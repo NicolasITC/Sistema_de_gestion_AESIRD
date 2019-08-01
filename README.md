@@ -3,4 +3,4 @@ Sistema de gestión para Agrupación de empaques supermercado Santa Isabel Rubé
 
 INFO263 Fundamentos de Ingeniería de Software, Universidad Austral de Chile
 
-Integrantes: Cristian Ojeda, Eleazar Vasquez, Patricio Canales, Nicolás Treimún
+Integrantes: Cristian Ojeda, Eleazar Vásquez, Patricio Canales, Nicolás Treimún
