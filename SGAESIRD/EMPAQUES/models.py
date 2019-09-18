@@ -34,11 +34,13 @@ class Usuario(models.Model):
 	activo = models.CharField(max_length=1, choices=OPCIONES_ACTIVIDAD, null=True)
 	telefono = models.CharField(max_length=12, null=True)
 	cant_turnos_disponibles = models.IntegerField(null=True)
+	foto = models.ImageField(upload_to='perfil/', default='EMPAQUES/static/media/perfil/default.png')
 
 	def __str__(self):
 		return self.usuario.first_name + " " + self.usuario.last_name
 	def get_date(self):
 		return self.created_date
+
 
 class Categoria_anotaciones(models.Model):
 	id_Categoria_anotaciones = models.AutoField(primary_key=True, help_text="ID")

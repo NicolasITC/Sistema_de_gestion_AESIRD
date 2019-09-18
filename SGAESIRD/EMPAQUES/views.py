@@ -11,7 +11,11 @@ from .forms import SignUpForm, Usuario_Form
 
 # Create your views here.
 def home(request):
-	return render(request, 'home.html', {})
+    if request.user.is_authenticated:
+    	return render(request, 'home.html', {})
+    else:
+        return redirect('/accounts/login/')
+        
 
 
 def registrate(request):
@@ -22,17 +26,12 @@ def registrate(request):
         if form_account.is_valid() and form_usuario.is_valid():
             post_form_account = form_account.save(commit=False)
             post_form_usuario = form_usuario.save(commit=False)
-
             post_form_account.save()
-
             post_form_usuario.usuario = post_form_account
             post_form_usuario.rol = 'E'
             post_form_usuario.activo = 'A'
             post_form_usuario.cant_turnos_disponibles = 3
-
             post_form_usuario.save()
-            
-
             return redirect('/')
     else:
         form_account = SignUpForm()

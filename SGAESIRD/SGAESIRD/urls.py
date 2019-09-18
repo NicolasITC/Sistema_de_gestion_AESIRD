@@ -18,6 +18,7 @@ from django.urls import path, include
 from EMPAQUES.views import home
 from django.conf.urls import url
 
+
 urlpatterns = [
     path('', include('EMPAQUES.urls')),
     path('admin/', admin.site.urls),
@@ -25,3 +26,4 @@ urlpatterns = [
 
     
 ]
+

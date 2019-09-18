@@ -22,52 +22,7 @@
 }
  /********************************************************************/
 
-.info{
-  overflow: hidden;
-  background-color: white;
-  padding: 40px 30px 30px 30px;
-  border-radius: 10px;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 400px;
-  -webkit-transform: translate(-50%, -50%);
-  -moz-transform: translate(-50%, -50%);
-  -ms-transform: translate(-50%, -50%);
-  -o-transform: translate(-50%, -50%);
-  transform: translate(-50%, -50%);
-  -webkit-transition: -webkit-transform 300ms, box-shadow 300ms;
-  -moz-transition: -moz-transform 300ms, box-shadow 300ms;
-  transition: transform 300ms, box-shadow 300ms;
-  box-shadow: 5px 10px 10px rgba(6, 8, 8, 0.2);
-}
-
-body {
-    background-color: #184b09e5;
-    font-family: "Asap", sans-serif;
-  }
-
-  .left{
-    float:left;
-    width: 50%;
-  }
-  
-  .right{
-    float:right;
-    width: 50%;
-  }
-  
-  .left{
-    float:left;
-    display:inline-block;
-    width: 50%;
-    background-color:red;
-  }
-  .right{
-    float:right;
-    display:inline-block;
-    width: 50%;
-  }
+/****************************** Login **************************/
 
   .login {
     overflow: hidden;
@@ -189,5 +144,22 @@ body {
   }
   
 
+/****************************** Fondo animado **************************/
 
 
+.right .background_animated{
+  
+	
+}
+
+@keyframes gradientBG {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}

@@ -1,0 +1,45 @@
+
+.info{
+  overflow: hidden;
+  background-color: white;
+  padding: 40px 30px 30px 30px;
+  border-radius: 10px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 400px;
+  -webkit-transform: translate(-50%, -50%);
+  -moz-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  -o-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  -webkit-transition: -webkit-transform 300ms, box-shadow 300ms;
+  -moz-transition: -moz-transform 300ms, box-shadow 300ms;
+  transition: transform 300ms, box-shadow 300ms;
+  box-shadow: 5px 10px 10px rgba(6, 8, 8, 0.2);
+}
+
+body {
+    background-color: #184b09e5;
+    font-family: "Asap", sans-serif;
+  }
+
+
+  
+.left{
+  float:left;
+  display:inline-block;
+  width: 50%;
+  background: linear-gradient(-45deg, #750101, #644543, #ac0202, #ec2e2e);
+  background-size: 400% 400%;
+  animation: gradientBG 15s ease infinite;
+}
+.right{
+  
+  float:right;
+  display:inline-block;
+  width: 50%;
+  background: linear-gradient(-45deg, #027a0865, #004110, #377a4d7a, #9eda92);
+  background-size: 400% 400%;
+  animation: gradientBG 15s ease infinite;
+}

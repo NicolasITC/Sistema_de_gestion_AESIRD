@@ -1,6 +1,6 @@
 <!-- templates/home.html-->
 {% extends "base.html" %}
-
+{% load static %}
 {% block title %}Bievenido{% endblock %}
 
 {% block content %}
@@ -8,7 +8,8 @@
     {% if user.is_authenticated %}
         <h1>Hola {{ user.username }} tu carrera es: {{ user.usuario.carrera }} y tu universidad es: {{ user.usuario.universidad }}</h1>
         <h1>Actualmente eres un usuario: {{ user.usuario.get_rol_display }}</h1>
-        <a href="{% url 'logout' %}">Cerrar sesión</a>
+        <img src="{{ user.usuario.foto.url }}">
+        <a href="{% url 'logout' %}"><span>Cerrar sesión<span></a>
     {% else %}
         <a href="{% url 'registrate' %}">Registrate</a>
         <a href="{% url 'login' %}">Iniciar sesión</a>

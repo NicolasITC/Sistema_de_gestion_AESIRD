@@ -3,6 +3,13 @@
 {% load static %}
 {% block title %}Login{% endblock %}
 
+
+
+{% block head %}
+<link rel="stylesheet" href="{% static "css/login.css" %}">
+
+{% endblock %}
+
 {% block content %}
 
 
@@ -13,18 +20,17 @@
 
       <h1>Agrupación de empaques Santa Isabel Rubén Darío</h1>
 
-      <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. 
-        Officia et cumque velit ducimus harum exercitationem minima 
-        aliquid aliquam adipisci? Numquam optio incidunt alias magnam 
-        similique repellendus, tempora facere voluptates fugit. Lorem 
-        ipsum dolor sit amet consectetur adipisicing elit. 
-        Officia et cumque velit ducimus harum exercitationem minima 
-        aliquid aliquam adipisci? Numquam optio incidunt alias magnam 
-        similique repellendus, tempora facere voluptates fugit! </p>
+      <p>La asociación de empaques del supermercado Santa Isabel Rubén Darío,
+Valdivia, es una agrupación que brinda servicios de empaquetamiento desde el año
+2015 al supermercado Santa Isabel situada en Avenida Picarte 3057, Valdivia,
+perteneciente a Cencosud S.A.</p><p>
+El objetivo de esta asociación es prestar servicios de empaquetamiento al
+supermercado, así como permitir el trabajo de estudiantes universitarios facilitando
+horarios flexibles para complementar sus estudios. </p>
       </div>
   </div>
 
-  <div class="split right">
+  <div class="split right background_animated">
     
       <form class="login"method="post">{% csrf_token %}
         {{ form.username }}
