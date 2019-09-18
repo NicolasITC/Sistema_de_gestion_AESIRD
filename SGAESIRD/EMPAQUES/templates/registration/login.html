@@ -1,0 +1,39 @@
+<!-- templates/registration/login.html -->
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Login{% endblock %}
+
+{% block content %}
+
+
+{{ form.as_p }}
+<div>
+  <div class= "split left">
+    <div class="info">
+
+      <h1>Agrupación de empaques Santa Isabel Rubén Darío</h1>
+
+      <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. 
+        Officia et cumque velit ducimus harum exercitationem minima 
+        aliquid aliquam adipisci? Numquam optio incidunt alias magnam 
+        similique repellendus, tempora facere voluptates fugit. Lorem 
+        ipsum dolor sit amet consectetur adipisicing elit. 
+        Officia et cumque velit ducimus harum exercitationem minima 
+        aliquid aliquam adipisci? Numquam optio incidunt alias magnam 
+        similique repellendus, tempora facere voluptates fugit! </p>
+      </div>
+  </div>
+
+  <div class="split right">
+    
+      <form class="login"method="post">{% csrf_token %}
+        {{ form.username }}
+        {{ form.password }}
+        <button>Login</button>
+      </form>
+  </div>
+  <a href="https://codepen.io/davinci/" target="_blank">check my other pens</a>
+</div>
+
+{% endblock content %}
+

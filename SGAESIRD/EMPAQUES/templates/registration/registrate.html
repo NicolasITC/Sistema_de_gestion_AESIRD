@@ -1,0 +1,139 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block head %}
+    <link rel="stylesheet" href="{% static 'css/registrate.css' %}">
+{% endblock %}
+
+{% block title %}Registrar usuario{% endblock %}
+
+{% block content %}
+
+<div>
+    <form method="POST" >
+        {% csrf_token %}
+        {{ form_account.non_field_errors }}
+        {{ form_usuario.non_field_errors }}
+
+
+        <div class="tooltip">
+                <label for="{{ form_account.username.id_for_label }}">Nombre de usuario:</label>
+                {{ form_account.username }}
+                {% if form_account.username.errors %}
+                    {% for error in form_account.username.errors %}
+                    <span class="tooltiptext">
+                        {{ error|escape }}
+                    </span>
+                    {% endfor %}
+                {% endif %}
+                
+        </div>
+
+        <div class="tooltip">
+                <label for="{{ form_account.email.id_for_label }}">email:</label>
+                {{ form_account.email }}
+                {% if form_account.email.errors %}
+                    {% for error in form_account.email.errors %}
+                    <span class="tooltiptext">
+                        {{ error|escape }}
+                    </span>
+                    {% endfor %}
+                {% endif %}
+        </div>
+        <div class="tooltip">
+                <label for="{{ form_account.first_name.id_for_label }}">Nombre:</label>
+                {{ form_account.first_name }}
+                {% if form_account.first_name.errors %}
+                    {% for error in form_account.first_name.errors %}
+                    <span class="tooltiptext">
+                        {{ error|escape }}
+                    </span>
+                    {% endfor %}
+                {% endif %}
+        </div>
+        <div class="tooltip">
+                <label for="{{ form_account.last_name.id_for_label }}">Apellido:</label>
+                {{ form_account.last_name }}
+                {% if form_account.last_name.errors %}
+                    {% for error in form_account.last_name.errors %}
+                    <span class="tooltiptext">
+                        {{ error|escape }}
+                    </span>
+                    {% endfor %}
+                {% endif %}
+        </div>
+        <div class="tooltip">
+                <label for="{{ form_account.password1.id_for_label }}">Contraseña:</label>
+                {{ form_account.password1 }}
+                {% if form_account.password1.errors %}
+                    {% for error in form_account.password1.errors %}
+                    <span class="tooltiptext">
+                        {{ error|escape }}
+                    </span>
+                    {% endfor %}
+                {% endif %}
+        </div>
+        <div class="tooltip">
+                
+                <label for="{{ form_account.password2.id_for_label }}">Vuelva a ingresar su contraseña:</label>
+                {{ form_account.password2 }}
+                {% if form_account.password2.errors %}
+                    {% for error in form_account.password2.errors %}
+                    <span class="tooltiptext">
+                        {{ error|escape }}
+                    </span>
+                    {% endfor %}
+                {% endif %}
+        </div>
+        <div class="tooltip">
+                <label for="{{ form_usuario.rut.id_for_label }}">Rut:</label>
+                {{ form_usuario.rut }}
+                {% if form_usuario.rut.errors %}
+                    {% for error in form_usuario.rut.errors %}
+                    <span class="tooltiptext">
+                        {{ error|escape }}
+                    </span>
+                    {% endfor %}
+                {% endif %}
+        </div>
+        <div class="tooltip">
+                <label for="{{ form_usuario.carrera.id_for_label }}">Carrera:</label>
+                {{ form_usuario.carrera }}
+                {% if form_usuario.carrera.errors %}
+                    {% for error in form_usuario.carrera.errors %}
+                    <span class="tooltiptext">
+                        {{ error|escape }}
+                    </span>
+                    {% endfor %}
+                {% endif %}
+        </div>
+        <div class="tooltip">
+                <label for="{{ form_usuario.universidad.id_for_label }}">Universidad:</label>
+                {{ form_usuario.universidad }}
+                {% if form_usuario.universidad.errors %}
+                    {% for error in form_usuario.universidad.errors %}
+                    <span class="tooltiptext">
+                        {{ error|escape }}
+                    </span>
+                    {% endfor %}
+                {% endif %}
+        </div>
+        <div class="tooltip">
+                <label for="{{ form_usuario.telefono.id_for_label }}">Teléfono:</label>
+                {{ form_usuario.telefono }}
+                {% if form_usuario.telefono.errors %}
+                    {% for error in form_usuario.telefono.errors %}
+                    <span class="tooltiptext">
+                        {{ error|escape }}
+                    </span>
+                    {% endfor %}
+                {% endif %}
+        </div>
+        <td>
+            <button align="center" type="submit"><span>Guardar:</span></button>
+        </td>
+    </form>
+</div>
+
+{% endblock content %}

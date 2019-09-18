@@ -1,0 +1,28 @@
+  #text_input{
+    background-color: white;
+    color: #000000;
+}
+
+
+.tooltip {
+  position: relative;
+
+  border-bottom: 1px dotted black;
+}
+
+.tooltip .tooltiptext {
+
+  
+  color: rgb(255, 0, 0);
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+
+  /* Position the tooltip */
+  position: absolute;
+  z-index: 1;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+}

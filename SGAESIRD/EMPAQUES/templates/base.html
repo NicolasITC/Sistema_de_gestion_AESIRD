@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+<head>
+  {% block head %}
+  {% endblock %}
+  <link rel="stylesheet" href="{% static "css/login.css" %}">
+  <meta charset="utf-8">
+  <title>{% block title %}Asociación de Empaques{% endblock %}</title>
+</head>
+<body>
+  <main>
+    {% block content %}
+    {% endblock %}
+  </main>
+</body>
+</html>
