@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% load turnos_tags %}
+
+{% block content %}
+<div>
+    <a href="{% url 'turnos' semana=semana|add:"-1"  %}">semana anterior</a>
+</div>
+<div>
+    <table>
+        <thead>
+            <tr>
+                <th>Hora</th>
+                <th>Lunes</th>
+                <th>Martes</th>
+                <th>Miércoles</th>
+                <th>Jueves</th>
+                <th>Viernes</th>
+                <th>Sábado</th>
+                <th>Domingo</th>
+            </tr>
+    </thead>
+    <tbody>
+        
+        {% get_semana semana as s %}
+        {% for h in hora %}
+
+            <tr>
+                <th>{{ h|date:'H:i' }}</th>
+                {% for dia in s %}
+                <td>
+                    {% for t in turnos %}
+                    {% if t.fecha|date:"d M Y" == dia|date:"d M Y" and  h|date:'H:i' == t.hora_inicio|date:'H:i' %} {{t.hora_inicio|date:'H:i' }} {% endif %}
+                    {% endfor %}
+                </td>
+                {% endfor %}
+            </tr>
+        {% endfor %}
+
+    </tbody>
+</div>
+
+<div>
+    <a href="{% url 'turnos' semana=semana|add:"1"  %}">semana siguiente</a>
+</div>
+{% endblock %}

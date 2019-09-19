@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 
+
 # Create your models here.
 
 
@@ -64,7 +65,9 @@ class Turnos(models.Model):
 	hora_final = models.TimeField()
 	usuario = models.ManyToManyField(Usuario, blank=True)
 	def __str__(self):
-		return self.fecha + " " + self.hora_inicio + " " + self.hora_final
+		return str(self.fecha) + " " + str(self.hora_inicio) + " " + str(self.hora_final)
+	class Meta:
+		ordering = ('fecha', 'hora_inicio', 'hora_final',)
 
 class Finanzas(models.Model):
 	id_Finanzas = models.AutoField(primary_key=True, help_text="ID")
