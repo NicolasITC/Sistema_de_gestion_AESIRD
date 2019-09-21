@@ -1,10 +1,21 @@
 <!-- templates/home.html-->
-{% extends "base.html" %}
+{% extends "EMPAQUES/estructura.html" %}
 {% load static %}
 {% block title %}Bievenido{% endblock %}
 
-{% block content %}
 
+{% block barra_lateral %}
+    <li><a href="{% url 'home' %}" class="active"><i class="fa fa-home fa-fw"></i>Inicio</a></li>
+    <li><a href="{% url 'turnos' 0 %}"><i class="fa fa-bar-chart fa-fw"></i>Turnos</a></li>
+    <li><a href="data-visualization.html"><i class="fa fa-database fa-fw"></i>Administracion</a></li>
+    <li><a href="{% url 'logout' %}"><i class="fa fa-eject fa-fw"></i>Desconectar</a></li>
+{% endblock %}
+            
+
+
+
+{% block content %}
+<div class="templatemo-content-widget white-bg col-2">
     {% if user.is_authenticated %}
         <h1>Hola {{ user.username }} tu carrera es: {{ user.usuario.carrera }} y tu universidad es: {{ user.usuario.universidad }}</h1>
         <h1>Actualmente eres un usuario: {{ user.usuario.get_rol_display }}</h1>
@@ -14,5 +25,5 @@
         <a href="{% url 'registrate' %}">Registrate</a>
         <a href="{% url 'login' %}">Iniciar sesión</a>
     {% endif %}
-    
+</div>
 {% endblock content %}
