@@ -10,16 +10,45 @@
     <li><a href="{% url 'logout' %}"><i class="fa fa-eject fa-fw"></i>Desconectar</a></li>
 {% endblock %}
 
+
+
+
+{% block barra_superior %}
+    <div class="templatemo-top-nav-container">
+        <div class="row">
+        <nav class="templatemo-top-nav col-lg-12 col-md-12">
+            <ul class="text-uppercase">
+            <li><a href="{% url 'turnos' semana=semana|add:"-1"  %}" class="active">Semana anterior</a></li>
+            <li><a href="{% url 'turnos' semana=semana|add:"1"  %}">Semana siguiente</a></li>
+            </ul>  
+        </nav> 
+        </div>
+    </div>
+{% endblock %}
+
+
+
+
 {% block content %}
 
 <div class="col-1">
-    <div>
-        <a href="{% url 'turnos' semana=semana|add:"-1"  %}">semana anterior</a>
-    </div>
 
+    {% get_semana semana as s %}
     <div class="panel panel-default templatemo-content-widget white-bg no-padding templatemo-overflow-hidden">
     <i class="fa fa-times"></i>
-    <div class="panel-heading templatemo-position-relative"><h2 class="text-uppercase">User Table</h2></div>
+    <div class="panel-heading templatemo-position-relative"><h2 class="text-uppercase">
+    Semana del 
+    {% for d in s %}
+        {% if forloop.first %}
+            {{ d|date:"j \d\e F" }} al 
+        {% endif %}
+        
+        {% if forloop.last %}
+            {{ d|date:"j \d\e F \d\e Y" }}
+        {% endif %}
+    {% endfor %}
+    
+    </h2></div>
     <div class="table-responsive">
         <table class="table table-striped table-bordered">
             <thead>
@@ -36,19 +65,30 @@
             </thead>
             <tbody>
         
-                {% get_semana semana as s %}
-                {% for h in hora %}
 
-                <tr>
-                    <th>{{ h|date:'H:i' }}</th>
-                    {% for dia in s %}
-                    <td>
-                        {% for t in turnos %}
-                        {% if t.fecha|date:"d M Y" == dia|date:"d M Y" and  h|date:'H:i' == t.hora_inicio|date:'H:i' %} {{t.hora_inicio|date:'H:i' }} {% endif %}
+                {% for h in hora %}
+                {% for tur in turnos %}
+                {% for day in s %}
+                    {% if tur.hora_inicio|date:'H:i' == h|date:'H:i' and tur.fecha|date:"d M Y" == day|date:"d M Y" %} 
+                    <tr>
+                        <th>{{ tur.hora_inicio|date:'H:i' }} - {{ tur.hora_final|date:'H:i' }}</th>
+                        {% for dia in s %}
+                        <td>
+                            {% if tur.fecha|date:"d M Y" == dia|date:"d M Y" and  h|date:'H:i' == tur.hora_inicio|date:'H:i' %} 
+                                {% for a in tur.usuario.all %}
+                                <div 
+                                    {% if user.username == a.usuario.username %} 
+                                        class="usuario_actual"
+                                    {% endif %}
+                                >{{ a }}</div>
+                                {% endfor %}
+                            {% endif %}
+                        </td>
                         {% endfor %}
-                    </td>
-                    {% endfor %}
-                </tr>
+                    </tr>
+                    {% endif %}
+                {% endfor %}
+                {% endfor %}
                 {% endfor %}
 
             </tbody>
@@ -56,7 +96,5 @@
     </div>                          
     </div>
 </div>
-<div>
-    <a href="{% url 'turnos' semana=semana|add:"1"  %}">semana siguiente</a>
-</div>
+
 {% endblock %}

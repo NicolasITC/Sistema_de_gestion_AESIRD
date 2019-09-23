@@ -12,8 +12,6 @@
 
 {% block content %}
 
-
-{{ form.as_p }}
 <div>
   <div class= "split left">
     <div class="info">
@@ -31,10 +29,19 @@ horarios flexibles para complementar sus estudios. </p>
   </div>
 
   <div class="split right background_animated">
-    
+
+    {% csrf_token %}
+    {{ form.non_field_errors }}
       <form class="login"method="post">{% csrf_token %}
+        
         {{ form.username }}
+
+        
+                
+
         {{ form.password }}
+
+        
         <button>Login</button>
       </form>
   </div>

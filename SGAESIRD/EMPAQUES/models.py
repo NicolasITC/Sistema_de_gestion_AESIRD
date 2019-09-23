@@ -35,7 +35,7 @@ class Usuario(models.Model):
 	activo = models.CharField(max_length=1, choices=OPCIONES_ACTIVIDAD, null=True)
 	telefono = models.CharField(max_length=12, null=True)
 	cant_turnos_disponibles = models.IntegerField(null=True)
-	foto = models.ImageField(upload_to='perfil/', default='EMPAQUES/static/media/perfil/default.png')
+	foto = models.ImageField(upload_to='perfil/', default='perfil/default.png')
 
 	def __str__(self):
 		return self.usuario.first_name + " " + self.usuario.last_name

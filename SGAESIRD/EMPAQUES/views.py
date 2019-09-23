@@ -36,7 +36,7 @@ def registrate(request):
             post_form_usuario.usuario = post_form_account
             post_form_usuario.rol = 'E'
             post_form_usuario.activo = 'A'
-            post_form_usuario.fecha_ingreso = timezone.now
+            post_form_usuario.fecha_ingreso = timezone.now()
             post_form_usuario.cant_turnos_disponibles = 3
             post_form_usuario.save()
             return redirect('/')
