@@ -9,6 +9,37 @@ from .models import Usuario, Turnos
 
 from .forms import SignUpForm, Usuario_Form
 import datetime
+from datetime import timedelta
+import dateutil.parser
+
+
+def turnos_base(actual, turnos):
+    if(actual>=0):
+        hoy=datetime.datetime.today()+ datetime.timedelta(weeks=actual)
+    else:
+        hoy=datetime.datetime.today()- datetime.timedelta(weeks=abs(actual))
+        
+    week=hoy.strftime("%Y-W%W") 
+    start_week = datetime.datetime.strptime(week + '-1', "%Y-W%W-%w")
+    end_week = start_week + datetime.timedelta(days=7)   
+    start_week = dateutil.parser.parse(str(start_week)).date()
+    end_week = dateutil.parser.parse(str(end_week)).date()
+    turnos=turnos.filter(fecha__range=[start_week,end_week])
+    return turnos
+def get_semana(actual, turnos):
+    if(actual>=0):
+        hoy=datetime.datetime.today()+ datetime.timedelta(weeks=actual)
+    else:
+        hoy=datetime.datetime.today()- datetime.timedelta(weeks=abs(actual))
+        
+    week=hoy.strftime("%Y-W%W") 
+    start_week = datetime.datetime.strptime(week + '-1', "%Y-W%W-%w")
+    start_week = dateutil.parser.parse(str(start_week)).date()
+    date_list = [start_week + datetime.timedelta(days=x) for x in range(7)]
+
+    return date_list
+
+
 
 
 @login_required
@@ -16,12 +47,15 @@ def home(request):
     return render(request, 'home.html', {})
 
 
+
 @login_required
 def planilla_turnos(request, semana):
     turnos=Turnos.objects.all()
     start = datetime.datetime.strptime("07:00", "%H:%M")
     hora = [start + datetime.timedelta(minutes=x*30) for x in range(35)]
-    return render(request, 'turnos.html', {'turnos':turnos, 'semana':semana, 'hora':hora})
+    sem=get_semana(semana, turnos)
+    turnos = turnos_base(semana, turnos)
+    return render(request, 'turnos.html', {'turnos':turnos, 'semana':semana,'sem':sem, 'hora':hora})
     
 @login_required
 def registrate(request):
