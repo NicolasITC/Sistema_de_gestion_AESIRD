@@ -1,13 +1,14 @@
 
 .info{
-  overflow: hidden;
+  overflow: auto;
   background-color: white;
-  padding: 40px 30px 30px 30px;
+  padding: 30px 30px 30px 30px;
   border-radius: 10px;
-  position: absolute;
+  position: relative;
   top: 50%;
   left: 50%;
-  width: 400px;
+  width: 50%;
+  height: 50%;
   -webkit-transform: translate(-50%, -50%);
   -moz-transform: translate(-50%, -50%);
   -ms-transform: translate(-50%, -50%);
@@ -30,7 +31,8 @@ body {
   float:left;
   display:inline-block;
   width: 50%;
-  background: linear-gradient(-45deg, #750101, #644543, #ac0202, #ec2e2e);
+  background: linear-gradient(-45deg, #027a0865, #004110, #377a4d7a, #9eda92);
+
   background-size: 400% 400%;
   animation: gradientBG 15s ease infinite;
 }
@@ -39,7 +41,7 @@ body {
   float:right;
   display:inline-block;
   width: 50%;
-  background: linear-gradient(-45deg, #027a0865, #004110, #377a4d7a, #9eda92);
+  background: linear-gradient(-45deg, #808080, #EBEEED, #F4F8F7, #FFFFFF);
   background-size: 400% 400%;
   animation: gradientBG 15s ease infinite;
 }
