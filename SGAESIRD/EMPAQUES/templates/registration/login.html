@@ -45,20 +45,10 @@
     {% csrf_token %}
     {{ form.non_field_errors }}
       <form class="login"method="post">{% csrf_token %}
-        
         {{ form.username }}
-
-        
-                
-
         {{ form.password }}
-
-        
         <button>Login</button>
       </form>
-  </div>
-  <a href="https://codepen.io/davinci/" target="_blank">check my other pens</a>
-</div>
 
 {% endblock content %}
 

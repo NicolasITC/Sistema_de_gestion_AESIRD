@@ -3,8 +3,12 @@ from ..models import Turnos
 import datetime
 from datetime import timedelta
 import dateutil.parser
+from django.http import HttpResponseRedirect
+
+
 
 register = template.Library()
+
 
 @register.simple_tag
 def comparar(dia, hora, turnos):
