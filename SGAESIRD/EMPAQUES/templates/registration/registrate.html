@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'EMPAQUES/estructura.html' %}
 {% load static %}
 
 
@@ -6,18 +6,29 @@
     <link rel="stylesheet" href="{% static 'css/registrate.css' %}">
 {% endblock %}
 
-{% block title %}Registrar usuario{% endblock %}
+
+{% block barra_lateral %}
+    <li><a href="{% url 'home' %}" ><i class="fa fa-home fa-fw"></i>Inicio</a></li>
+    <li><a href="{% url 'turnos' 0 %}" ><i class="fa fa-bar-chart fa-fw"></i>Turnos</a></li>
+    <li><a href="data-visualization.html" class="active"><i class="fa fa-database fa-fw"></i>Administracion</a></li>
+    <li><a href="{% url 'logout' %}"><i class="fa fa-eject fa-fw"></i>Desconectar</a></li>
+{% endblock %}
+
 
 {% block content %}
+<div class="templatemo-content col-1 light-gray-bg">
+<div class="templatemo-content-container">
+    <div class="templatemo-content-widget white-bg">
+        <h2 class="margin-bottom-10">Preferences</h2>
+        <p>Here goes another form and form controls.</p>
+        <form method="POST" action="index.html" class="templatemo-login-form" enctype="multipart/form-data">
 
-<div>
-    <form method="POST" >
         {% csrf_token %}
         {{ form_account.non_field_errors }}
         {{ form_usuario.non_field_errors }}
 
-
-        <div class="tooltip">
+        <div class="row form-group">
+        <div class="col-lg-6 col-md-6 form-group">
                 <label for="{{ form_account.username.id_for_label }}">Nombre de usuario:</label>
                 {{ form_account.username }}
                 {% if form_account.username.errors %}
@@ -29,8 +40,7 @@
                 {% endif %}
                 
         </div>
-
-        <div class="tooltip">
+        <div class="col-lg-6 col-md-6 form-group">
                 <label for="{{ form_account.email.id_for_label }}">email:</label>
                 {{ form_account.email }}
                 {% if form_account.email.errors %}
@@ -41,7 +51,10 @@
                     {% endfor %}
                 {% endif %}
         </div>
-        <div class="tooltip">
+        </div>
+
+        <div class="row form-group">
+        <div class="col-lg-6 col-md-6 form-group">
                 <label for="{{ form_account.first_name.id_for_label }}">Nombre:</label>
                 {{ form_account.first_name }}
                 {% if form_account.first_name.errors %}
@@ -52,7 +65,7 @@
                     {% endfor %}
                 {% endif %}
         </div>
-        <div class="tooltip">
+        <div class="col-lg-6 col-md-6 form-group">
                 <label for="{{ form_account.last_name.id_for_label }}">Apellido:</label>
                 {{ form_account.last_name }}
                 {% if form_account.last_name.errors %}
@@ -63,7 +76,10 @@
                     {% endfor %}
                 {% endif %}
         </div>
-        <div class="tooltip">
+        </div>
+
+        <div class="row form-group">
+        <div class="col-lg-6 col-md-6 form-group">
                 <label for="{{ form_account.password1.id_for_label }}">Contraseña:</label>
                 {{ form_account.password1 }}
                 {% if form_account.password1.errors %}
@@ -74,7 +90,7 @@
                     {% endfor %}
                 {% endif %}
         </div>
-        <div class="tooltip">
+        <div class="col-lg-6 col-md-6 form-group">
                 
                 <label for="{{ form_account.password2.id_for_label }}">Vuelva a ingresar su contraseña:</label>
                 {{ form_account.password2 }}
@@ -86,7 +102,10 @@
                     {% endfor %}
                 {% endif %}
         </div>
-        <div class="tooltip">
+        </div>
+
+        <div class="row form-group">
+        <div class="col-lg-6 col-md-6 form-group">
                 <label for="{{ form_usuario.rut.id_for_label }}">Rut:</label>
                 {{ form_usuario.rut }}
                 {% if form_usuario.rut.errors %}
@@ -97,29 +116,7 @@
                     {% endfor %}
                 {% endif %}
         </div>
-        <div class="tooltip">
-                <label for="{{ form_usuario.carrera.id_for_label }}">Carrera:</label>
-                {{ form_usuario.carrera }}
-                {% if form_usuario.carrera.errors %}
-                    {% for error in form_usuario.carrera.errors %}
-                    <span class="tooltiptext">
-                        {{ error|escape }}
-                    </span>
-                    {% endfor %}
-                {% endif %}
-        </div>
-        <div class="tooltip">
-                <label for="{{ form_usuario.universidad.id_for_label }}">Universidad:</label>
-                {{ form_usuario.universidad }}
-                {% if form_usuario.universidad.errors %}
-                    {% for error in form_usuario.universidad.errors %}
-                    <span class="tooltiptext">
-                        {{ error|escape }}
-                    </span>
-                    {% endfor %}
-                {% endif %}
-        </div>
-        <div class="tooltip">
+        <div class="col-lg-6 col-md-6 form-group">
                 <label for="{{ form_usuario.telefono.id_for_label }}">Teléfono:</label>
                 {{ form_usuario.telefono }}
                 {% if form_usuario.telefono.errors %}
@@ -130,10 +127,39 @@
                     {% endfor %}
                 {% endif %}
         </div>
+        </div>
+
+        <div class="row form-group">
+        <div class="col-lg-6 col-md-6 form-group">
+                <label for="{{ form_usuario.carrera.id_for_label }}">Carrera:</label>
+                {{ form_usuario.carrera }}
+                
+                {% if form_usuario.carrera.errors %}
+                    {% for error in form_usuario.carrera.errors %}
+                    <span class="tooltiptext">
+                        {{ error|escape }}
+                    </span>
+                    {% endfor %}
+                {% endif %}
+        </div>
+        <div class="col-lg-6 col-md-6 form-group">
+                <label for="{{ form_usuario.universidad.id_for_label }}">Universidad:</label>
+                {{ form_usuario.universidad }}
+                {% if form_usuario.universidad.errors %}
+                    {% for error in form_usuario.universidad.errors %}
+                    <span class="tooltiptext">
+                        {{ error|escape }}
+                    </span>
+                    {% endfor %}
+                {% endif %}
+        </div>
+        </div>
+
         <td>
             <button align="center" type="submit"><span>Guardar:</span></button>
         </td>
     </form>
+</div>
 </div>
 
 {% endblock content %}

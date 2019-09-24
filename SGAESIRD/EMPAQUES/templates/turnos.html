@@ -19,6 +19,7 @@
         <nav class="templatemo-top-nav col-lg-12 col-md-12">
             <ul class="text-uppercase">
             <li><a href="{% url 'turnos' semana=semana|add:"-1"  %}" class="active">Semana anterior</a></li>
+            <li><a href="{% url 'turnos' semana=0  %}">Semana actual</a></li>
             <li><a href="{% url 'turnos' semana=semana|add:"1"  %}">Semana siguiente</a></li>
             </ul>  
         </nav> 
@@ -77,7 +78,9 @@
                             {% if tur.fecha|date:"d M Y" == dia|date:"d M Y" and  h|date:'H:i' == tur.hora_inicio|date:'H:i' %} 
                                 {% for a in tur.usuario.all %}
                                 <div 
+                                    {% with name="True" %} {% endwith %}
                                     {% if user.username == a.usuario.username %} 
+
                                         class="usuario_actual"
                                     {% endif %}
                                 >{{ a }}</div>
@@ -93,6 +96,10 @@
 
             </tbody>
         </table>    
+        <div>
+            {% if name|length > 0 %} <a>Entró</a>{% endif %}
+            
+        </div>
     </div>                          
     </div>
 </div>
