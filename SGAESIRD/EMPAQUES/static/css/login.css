@@ -1,27 +1,25 @@
 
 
-
 /****************************** Split screen **************************/
 
 .split {
   height: 100%;
-  width: 50%;
-  position: fixed;
+  
   z-index: 1;
   top: 0;
-  overflow-x: hidden;
+  position: absolute;
   padding-top: 20px;
 }
 
 /* Control the left side */
 .left {
   left: 0;
-  background-color: #184b09e5;
+
 }
 /* Control the right side */
 .right {
   right: 0;
-  background-color: #f8f8f8;
+
 }
  /********************************************************************/
 
@@ -60,7 +58,7 @@
   .login::before {
     left: 40%;
     bottom: -130%;
-    background-color: #184b09e5;
+    background-color: rgba(27, 180, 126, 0.849);
     -webkit-animation: wawes 6s infinite linear;
     -moz-animation: wawes 6s infinite linear;
     animation: wawes 6s infinite linear;
@@ -68,7 +66,7 @@
   .login::after {
     left: 35%;
     bottom: -125%;
-    background-color: #184b0998;
+    background-color: rgba(14, 97, 68, 0.568);
     -webkit-animation: wawes 7s infinite;
     -moz-animation: wawes 7s infinite;
     animation: wawes 7s infinite;
@@ -78,7 +76,7 @@
     display: block;
     border-radius: 5px;
     font-size: 16px;
-    background: white;
+    background: rgba(196, 255, 242, 0.925);
     width: 100%;
     border: 0;
     padding: 10px 10px;
@@ -96,13 +94,13 @@
     margin-top: 10px;
     margin-left: -5px;
     border-radius: 5px;
-    background-color: #184b09;
+    background-color: #13895F;
     -webkit-transition: background-color 300ms;
     -moz-transition: background-color 300ms;
     transition: background-color 300ms;
   }
   .login > button:hover {
-    background-color: #184b09;
+    background-color: #13895F;
   }
   
   @-webkit-keyframes wawes {
@@ -177,3 +175,42 @@
   bottom: 70px;
   padding-bottom: 20px;
 }
+
+
+
+
+ /* For mobile phones: */
+ @media only screen and (max-width: 768px) {
+ [class*="split"] {
+  width: 100%;
+  }
+  .left{
+    visibility: hidden;
+    
+    
+  }
+  .right{
+    transform: scale(100%);
+    
+    
+  }
+  .login {
+
+    padding: 5%;
+    z-index: 0;
+    border-radius: 10px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    width: 85%;
+    
+  }
+  
+}
+
+
+@media only screen and (min-width: 768px) {
+  /* For desktop: */
+
+  
+} 

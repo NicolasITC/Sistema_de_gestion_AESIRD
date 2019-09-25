@@ -21,7 +21,7 @@
 }
 
 body {
-    background-color: #184b09e5;
+    background-color: #13895F;
     font-family: "Asap", sans-serif;
   }
 
@@ -31,7 +31,7 @@ body {
   float:left;
   display:inline-block;
   width: 50%;
-  background: linear-gradient(-45deg, #027a0865, #004110, #377a4d7a, #9eda92);
+  background: #13895F;
 
   background-size: 400% 400%;
   animation: gradientBG 15s ease infinite;
@@ -41,7 +41,7 @@ body {
   float:right;
   display:inline-block;
   width: 50%;
-  background: linear-gradient(-45deg, #808080, #EBEEED, #F4F8F7, #FFFFFF);
+  background: #1f2124;
   background-size: 400% 400%;
   animation: gradientBG 15s ease infinite;
 }
