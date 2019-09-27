@@ -15,6 +15,12 @@
 {% block content %}
 
 <div>
+
+
+  <div class="titulo-mobile">
+      <h1>Agrupación de empaques Santa Isabel Rubén Darío</h1>
+  </div>
+  
   <div class= "split left">
     <div class="info">
 
@@ -41,7 +47,7 @@
   </div>
 
   <div class="split right background_animated">
-
+    
     {% csrf_token %}
     {{ form.non_field_errors }}
       <form class="login"method="post">{% csrf_token %}

@@ -26,6 +26,7 @@ def turnos_base(actual, turnos):
     end_week = dateutil.parser.parse(str(end_week)).date()
     turnos=turnos.filter(fecha__range=[start_week,end_week])
     return turnos
+
 def get_semana(actual, turnos):
     if(actual>=0):
         hoy=datetime.datetime.today()+ datetime.timedelta(weeks=actual)
@@ -38,8 +39,6 @@ def get_semana(actual, turnos):
     date_list = [start_week + datetime.timedelta(days=x) for x in range(7)]
 
     return date_list
-
-
 
 
 @login_required
@@ -80,4 +79,13 @@ def registrate(request):
 
 
     return render(request, 'registration/registrate.html', {'form_account': form_account, 'form_usuario': form_usuario})
+
+
+
+@login_required
+def toma_turnos(request):
+
+    
+    return render(request, "toma_turnos.html")
+
 

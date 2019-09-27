@@ -45,3 +45,7 @@ body {
   background-size: 400% 400%;
   animation: gradientBG 15s ease infinite;
 }
+
+.right titulo{
+  visibility: hidden;
+}
