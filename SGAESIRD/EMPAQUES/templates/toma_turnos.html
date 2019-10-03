@@ -1,2 +1,32 @@
 {% extends "EMPAQUES/estructura.html" %}
 
+{% block barra_lateral %}
+    <li><a href="{% url 'home' %}" ><i class="fa fa-home fa-fw"></i>Inicio</a></li>
+    <li><a href="{% url 'turnos' 0 %}" class="active"><i class="fa fa-bar-chart fa-fw"></i>Turnos</a></li>
+    <li><a href="data-visualization.html"><i class="fa fa-database fa-fw"></i>Administracion</a></li>
+    <li><a href="{% url 'logout' %}"><i class="fa fa-eject fa-fw"></i>Desconectar</a></li>
+{% endblock %}
+
+
+{% block barra_superior %}
+    <div class="templatemo-top-nav-container">
+        <div class="row">
+        <nav class="templatemo-top-nav col-lg-12 col-md-12">
+            <ul class="text-uppercase">
+            <li><a href="{% url 'turnos' semana=semana|add:"-1"  %}">Semana anterior</a></li>
+            <li><a href="{% url 'turnos' semana=0  %}">Semana actual</a></li>
+            <li><a href="{% url 'turnos' semana=semana|add:"1"  %}">Semana siguiente</a></li>
+            </ul>  
+        </nav> 
+        </div>
+    </div>
+{% endblock %}
+
+
+{% block content %}
+
+    <div>
+        <p>wenawena</p>
+    </div>
+
+{% endblock %}

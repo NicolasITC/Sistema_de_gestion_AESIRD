@@ -83,9 +83,13 @@ def registrate(request):
 
 
 @login_required
-def toma_turnos(request):
+def toma_turnos(request, semana):
+    turnos=Turnos.objects.all()
+    start = datetime.datetime.strptime("07:00", "%H:%M")
+    hora = [start + datetime.timedelta(minutes=x*30) for x in range(35)]
+    sem=get_semana(semana, turnos)
+    turnos = turnos_base(semana, turnos)
 
-    
-    return render(request, "toma_turnos.html")
+    return render(request, "toma_turnos.html",{'turnos':turnos, 'semana':semana,'sem':sem, 'hora':hora})
 
 

@@ -17,7 +17,7 @@ urlpatterns = [
     path('', views.home, name='home'),
     path('accounts/registrate', views.registrate, name='registrate'),
     path('turnos/<negint:semana>/', views.planilla_turnos, name='turnos'),
-    path('toma_turnos', views.toma_turnos, name='toma_turnos'),
+    path('toma_turnos/<negint:semana>', views.toma_turnos, name='toma_turnos'),
 
 
 
