@@ -21,7 +21,7 @@
     <div class="templatemo-content-widget white-bg">
         <h2 class="margin-bottom-10">Preferences</h2>
         <p>Here goes another form and form controls.</p>
-        <form method="POST" action="index.html" class="templatemo-login-form" enctype="multipart/form-data">
+        <form method="POST" class="templatemo-login-form" enctype="multipart/form-data">
 
         {% csrf_token %}
         {{ form_account.non_field_errors }}
@@ -116,7 +116,8 @@
                     {% endfor %}
                 {% endif %}
         </div>
-        <div class="col-lg-6 col-md-6 form-group">
+        <div class="col-lg-6 col-md-6 form-group">Hola admin tu carrera es: CAPO y tu universidad es: UACH
+            Actualmen
                 <label for="{{ form_usuario.telefono.id_for_label }}">Teléfono:</label>
                 {{ form_usuario.telefono }}
                 {% if form_usuario.telefono.errors %}
@@ -156,7 +157,7 @@
         </div>
 
         <td>
-            <button align="center" type="submit"><span>Guardar:</span></button>
+            <button align ="center"   type="submit"><span>Guardar:</span></button>
         </td>
     </form>
 </div>
