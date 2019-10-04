@@ -12,6 +12,9 @@ import datetime
 from datetime import timedelta
 import dateutil.parser
 
+from django.core.mail import send_mail
+from django.conf import settings
+
 
 def turnos_base(actual, turnos):
     if(actual>=0):
@@ -40,11 +43,9 @@ def get_semana(actual, turnos):
 
     return date_list
 
-
 @login_required
 def home(request):
     return render(request, 'home.html', {})
-
 
 
 @login_required
