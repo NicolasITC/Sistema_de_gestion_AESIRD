@@ -25,7 +25,7 @@ urlpatterns = [
     auth_views.PasswordResetView.as_view(
       template_name='reset_password.html',
       html_email_template_name='reset_password_email.html',
-      success_url=settings.LOGIN_URL,
+      success_url='done',
       token_generator=default_token_generator),
     name='reset_password'
   ),
@@ -38,6 +38,12 @@ urlpatterns = [
       token_generator=default_token_generator,
       success_url=settings.LOGIN_REDIRECT_URL),
     name='passwordResetConfirm'
+  ),
+  path('accounts/reset-password/done',
+    auth_views.PasswordResetDoneView.as_view(
+      template_name='reset_password_done.html'
+    ),
+    name='passwordResetDone'
   ),
 
 
