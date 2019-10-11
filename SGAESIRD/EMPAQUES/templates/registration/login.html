@@ -47,15 +47,15 @@
   </div>
 
   <div class="split right background_animated">
-    
+    {% block log %}
     {% csrf_token %}
-    {{ form.non_field_errors }}
       <form class="login"method="post">{% csrf_token %}
         {{ form.username }}
         {{ form.password }}
+        <p class="help is-danger">{{ form.errors }}</p>
         <button>Login</button>
-        <a href="{% url 'reset_password' %}">Olvido su contraseña?</a>
+        <a href="{% url 'reset_password' %}">¿Olvidó su contraseña?</a>
       </form>
-
+    {% endblock %}
 {% endblock content %}
 
