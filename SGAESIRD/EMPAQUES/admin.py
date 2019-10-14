@@ -1,10 +1,10 @@
 from django.contrib import admin
-from .models import Usuario, Categoria_anotaciones, Anotaciones, Turnos, Finanzas, Anuncios, Comentarios, Universidades, Lista_de_Espera
+from .models import Usuario, Categoria_anotaciones, Anotaciones, Turnos, Finanzas, Anuncios, Comentarios, Universidades, Lista_de_Espera, Toma_turnos
 
 # Register your models here.
 
 	
-	
+admin.site.register(Toma_turnos)
 admin.site.register(Usuario)
 admin.site.register(Categoria_anotaciones)
 admin.site.register(Anotaciones)
