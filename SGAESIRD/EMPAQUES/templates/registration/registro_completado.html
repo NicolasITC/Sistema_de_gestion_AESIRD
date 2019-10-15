@@ -1,0 +1,22 @@
+{% extends 'EMPAQUES/estructura.html' %}
+{% load static %}
+
+
+{% block head %}
+<link rel="stylesheet" href="{% static "css/registro_completado.css" %}">
+{% endblock %}
+
+{% block content %}
+
+    <div class="templatemo-content-widget white-bg loading">Registro completado!! redireccionando en 5 sec</div>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta http-equiv="refresh" content="5;URL=http://127.0.0.1:8000/accounts/registrate">
+
+        
+{% endblock %}
+{% block barra_lateral %}
+    <li><a href="{% url 'home' %}" ><i class="fa fa-home fa-fw"></i>Inicio</a></li>
+    <li><a href="{% url 'turnos' 0 %}" ><i class="fa fa-bar-chart fa-fw"></i>Turnos</a></li>
+    <li><a href="data-visualization.html" class="active"><i class="fa fa-database fa-fw"></i>Administracion</a></li>
+    <li><a href="{% url 'logout' %}"><i class="fa fa-eject fa-fw"></i>Desconectar</a></li>
+{% endblock %}

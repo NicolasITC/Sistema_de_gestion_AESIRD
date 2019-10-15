@@ -7,7 +7,7 @@ from django.utils import timezone
 
 from .models import Usuario, Turnos, Toma_turnos
 
-from .forms import SignUpForm, Usuario_Form
+from .forms import SignUpForm, Usuario_Form, Turnos_form
 import datetime
 from datetime import timedelta
 import dateutil.parser
@@ -82,14 +82,14 @@ def registrate(request):
             post_form_usuario.fecha_ingreso = timezone.now()
             post_form_usuario.cant_turnos_disponibles = 3
             post_form_usuario.save()
-            return redirect('registrate')
+            return redirect('registro_completado')
     else:
         form_account = SignUpForm()
         form_usuario = Usuario_Form()
 
 
     return render(request, 'registration/registrate.html', {'form_account': form_account, 'form_usuario': form_usuario})
-
+    
 
 
 @login_required
@@ -102,4 +102,16 @@ def toma_turnos(request, semana):
 
     return render(request, "toma_turnos.html",{'turnos':turnos, 'semana':semana,'sem':sem, 'hora':hora})
 
+def registro_completado(request):
+    return render(request,"registration/registro_completado.html")
 
+
+def asignar_turnos(request):
+    semana=1
+    turnos=Turnos.objects.all()
+    start = datetime.datetime.strptime("07:00", "%H:%M")
+    hora = [start + datetime.timedelta(minutes=x*30) for x in range(35)]
+    sem=get_semana(semana)
+    turnos = turnos_base(semana, turnos)
+    return render(request, 'asignar_turnos.html', {'turnos':turnos, 'semana':semana,'sem':sem, 'hora':hora})
+    
