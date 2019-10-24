@@ -35,14 +35,37 @@
 
 {% block content %}
 <div class="templatemo-content-widget white-bg col-2">
-    {% if user.is_authenticated %}
-        <h1>Hola {{ user.username }} tu carrera es: {{ user.usuario.carrera }} y tu universidad es: {{ user.usuario.universidad }}</h1>
-        <h1>Actualmente eres un usuario: {{ user.usuario.get_rol_display }}</h1>
-        <img src="{{ user.usuario.foto.url }}">
-        <a href="{% url 'logout' %}"><span>Cerrar sesión<span></a>
-    {% else %}
-        <a href="{% url 'registrate' %}">Registrate</a>
-        <a href="{% url 'login' %}">Iniciar sesión</a>
-    {% endif %}
+    <h1>Hola <i>{{ user.username }}</i></h1>
+    <h2>Bienvenido al Sistema de Gestión de la Asociación de Empaques de Santa Isabel de Ruben Dario, Valdivia.</h2><br>
+    <h3>Actualmente eres un usuario: <i>{{ user.usuario.get_rol_display }}</i></h3>
+
+    <div class="panel panel-default templatemo-content-widget white-bg no-padding templatemo-overflow-hidden">
+        <i class="fa fa-times"></i>
+        <div class="panel-heading templatemo-position-relative">
+        <h2 class="text-uppercase"> Tablon de Anuncios</h2>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-striped table-bordered">
+                <thead>
+                    <tr>
+                        <th>Fecha</th>
+                        <th>Usuario</th>
+                        <th>Titulo</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for user in anuncios %}
+                    <tr>
+                        <td>{{ user.fecha }}</td>
+                        <td>{{ user.usuario.usuario }}</td>
+                        <td><a href="{% url 'ver_anuncios' %}">{{ user.titulo }}</a></td>
+                    </tr>
+                    {% endfor %}    
+                </tbody>
+            </table>    
+        </div>                          
+    </div>
 </div>
+
 {% endblock content %}
+

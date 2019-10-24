@@ -5,7 +5,7 @@ from django.views.generic import CreateView, TemplateView
 from django.contrib.auth.decorators import login_required
 from django.utils import timezone
 
-from .models import Usuario, Turnos, Toma_turnos
+from .models import Usuario, Turnos, Toma_turnos, Anuncios
 
 from .forms import SignUpForm, Usuario_Form
 import datetime
@@ -45,6 +45,7 @@ def get_semana(actual):
 
 @login_required
 def home(request):
+    anuncios=Anuncios.objects.all()
     retorno = ""
     now = datetime.datetime.today()
     registro = Toma_turnos.objects.filter(fecha_inicio__lte = now, fecha_termino__gte = now)
@@ -53,9 +54,9 @@ def home(request):
         retorno = "ahora"
     print(len(informacion))
     if(len(informacion)>0):
-        return render(request, 'home.html', {'retorno':retorno, 'informacion':informacion[0]})
+        return render(request, 'home.html', {'anuncios': anuncios, 'retorno':retorno, 'informacion':informacion[0]})
     else:
-        return render(request, 'home.html', {'retorno':retorno, 'informacion':"no hay informacion"})
+        return render(request, 'home.html', {'anuncios': anuncios, 'retorno':retorno, 'informacion':"no hay informacion"})
 
 @login_required
 def planilla_turnos(request, semana):
@@ -102,4 +103,7 @@ def toma_turnos(request, semana):
 
     return render(request, "toma_turnos.html",{'turnos':turnos, 'semana':semana,'sem':sem, 'hora':hora})
 
+@login_required
+def ver_anuncios(request):
+    return render(request, "anuncios.html", {})
 

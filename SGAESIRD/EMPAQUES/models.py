@@ -91,7 +91,7 @@ class Anuncios(models.Model):
 	contenido = models.TextField()
 	usuario = models.ForeignKey(Usuario, blank=True, on_delete=models.CASCADE)
 	def __str__(self):
-		return self.fecha + " " + self.titulo
+		return str(self.fecha) + " " + self.titulo
 
 class Comentarios(models.Model):
 	id_Comentarios = models.AutoField(primary_key=True, help_text="ID")
