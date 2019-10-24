@@ -40,7 +40,8 @@ urlpatterns = [
     name='passwordResetDone'
     ),
     path('anuncios', views.ver_anuncios, name='ver_anuncios'),
-
+    path('accounts/registro_completado', views.registro_completado, name='registro_completado'),
+    path('asignar_turnos',views.asignar_turnos,name='asignar_turnos'),
 
 
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
