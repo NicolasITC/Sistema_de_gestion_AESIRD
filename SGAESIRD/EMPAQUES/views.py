@@ -5,7 +5,7 @@ from django.views.generic import CreateView, TemplateView
 from django.contrib.auth.decorators import login_required
 from django.utils import timezone
 
-from .models import Usuario, Turnos, Toma_turnos, Anuncios
+from .models import Usuario, Turnos, Toma_turnos, Anuncios, Comentarios
 
 from .forms import SignUpForm, Usuario_Form, Turnos_form
 import datetime
@@ -104,8 +104,19 @@ def toma_turnos(request, semana):
     return render(request, "toma_turnos.html",{'turnos':turnos, 'semana':semana,'sem':sem, 'hora':hora})
 
 @login_required
-def ver_anuncios(request):
-    return render(request, "anuncios.html", {})
+def ver_anuncios(request, id_anun):
+    anu=Anuncios.objects.filter(id_Anuncios=id_anun)
+    com=Comentarios.objects.filter(anuncio__id_Anuncios=id_anun)
+    if len(anu) > 0:
+        if len(com) > 0:
+            return render(request, "anuncios.html", {'anu':anu[0], 'com':com})
+        else:
+            return render(request, "anuncios.html", {'anu':anu[0], 'com':None})    
+    else:
+        return render(request, "anuncios.html", {'anu':None, 'com':None})
+
+
+
 def registro_completado(request):
     return render(request,"registration/registro_completado.html")
 

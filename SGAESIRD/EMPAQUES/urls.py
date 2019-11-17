@@ -39,7 +39,7 @@ urlpatterns = [
       template_name='reset_password_done.html'),
     name='passwordResetDone'
     ),
-    path('anuncios', views.ver_anuncios, name='ver_anuncios'),
+    path('anuncios/<negint:id_anun>', views.ver_anuncios, name='ver_anuncios'),
     path('accounts/registro_completado', views.registro_completado, name='registro_completado'),
     path('asignar_turnos',views.asignar_turnos,name='asignar_turnos'),
 

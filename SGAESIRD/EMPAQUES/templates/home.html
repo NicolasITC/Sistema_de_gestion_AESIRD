@@ -58,7 +58,7 @@
                     <tr>
                         <td>{{ user.fecha }}</td>
                         <td>{{ user.usuario.usuario }}</td>
-                        <td><a href="{% url 'ver_anuncios' %}">{{ user.titulo }}</a></td>
+                        <td><a href="{% url 'ver_anuncios' id_anun=user.id_Anuncios %}">{{ user.titulo }}</a></td>
                     </tr>
                     {% endfor %}    
                 </tbody>

@@ -11,6 +11,70 @@
 
 
 {% block content %}
-    <h1>Vista anuncios con sus comentarios</h1>
+    <div class="templatemo-content-widget white-bg col-2">
+        {% if anu != None %}
+            <div class="col-md-12">
+                <h2 class="page-header">Anuncio #{{ anu.id_Anuncios}}</h2>
+                <section class="comment-list">
+                    <!-- First Comment -->
+                    <article class="row">
+                        <div class="col-md-2 col-sm-2 hidden-xs">
+                            <figure class="thumbnail">
+                            <img src="{{ anu.usuario.foto.url }}" alt="Profile Photo" class="img-responsive"> 
+                            <figcaption class="text-center">{{ anu.usuario.usuario }}</figcaption>
+                            </figure>
+                        </div>
+                        <div class="col-md-10 col-sm-10">
+                            <div class="panel panel-default arrow left">
+                                <div class="panel-body">
+                                    <header class="text-left">
+                                        <div class="comment-user"><i class="fa fa-user"></i> {{ anu.usuario }}</div>
+                                        <time class="comment-date"><i class="fa fa-clock-o"></i> {{ anu.fecha }}</time>
+                                    </header>
+                                    <div class="comment-post">
+                                        <br>{{ anu.contenido }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+                    <!-- Second Comment Reply -->
+                    {% if com != None %}
+                    {% for co in com %}
+                        <article class="row">
+                            <div class="col-md-2 col-sm-2 col-md-offset-1 col-sm-offset-0 hidden-xs">
+                                <figure class="thumbnail">
+                                <img src="{{ co.usuario.foto.url }}" alt="Profile Photo" class="img-responsive"> 
+                                <figcaption class="text-center">{{ co.usuario.usuario }}</figcaption>
+                                </figure>
+                            </div>
+                            <div class="col-md-9 col-sm-9">
+                                <div class="panel panel-default arrow left">
+                                    <div class="panel-heading right">Comentario </div>
+                                    <div class="panel-body">
+                                        <header class="text-left">
+                                        <div class="comment-user"><i class="fa fa-user"></i> {{ co.usuario}}</div>
+                                        <time class="comment-date" ><i class="fa fa-clock-o"></i> {{ co.fecha }}</time>
+                                        </header>
+                                        <div class="comment-post">
+                                            {{ co.contenido}}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </article>
+                    {% endfor %}
+                    {% else %}
+                        <h2> No hay comentarios</h2>
+                    {% endif %}
+                </section>
+            </div>
+        {% else %}
+            <h2> No exite anuncio</h2>
+        {% endif %}
+        
+        
+    </div>
 
+    
 {% endblock %}

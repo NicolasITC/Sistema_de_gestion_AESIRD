@@ -91,7 +91,7 @@ class Anuncios(models.Model):
 	contenido = models.TextField()
 	usuario = models.ForeignKey(Usuario, blank=True, on_delete=models.CASCADE)
 	def __str__(self):
-		return str(self.fecha) + " " + self.titulo
+		return str(self.fecha) + " " + self.titulo + " " + str(self.id_Anuncios)
 
 class Comentarios(models.Model):
 	id_Comentarios = models.AutoField(primary_key=True, help_text="ID")
@@ -100,7 +100,7 @@ class Comentarios(models.Model):
 	anuncio = models.ForeignKey(Anuncios, on_delete=models.CASCADE)
 	usuario = models.ForeignKey(Usuario, blank=True, on_delete=models.CASCADE)
 	def __str__(self):
-		return self.fecha + " " + self.anuncio
+		return str(self.fecha) + " " + self.anuncio.titulo  + " " + str(self.anuncio.id_Anuncios)
 
 class Lista_de_Espera(models.Model):
 	id_Lista_de_Espera = models.AutoField(primary_key=True, help_text="ID")
