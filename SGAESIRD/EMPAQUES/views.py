@@ -138,11 +138,11 @@ def ver_anuncios(request, id_anun):
         return render(request, "anuncios.html", {'anu':None, 'com':None, 'form_comentarios':form_comentarios})
 
 
-
+@login_required
 def registro_completado(request):
     return render(request,"registration/registro_completado.html")
 
-
+@login_required
 def asignar_turnos(request):
     semana=1
     turnos=Turnos.objects.all()
@@ -151,3 +151,7 @@ def asignar_turnos(request):
     sem=get_semana(semana)
     turnos = turnos_base(semana, turnos)
     return render(request, 'asignar_turnos.html', {'turnos':turnos, 'semana':semana,'sem':sem, 'hora':hora})
+
+@login_required
+def finanzas(request):
+    return render(request,"finanzas.html")
