@@ -43,5 +43,8 @@ urlpatterns = [
     path('accounts/registro_completado', views.registro_completado, name='registro_completado'),
     path('asignar_turnos',views.asignar_turnos,name='asignar_turnos'),
     path('finanzas',views.finanzas,name='finanzas'),
+    path('lista_usuarios', views.lista_usuarios, name='lista_usuarios'),
+    path('perfil_user=<negint:id_perfil>', views.ver_perfil, name='ver_perfil'),
+    path('editar_perfil/<int:pk>/edit/', views.editar_perfil, name='editar_perfil'),
 
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

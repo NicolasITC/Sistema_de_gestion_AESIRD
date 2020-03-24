@@ -45,6 +45,18 @@ class Turnos_form(forms.ModelForm):
             'hora_final',
             'fecha',
         }
+    
+class Editar_usuario_form(forms.ModelForm):
+    class Meta:
+        model = Usuario
+        fields={
+            'rut',
+            'carrera',
+            'telefono',
+            'foto',
+            'activo',
+            'cant_turnos_disponibles',
+        }
 class AnunciosForm(forms.ModelForm):
     titulo = forms.CharField(
         widget=forms.TextInput(attrs={'type':"text", 'class':"form-control", 'id':"inputText"})

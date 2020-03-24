@@ -1,0 +1,28 @@
+{% extends "EMPAQUES/estructura.html" %}
+{% load static %}
+
+{% block barra_lateral %}
+    <li><a href="{% url 'home' %}" ><i class="fa fa-home fa-fw"></i>Inicio</a></li>
+    <li><a href="{% url 'turnos' 0 %}" ><i class="fa fa-bar-chart fa-fw"></i>Turnos</a></li>
+    <li><a href="data-visualization.html"><i class="fa fa-database fa-fw"></i>Administracion</a></li>
+    <li><a href="{% url 'logout' %}"><i class="fa fa-eject fa-fw"></i>Desconectar</a></li>
+{% endblock %}
+
+
+
+{% block content %}
+    <h1>Esta es la lista de usuarios</h1>
+
+    <br>
+    {% for user in usuario %}
+        {{ user.usuario.first_name }}
+        {{ user.usuario.last_name }}
+        <a href="{% url 'ver_perfil' id_perfil=user.id_Usuario %}"> yy </a>
+        <br>
+    {% endfor %}
+
+    
+{% endblock %}
+
+
+
