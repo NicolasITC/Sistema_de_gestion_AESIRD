@@ -6,7 +6,7 @@ from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit
 
 
-from .models import Usuario, Universidades, Turnos
+from .models import Usuario, Universidades, Turnos, Anuncios, Comentarios
 
 class SignUpForm(UserCreationForm):
     username = forms.CharField(max_length=140, required=True)
@@ -45,4 +45,21 @@ class Turnos_form(forms.ModelForm):
             'hora_final',
             'fecha',
         }
-    
+class AnunciosForm(forms.ModelForm):
+    titulo = forms.CharField(
+        widget=forms.TextInput(attrs={'type':"text", 'class':"form-control", 'id':"inputText"})
+    )
+    contenido = forms.CharField(
+        widget=forms.Textarea(attrs={'type':"text", 'class':"form-control", 'id':"inputText", 'rows':3})
+    )
+    class Meta:
+        model = Anuncios
+        fields = ("titulo","contenido",)
+
+class ComentariosForm(forms.ModelForm):
+    contenido = forms.CharField(
+        widget=forms.TextInput(attrs={'type':"text", 'class':"form-control", 'id':"inputText", 'placeholder':"Escribe una respuesta..."})
+    )
+    class Meta:
+        model = Comentarios
+        fields = ("contenido",)

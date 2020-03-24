@@ -7,7 +7,7 @@ from django.utils import timezone
 
 from .models import Usuario, Turnos, Toma_turnos, Anuncios, Comentarios
 
-from .forms import SignUpForm, Usuario_Form, Turnos_form
+from .forms import SignUpForm, Usuario_Form, Turnos_form, AnunciosForm, ComentariosForm
 import datetime
 from datetime import timedelta
 import dateutil.parser
@@ -45,18 +45,31 @@ def get_semana(actual):
 
 @login_required
 def home(request):
-    anuncios=Anuncios.objects.all()
-    retorno = ""
     now = datetime.datetime.today()
-    registro = Toma_turnos.objects.filter(fecha_inicio__lte = now, fecha_termino__gte = now)
-    informacion = Toma_turnos.objects.filter(fecha_termino__gte = now)
-    if(len(registro)>0):
-        retorno = "ahora"
-    print(len(informacion))
-    if(len(informacion)>0):
-        return render(request, 'home.html', {'anuncios': anuncios, 'retorno':retorno, 'informacion':informacion[0]})
+    if request.method == "POST":
+        form_anuncio = AnunciosForm(request.POST)
+        if form_anuncio.is_valid():
+            post_form_anuncio = form_anuncio.save(commit=False)
+            post_form_anuncio.usuario = Usuario.objects.filter(usuario = request.user)[:1].get()
+            post_form_anuncio.save()
+        anuncios=Anuncios.objects.all()
+        retorno = ""
+        registro = Toma_turnos.objects.filter(fecha_inicio__lte = now, fecha_termino__gte = now)
+        if(len(registro)>0):
+            retorno = "ahora"
     else:
-        return render(request, 'home.html', {'anuncios': anuncios, 'retorno':retorno, 'informacion':"no hay informacion"})
+        anuncios=Anuncios.objects.all()
+        retorno = ""
+        registro = Toma_turnos.objects.filter(fecha_inicio__lte = now, fecha_termino__gte = now)
+        if(len(registro)>0):
+            retorno = "ahora"
+    
+    informacion = Toma_turnos.objects.filter(fecha_termino__gte = now)
+    form_anuncios = AnunciosForm()
+    if(len(informacion)>0):
+        return render(request, 'home.html', {'anuncios': anuncios, 'retorno':retorno, 'informacion':informacion[0], 'form_anuncios':AnunciosForm})
+    else:
+        return render(request, 'home.html', {'anuncios': anuncios, 'retorno':retorno, 'informacion':"no hay informacion", 'form_anuncios':AnunciosForm})
 
 @login_required
 def planilla_turnos(request, semana):
@@ -106,14 +119,23 @@ def toma_turnos(request, semana):
 @login_required
 def ver_anuncios(request, id_anun):
     anu=Anuncios.objects.filter(id_Anuncios=id_anun)
+    if request.method == "POST":
+        form_comentarios = ComentariosForm(request.POST)
+        if form_comentarios.is_valid():
+            post_form_comentarios = form_comentarios.save(commit=False)
+            post_form_comentarios.usuario = Usuario.objects.filter(usuario = request.user)[:1].get()
+            post_form_comentarios.anuncio = anu[:1].get()
+            post_form_comentarios.save()
+
+    form_comentarios = ComentariosForm
     com=Comentarios.objects.filter(anuncio__id_Anuncios=id_anun)
     if len(anu) > 0:
         if len(com) > 0:
-            return render(request, "anuncios.html", {'anu':anu[0], 'com':com})
+            return render(request, "anuncios.html", {'anu':anu[0], 'com':com, 'form_comentarios':form_comentarios})
         else:
-            return render(request, "anuncios.html", {'anu':anu[0], 'com':None})    
+            return render(request, "anuncios.html", {'anu':anu[0], 'com':None, 'form_comentarios':form_comentarios})    
     else:
-        return render(request, "anuncios.html", {'anu':None, 'com':None})
+        return render(request, "anuncios.html", {'anu':None, 'com':None, 'form_comentarios':form_comentarios})
 
 
 

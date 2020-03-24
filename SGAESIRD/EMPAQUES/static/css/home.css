@@ -1,0 +1,20 @@
+.table {
+    display: table;
+  }
+  
+  .row {
+    display: table-row;
+  }
+  
+  .cell {
+    display: table-cell;
+    padding: 10px;
+  }
+  
+  .row:hover {
+    background-color: #cccccc;
+  }
+  
+  .cell:hover {
+    background-color: #e5e5e5;
+  }
