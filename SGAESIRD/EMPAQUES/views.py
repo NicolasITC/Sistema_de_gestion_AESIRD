@@ -6,7 +6,7 @@ from django.contrib.auth.decorators import login_required
 from django.utils import timezone
 from django.shortcuts import render, get_object_or_404
 
-from .models import Usuario, Turnos, Toma_turnos, Anuncios, Comentarios, User, Lista_de_Espera
+from .models import Usuario, Turnos, Toma_turnos, Anuncios, Comentarios, User, Lista_de_Espera, Anotaciones
 
 from .forms import SignUpForm, Usuario_Form, Turnos_form, Editar_usuario_form, Editar_usuario_form2, Agregar_Lista_Espera
 from .forms import SignUpForm, Usuario_Form, Turnos_form, AnunciosForm, ComentariosForm
@@ -179,7 +179,11 @@ def lista_usuarios(request):
 
 def ver_perfil(request, id_perfil):
     perfil=Usuario.objects.filter(id_Usuario=id_perfil)
-    return render(request, 'perfil.html', {'perfil':perfil, 'id_perfil':id_perfil})    
+    anotaciiones=Anotaciones.objects.filter(usuario__id_Usuario=id_perfil)
+    if len(anotaciiones) > 0:
+        return render(request, 'perfil.html', {'perfil':perfil, 'id_perfil':id_perfil, 'anotaciones':anotaciiones})
+    else:
+        return render(request, 'perfil.html', {'perfil':perfil, 'id_perfil':id_perfil, 'anotaciones':None})        
 
 def editar_perfil(request, pk):
     post2 = get_object_or_404(User, pk=pk)

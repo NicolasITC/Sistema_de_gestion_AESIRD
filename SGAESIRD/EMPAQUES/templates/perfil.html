@@ -24,29 +24,69 @@
                             <figcaption class="text-center">{{ user.usuario}}</figcaption>
                             </figure>
                         </div>
-                        <div class="col-md-9 col-sm-9">
+                        <div class="col-md-5 col-sm-9">
                             <div class="panel panel-default arrow left">
                                 <div class="panel-heading right">Perfil de usuario </div>
-                                <div class="panel-body">
-                                    <header class="text-left">
-                                        <div> Nombre completo: {{ user.usuario.first_name }}  {{ user.usuario.last_name }}</div>
-                                        <div> rut: {{ user.rut }}</div>
-                                        <div> email: {{ user.usuario.email }}</div>
-                                        <div> telefono: {{ user.telefono }}</div>
-                                        <div> fecha de ingreso: {{ user.fecha_ingreso }}</div>
-                                        <div> universidad: {{ user.universidad }}</div>
-                                        <div> carrera: {{ user.carrera }}</div>
-                                        <div> activo: {{ user.activo }}</div>
-                                        <div> cantidad de turnos disponibles: {{ user.cant_turnos_disponibles }}</div>               
-                                    </header>
+                                    <div class="panel-body">
+                                        <header class="text-left">
+                                            <div> <b>Nombre completo</b>: {{ user.usuario.first_name }}  {{ user.usuario.last_name }}</div>
+                                            <div> <b>rut</b>: {{ user.rut }}</div>
+                                            <div> <b>email</b>: {{ user.usuario.email }}</div>
+                                            <div> <b>telefono</b>: {{ user.telefono }}</div>
+                                            <div> <b>fecha de ingreso</b>: {{ user.fecha_ingreso }}</div>
+                                            <div> <b>universidad</b>: {{ user.universidad }}</div>
+                                            <div> <b>carrera</b>: {{ user.carrera }}</div>
+                                            <div> <b>activo</b>: {{ user.get_activo_display }}</div>
+                                            <div> <b>cantidad de turnos disponibles</b>: {{ user.cant_turnos_disponibles }}</div>   <br>            
+                                        </header>
+                                        <button class="templatemo-blue-button"><a href="{% url 'editar_perfil' pk=user.pk %}">Editar perfil</a></button>
+                                     
+                                    </div>
                                 </div>
-                            </div>
+           
+                        </div>
+                        <div class="col-md-5 col-sm-9">
+                            <div class="panel panel-default arrow left">
+                                <div class="panel-heading right">Anotaciones </div>
+                                    <div class="panel-body">
+                                        <header class="text-left">
+                                            <div class="table-responsive">
+                                                <table class="table table-striped table-bordered">
+                                                    {% if anotaciones != None %}
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Fecha</th>
+                                                            <th>Categoria anotación</th>
+                                                            <th>Turnos restados</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        {% for anot in anotaciones %}
+                                                        <tr>
+                                                            
+                                                            <td>{{ anot.fecha|date:"d M Y" }} </td>    
+                                                            <td>{{ anot.categoria_anotaciones.nombre_anotacion }}</td>
+                                                            <td>{{ anot.turnos_restados }}</td>         
+                                                            
+                                                        </tr>
+                                                        {% endfor %}    
+                                                    </tbody>
+                                                    {% else %}
+                                                    <div>Sin anotaciones</div> 
+                                                    {% endif %}
+
+                                                </table>    
+                                            </div>           
+                                        </header>
+                                    </div>
+                                </div>
                             <div>
-                                <button class="templatemo-blue-button"><a href="{% url 'editar_perfil' pk=user.pk %}">Editar perfil</a></button>
-                                <button class="templatemo-blue-button"><a href="lista_usuarios">volver</a></button>
+                              
                             </div>
                         </div>
                     </article>
+                    <button class="templatemo-blue-button"><a href="lista_usuarios">volver a la lista de usuarios</a></button>
+
                 </section>
             </div>
     </div>
