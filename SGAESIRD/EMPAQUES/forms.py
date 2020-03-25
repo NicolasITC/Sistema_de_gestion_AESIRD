@@ -6,7 +6,7 @@ from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit
 
 
-from .models import Usuario, Universidades, Turnos, Anuncios, Comentarios
+from .models import Usuario, Universidades, Turnos, Anuncios, Comentarios, Lista_de_Espera
 
 class SignUpForm(UserCreationForm):
     username = forms.CharField(max_length=140, required=True)
@@ -86,3 +86,15 @@ class ComentariosForm(forms.ModelForm):
     class Meta:
         model = Comentarios
         fields = ("contenido",)
+
+class Agregar_Lista_Espera(forms.ModelForm):
+    class Meta:
+        model=Lista_de_Espera
+        fields={
+            'rut',
+            'nombre',
+            'apellido',
+            'carrera',
+            'universidad',
+            'telefono',
+        }

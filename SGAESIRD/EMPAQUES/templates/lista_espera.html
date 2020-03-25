@@ -1,36 +1,15 @@
 <!-- templates/home.html-->
-{% extends "EMPAQUES/estructura.html" %}
+{% extends "base_lista.html" %}
 {% load static %}
 {% block title %}Bievenido{% endblock %}
 
 
-{% block banner %}
-    <div align="center">
-        {% if retorno == "ahora" %} <marquee behavior="alternate" bgcolor="#bb3434" direction="left" height:="" 
-            loop="7" scrollamount="1" scrolldelay="2" width="100%">
-            <span style="font-size: 20px;color:#FFFFFF">Toma de turnos activada
-        {% elif informacion == "no hay informacion" %}<marquee behavior="alternate" direction="left" height:="" 
-            loop="7" scrollamount="1" scrolldelay="2" width="100%">
-            <span style="font-size: 20px;color:#FFFFFF"> Aún no se define la próxima toma de turnos 
-        {% else %}<marquee behavior="alternate" bgcolor="#13895F" direction="left" height:="" 
-            loop="7" scrollamount="1" scrolldelay="2" width="100%">
-            <span style="font-size: 20px;color:#FFFFFF">Siguiente toma de turnos: {{ informacion.fecha_inicio }}
-        {% endif %}
-        </span></marquee>
-    </div>
+{% block head %}
+<link rel="stylesheet" href="{% static "css/home.css" %}">
+
+
+
 {% endblock %}
-
-
-
-
-{% block barra_lateral %}
-    <li><a href="{% url 'home' %}" class="active"><i class="fa fa-home fa-fw"></i>Inicio</a></li>
-    <li><a href="{% url 'turnos' 0 %}"><i class="fa fa-bar-chart fa-fw"></i>Turnos</a></li>
-    <li><a href="data-visualization.html"><i class="fa fa-database fa-fw"></i>Administracion</a></li>
-    <li><a href="{% url 'logout' %}"><i class="fa fa-eject fa-fw"></i>Desconectar</a></li>
-{% endblock %}
-            
-
 
 
 {% block content %}
@@ -66,6 +45,9 @@
             </table>    
         </div>                          
     </div>
+    
+    <div class="clearfix"></div>
+    <button ><a href="agregar_lista_espera" > Añadir a un wn</a></button>
 </div>
 
 {% endblock content %}

@@ -8,7 +8,7 @@ from django.shortcuts import render, get_object_or_404
 
 from .models import Usuario, Turnos, Toma_turnos, Anuncios, Comentarios, User, Lista_de_Espera
 
-from .forms import SignUpForm, Usuario_Form, Turnos_form, Editar_usuario_form, Editar_usuario_form2
+from .forms import SignUpForm, Usuario_Form, Turnos_form, Editar_usuario_form, Editar_usuario_form2, Agregar_Lista_Espera
 from .forms import SignUpForm, Usuario_Form, Turnos_form, AnunciosForm, ComentariosForm
 import datetime
 from datetime import timedelta
@@ -72,7 +72,9 @@ def home(request):
         return render(request, 'home.html', {'anuncios': anuncios, 'retorno':retorno, 'informacion':informacion[0], 'form_anuncios':AnunciosForm})
     else:
         return render(request, 'home.html', {'anuncios': anuncios, 'retorno':retorno, 'informacion':"no hay informacion", 'form_anuncios':AnunciosForm})
-@login_required
+
+
+
 def lista(request):
     listas=Lista_de_Espera.objects.all()
     retorno = ""
@@ -195,3 +197,17 @@ def editar_perfil(request, pk):
         form = Editar_usuario_form(instance=post)
         form2 = Editar_usuario_form2(instance=post2)
     return render(request, 'form_editar_perfil.html', {'form2': form2, 'form': form, 'pk':pk})
+
+
+def agregar_lista(request):
+    if request.method == "POST":
+        form=Agregar_Lista_Espera(request.POST)
+        if form.is_valid():
+            post = form.save(commit=False)
+            post.fecha_ingreso = timezone.now()
+            post.save()
+            return render(request,'agregar_lista_espera.html',{'form':form})
+    else:
+        form=Agregar_Lista_Espera()
+    
+    return render(request,'agregar_lista_espera.html',{'form':form})

@@ -1,0 +1,33 @@
+
+{% extends "base_lista.html" %}
+{% load static %}
+{% block title %}Bievenido{% endblock %}
+
+
+{% block head %}
+<link rel="stylesheet" href="{% static "css/home.css" %}">
+
+{% endblock %}
+
+{% block content%}
+<div class="col-1">
+    <div class="panel panel-default margin-10">
+    <div class="panel-heading"><h2 class="text-uppercase">Agregar futuro Empaque</h2></div>
+    <div class="panel-body">
+        
+        <form method="POST" class="">
+            {% csrf_token %}
+            {{ form.as_p }}
+
+        <div class="form-group">
+            <button type="submit" class="templatemo-blue-button" >Agregar</button>
+        </div>
+        </form>
+    </div>                
+    </div>
+    <div class="clearfix"></div>
+
+
+    <button class="volver-login"><a href="{% url 'listar' %}"> Volver </a></button>          
+</div>
+{% endblock content%}
