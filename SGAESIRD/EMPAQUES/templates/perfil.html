@@ -12,36 +12,10 @@
 
 {% block content %}
 
-    <!-- First Comment 
-    <h1>Este es el perfil de usuario</h1>
-    
-    {% for user in perfil %}
-
-        {{ user.usuario.first_name }}
-        {{ user.usuario.last_name }}
-        {{ user.usuario.email }}
-        {{ user.rut }}
-        {{ user.id_Usuario }}
-        {{ user.rol }}
-        {{ user.fecha_ingreso }}
-        {{ user.carrera }}
-        {{ user.universidad }}
-        {{ user.activo }}
-        {{ user.telefono }}
-        {{ user.cant_turnos_disponibles }}
-        {{ user.foto }}
-        <img src="{{ user.foto }}" alt="Profile Photo" class="img-responsive"> 
-    
-    {% endfor %}
-
-    -->
     {% for user in perfil %}
     <div class="templatemo-content-widget white-bg col-2">
-
             <div class="col-md-12">
-           
                 <section class="comment-list">
-                    <!-- First Comment -->
                     <article class="row">
                         <div class="col-md-2 col-sm-2 hidden-xs">
                             <figure class="thumbnail">
@@ -49,7 +23,6 @@
                             <figcaption class="text-center">{{ user.usuario}}</figcaption>
                             </figure>
                         </div>
-
                         <div class="col-md-9 col-sm-9">
                             <div class="panel panel-default arrow left">
                                 <div class="panel-heading right">Perfil de usuario </div>
@@ -57,29 +30,25 @@
                                     <header class="text-left">
                                         <div> Nombre completo: {{ user.usuario.first_name }}  {{ user.usuario.last_name }}</div>
                                         <div> rut: {{ user.rut }}</div>
-                                        <div> email: {{ user.email }}</div>
+                                        <div> email: {{ user.usuario.email }}</div>
                                         <div> telefono: {{ user.telefono }}</div>
                                         <div> fecha de ingreso: {{ user.fecha_ingreso }}</div>
                                         <div> universidad: {{ user.universidad }}</div>
                                         <div> carrera: {{ user.carrera }}</div>
                                         <div> activo: {{ user.activo }}</div>
-                                        <div> cantidad de turnos disponibles: {{ user.cant_turnos_disponibles }}</div>
-                                        {{ id_perfil }}
-                                        
+                                        <div> cantidad de turnos disponibles: {{ user.cant_turnos_disponibles }}</div>               
                                     </header>
-                                    </div>
                                 </div>
-                                <a href="{% url 'editar_perfil' pk=user.pk %}"> editar perfil</a>
+                            </div>
+                            <div>
+                                <button class="templatemo-blue-button"><a href="{% url 'editar_perfil' pk=user.pk %}">Editar perfil</a></button>
+                                <button class="templatemo-blue-button"><a href="lista_usuarios">volver</a></button>
                             </div>
                         </div>
                     </article>
-                    
-             
-                
                 </section>
             </div>
-        
     </div>
     {% endfor %}
-
+    
 {% endblock %}

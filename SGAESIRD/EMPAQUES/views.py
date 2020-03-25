@@ -6,9 +6,9 @@ from django.contrib.auth.decorators import login_required
 from django.utils import timezone
 from django.shortcuts import render, get_object_or_404
 
-from .models import Usuario, Turnos, Toma_turnos, Anuncios, Comentarios
+from .models import Usuario, Turnos, Toma_turnos, Anuncios, Comentarios, User
 
-from .forms import SignUpForm, Usuario_Form, Turnos_form, Editar_usuario_form
+from .forms import SignUpForm, Usuario_Form, Turnos_form, Editar_usuario_form, Editar_usuario_form2
 from .forms import SignUpForm, Usuario_Form, Turnos_form, AnunciosForm, ComentariosForm
 import datetime
 from datetime import timedelta
@@ -164,13 +164,23 @@ def ver_perfil(request, id_perfil):
     perfil=Usuario.objects.filter(id_Usuario=id_perfil)
     return render(request, 'perfil.html', {'perfil':perfil, 'id_perfil':id_perfil})    
 def editar_perfil(request, pk):
+    post2 = get_object_or_404(User, pk=pk)
     post = get_object_or_404(Usuario, pk=pk)
     if request.method == "POST":
+        form2 = Editar_usuario_form2(request.POST, instance=post2)
         form = Editar_usuario_form(request.POST, instance=post)
-        if form.is_valid():
+        if form.is_valid() and  form2.is_valid:
             post = form.save(commit=False)
+            post2 = form2.save(commit=False)
+            #post.foto = request.FILES['foto']
+
+            #post.carrera = request.carrera
+            #post.rut = request.rut
+            #post.telefono = request.telefono
             post.save()
+            post2.save()
             return redirect('ver_perfil', id_perfil=pk)
     else:
         form = Editar_usuario_form(instance=post)
-    return render(request, 'form_editar_perfil.html', {'form': form})
+        form2 = Editar_usuario_form2(instance=post2)
+    return render(request, 'form_editar_perfil.html', {'form2': form2, 'form': form, 'pk':pk})

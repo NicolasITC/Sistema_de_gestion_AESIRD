@@ -12,12 +12,32 @@
 
 {% block content %}
 
-<div class="templatemo-content-widget white-bg col-2">
-   <h2>Editar perfil</h2>
 
-   <form method="POST" class="post-form   ">{% csrf_token %}
-       {{ form.as_p }}
-       <button type="submit" class="save btn btn-default">Save</button>
-   </form>
+<div class="templatemo-content-widget white-bg col-2">
+    <div class="col-md-12">
+        <section class="comment-list">
+            <article class="row">
+                <div class="col-md-9 col-sm-9">
+                    <div class="panel panel-default arrow left">
+                        <div class="panel-heading right">Editar perfil</div>
+                        <div class="panel-body">
+                            <header class="text-left">
+                                <form method="POST" class="post-form   ">{% csrf_token %}
+
+                                    {{ form2.as_p }}
+                                    {{ form.as_p }}
+                                    <button type="submit" class="templatemo-blue-button">Guardar</button>
+                                    <button class="templatemo-blue-button"><a href="{% url 'ver_perfil' id_perfil=pk %}">Cancelar cambios y volver</a></button>                             
+                                </form>
+                    
+                        </div>
+                    </div>
+                </div>
+            </article>
+        </section>
+    </div>
 </div>
+
+
+
 {% endblock %}

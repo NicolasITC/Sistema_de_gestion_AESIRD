@@ -57,6 +57,16 @@ class Editar_usuario_form(forms.ModelForm):
             'activo',
             'cant_turnos_disponibles',
         }
+class Editar_usuario_form2(forms.ModelForm):
+    class Meta:
+        model = User
+        fields={
+            'username',
+            'first_name',
+            'last_name',
+            'email',
+        }
+
 class AnunciosForm(forms.ModelForm):
     titulo = forms.CharField(
         widget=forms.TextInput(attrs={'type':"text", 'class':"form-control", 'id':"inputText"})
