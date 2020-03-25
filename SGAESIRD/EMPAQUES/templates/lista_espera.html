@@ -4,14 +4,6 @@
 {% block title %}Bievenido{% endblock %}
 
 
-{% block head %}
-<link rel="stylesheet" href="{% static "css/home.css" %}">
-
-
-
-{% endblock %}
-
-
 {% block content %}
 <div class="templatemo-content-widget white-bg col-2">
 
@@ -26,28 +18,27 @@
             <table class="table table-striped table-bordered">
                 <thead>
                     <tr>
+                        <th>ID</th>
                         <th>Nombre</th>
                         <th>Apellido</th>
                         <th>Celular</th>
-                        <th>ID</th>
                     </tr>
                 </thead>
                 <tbody>
                     {% for list in listas %}
                     <tr>
+                        <td>{{ list.id_Lista_de_Espera}}</td>
                         <td>{{ list.nombre }}</td>
                         <td>{{ list.apellido}}</td>
                         <td>{{ list.telefono}}</td>
-                        <td>{{ list.id_Lista_de_Espera}}</td>
+                        
                     </tr>
                     {% endfor %}    
                 </tbody>
             </table>    
         </div>                          
     </div>
-    
-    <div class="clearfix"></div>
-    <button ><a href="agregar_lista_espera" > Añadir a un wn</a></button>
+    <button ><a href="{% url 'agregar_lista_espera' %}"> Añadir persona </a></button>
 </div>
 
 {% endblock content %}

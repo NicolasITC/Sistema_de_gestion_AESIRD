@@ -206,7 +206,7 @@ def agregar_lista(request):
             post = form.save(commit=False)
             post.fecha_ingreso = timezone.now()
             post.save()
-            return render(request,'agregar_lista_espera.html',{'form':form})
+            return redirect('listar')
     else:
         form=Agregar_Lista_Espera()
     

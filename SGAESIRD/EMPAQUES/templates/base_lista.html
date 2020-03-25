@@ -26,12 +26,10 @@
   </head>
   <body>  
     {% block banner %}
-        <div align="center">
-         <marquee behavior="alternate" bgcolor="#bb3434" direction="left" height:="" 
-            loop="7" scrollamount="1" scrolldelay="2" width="100%" style="background-color:#000000">
-            <span style="font-size: 20px;color:#FFFFFF;">Bienvenido!
-        </span></marquee>
-    </div>
+      <marquee behavior="alternate" direction="left" height:="" 
+            loop="7" scrollamount="1" scrolldelay="2" width="100%">
+            <span style="font-size: 20px;color:#FFFFFF"> Bienvenidos!</span>
+      </marquee>
     {% endblock %}
 
     <!-- Left column -->
@@ -53,7 +51,7 @@
         <nav class="templatemo-left-nav">          
           <ul>
             {% block barra_lateral %}
-            <li><a href="{% url 'logout' %}"><i class="fa fa-eject fa-fw"></i>Desconectar</a></li>
+              <li><a href="{% url 'logout' %}"><i class="fa fa-eject fa-fw"></i>Desconectar</a></li>
             {% endblock %}
           </ul>  
         </nav>
