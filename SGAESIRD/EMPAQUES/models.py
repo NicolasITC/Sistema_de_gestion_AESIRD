@@ -61,7 +61,7 @@ class Anotaciones(models.Model):
 	turnos_restados = models.IntegerField()
 	usuario = models.ForeignKey(Usuario, on_delete=models.CASCADE)
 	def __str__(self):
-		return self.fecha + " " + self.categoria_anotaciones + " " + self.usuario
+		return str(self.fecha) + " " + str(self.categoria_anotaciones) + " " + str(self.usuario.usuario)
 
 class Turnos(models.Model):
 	id_Turnos = models.AutoField(primary_key=True, help_text="ID")
