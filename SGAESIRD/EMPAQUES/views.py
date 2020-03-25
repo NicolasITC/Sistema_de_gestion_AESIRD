@@ -4,9 +4,11 @@ from django.contrib.auth.views import LoginView
 from django.views.generic import CreateView, TemplateView
 from django.contrib.auth.decorators import login_required
 from django.utils import timezone
+from django.shortcuts import render, get_object_or_404
 
 from .models import Usuario, Turnos, Toma_turnos, Anuncios, Comentarios
 
+from .forms import SignUpForm, Usuario_Form, Turnos_form, Editar_usuario_form
 from .forms import SignUpForm, Usuario_Form, Turnos_form, AnunciosForm, ComentariosForm
 import datetime
 from datetime import timedelta
@@ -151,3 +153,34 @@ def asignar_turnos(request):
     sem=get_semana(semana)
     turnos = turnos_base(semana, turnos)
     return render(request, 'asignar_turnos.html', {'turnos':turnos, 'semana':semana,'sem':sem, 'hora':hora})
+
+
+def lista_usuarios(request):
+    usuario=Usuario.objects.all()
+    return render(request, 'lista_usuarios.html', {'usuario':usuario})
+
+def ver_perfil(request, id_perfil):
+    perfil=Usuario.objects.filter(id_Usuario=id_perfil)
+    return render(request, 'perfil.html', {'perfil':perfil, 'id_perfil':id_perfil})    
+
+#def editar_perfil(request):
+#    form = Editar_usuario_form()
+#    return render(request, 'form_editar_perfil.html', {'form':form})    
+
+
+def editar_perfil(request, pk):
+    post = get_object_or_404(Usuario, pk=pk)
+    if request.method == "POST":
+        form = Editar_usuario_form(request.POST, instance=post)
+        if form.is_valid():
+            post = form.save(commit=False)
+            #post.foto = request.FILES['foto']
+
+            #post.carrera = request.carrera
+            #post.rut = request.rut
+            #post.telefono = request.telefono
+            post.save()
+            return redirect('ver_perfil', id_perfil=pk)
+    else:
+        form = Editar_usuario_form(instance=post)
+    return render(request, 'form_editar_perfil.html', {'form': form})

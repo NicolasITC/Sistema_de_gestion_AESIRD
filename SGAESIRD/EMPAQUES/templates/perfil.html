@@ -1,0 +1,85 @@
+{% extends "EMPAQUES/estructura.html" %}
+{% load static %}
+
+{% block barra_lateral %}
+    <li><a href="{% url 'home' %}" ><i class="fa fa-home fa-fw"></i>Inicio</a></li>
+    <li><a href="{% url 'turnos' 0 %}" ><i class="fa fa-bar-chart fa-fw"></i>Turnos</a></li>
+    <li><a href="data-visualization.html"><i class="fa fa-database fa-fw"></i>Administracion</a></li>
+    <li><a href="{% url 'logout' %}"><i class="fa fa-eject fa-fw"></i>Desconectar</a></li>
+{% endblock %}
+
+
+
+{% block content %}
+
+    <!-- First Comment 
+    <h1>Este es el perfil de usuario</h1>
+    
+    {% for user in perfil %}
+
+        {{ user.usuario.first_name }}
+        {{ user.usuario.last_name }}
+        {{ user.usuario.email }}
+        {{ user.rut }}
+        {{ user.id_Usuario }}
+        {{ user.rol }}
+        {{ user.fecha_ingreso }}
+        {{ user.carrera }}
+        {{ user.universidad }}
+        {{ user.activo }}
+        {{ user.telefono }}
+        {{ user.cant_turnos_disponibles }}
+        {{ user.foto }}
+        <img src="{{ user.foto }}" alt="Profile Photo" class="img-responsive"> 
+    
+    {% endfor %}
+
+    -->
+    {% for user in perfil %}
+    <div class="templatemo-content-widget white-bg col-2">
+
+            <div class="col-md-12">
+           
+                <section class="comment-list">
+                    <!-- First Comment -->
+                    <article class="row">
+                        <div class="col-md-2 col-sm-2 hidden-xs">
+                            <figure class="thumbnail">
+                            <img src="{{ user.foto.url }}" alt="Profile Photo" class="img-responsive"> 
+                            <figcaption class="text-center">{{ user.usuario}}</figcaption>
+                            </figure>
+                        </div>
+
+                        <div class="col-md-9 col-sm-9">
+                            <div class="panel panel-default arrow left">
+                                <div class="panel-heading right">Perfil de usuario </div>
+                                <div class="panel-body">
+                                    <header class="text-left">
+                                        <div> Nombre completo: {{ user.usuario.first_name }}  {{ user.usuario.last_name }}</div>
+                                        <div> rut: {{ user.rut }}</div>
+                                        <div> email: {{ user.email }}</div>
+                                        <div> telefono: {{ user.telefono }}</div>
+                                        <div> fecha de ingreso: {{ user.fecha_ingreso }}</div>
+                                        <div> universidad: {{ user.universidad }}</div>
+                                        <div> carrera: {{ user.carrera }}</div>
+                                        <div> activo: {{ user.activo }}</div>
+                                        <div> cantidad de turnos disponibles: {{ user.cant_turnos_disponibles }}</div>
+                                        {{ id_perfil }}
+                                        
+                                    </header>
+                                    </div>
+                                </div>
+                                <a href="{% url 'editar_perfil' pk=user.pk %}"> editar perfil</a>
+                            </div>
+                        </div>
+                    </article>
+                    
+             
+                
+                </section>
+            </div>
+        
+    </div>
+    {% endfor %}
+
+{% endblock %}

@@ -1,0 +1,23 @@
+{% extends "EMPAQUES/estructura.html" %}
+{% load static %}
+
+{% block barra_lateral %}
+    <li><a href="{% url 'home' %}" ><i class="fa fa-home fa-fw"></i>Inicio</a></li>
+    <li><a href="{% url 'turnos' 0 %}" ><i class="fa fa-bar-chart fa-fw"></i>Turnos</a></li>
+    <li><a href="data-visualization.html"><i class="fa fa-database fa-fw"></i>Administracion</a></li>
+    <li><a href="{% url 'logout' %}"><i class="fa fa-eject fa-fw"></i>Desconectar</a></li>
+{% endblock %}
+
+
+
+{% block content %}
+
+<div class="templatemo-content-widget white-bg col-2">
+   <h2>Editar perfil</h2>
+
+   <form method="POST" class="post-form   ">{% csrf_token %}
+       {{ form.as_p }}
+       <button type="submit" class="save btn btn-default">Save</button>
+   </form>
+</div>
+{% endblock %}
