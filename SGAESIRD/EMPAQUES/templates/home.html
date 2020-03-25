@@ -91,8 +91,8 @@
                 <tbody>
                     {% for user in anuncios %}
                     <tr>
-                        <td><a href="{% url 'ver_anuncios' id_anun=user.id_Anuncios %}"><img src="{{ user.usuario.foto.url }}" 
-                            alt="Profile Photo" align="left" height="30" width="30" class="img-responsive">&nbsp;&nbsp;{{ user.usuario.usuario }}</a></td>
+                        <td><a href="{% url 'ver_perfil' id_perfil=user.usuario.id_Usuario %}"><img src="{{ user.usuario.foto.url }}" 
+                            alt="Profile Photo" align="left" height="30" width="30" class="img-responsive">&nbsp;&nbsp;{{ user.usuario.usuario}}</a></td>
                         <td><a href="{% url 'ver_anuncios' id_anun=user.id_Anuncios %}">{{ user.titulo }}</a></td>
                         <td><a href="{% url 'ver_anuncios' id_anun=user.id_Anuncios %}">{{ user.fecha }}</a></td>
                     </tr>

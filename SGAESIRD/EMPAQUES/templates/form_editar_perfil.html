@@ -5,6 +5,7 @@
     <li><a href="{% url 'home' %}" ><i class="fa fa-home fa-fw"></i>Inicio</a></li>
     <li><a href="{% url 'turnos' 0 %}" ><i class="fa fa-bar-chart fa-fw"></i>Turnos</a></li>
     <li><a href="data-visualization.html"><i class="fa fa-database fa-fw"></i>Administracion</a></li>
+    <li><a href="{% url 'finanzas' %}"><i class="fa fa-database fa-fw"></i>Finanzas</a></li>
     <li><a href="{% url 'logout' %}"><i class="fa fa-eject fa-fw"></i>Desconectar</a></li>
 {% endblock %}
 
@@ -22,10 +23,11 @@
                         <div class="panel-heading right">Editar perfil</div>
                         <div class="panel-body">
                             <header class="text-left">
-                                <form method="POST" class="post-form   ">{% csrf_token %}
+                                <form method="POST" enctype='multipart/form-data' class="post-form">{% csrf_token %}
 
                                     {{ form2.as_p }}
                                     {{ form.as_p }}
+                                    
                                     <button type="submit" class="templatemo-blue-button">Guardar</button>
                                     <button class="templatemo-blue-button"><a href="{% url 'ver_perfil' id_perfil=pk %}">Cancelar cambios y volver</a></button>                             
                                 </form>
