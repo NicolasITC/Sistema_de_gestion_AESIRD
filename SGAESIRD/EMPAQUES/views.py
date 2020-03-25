@@ -72,7 +72,9 @@ def home(request):
         return render(request, 'home.html', {'anuncios': anuncios, 'retorno':retorno, 'informacion':informacion[0], 'form_anuncios':AnunciosForm})
     else:
         return render(request, 'home.html', {'anuncios': anuncios, 'retorno':retorno, 'informacion':"no hay informacion", 'form_anuncios':AnunciosForm})
-@login_required
+
+
+
 def lista(request):
     listas=Lista_de_Espera.objects.all()
     retorno = ""
