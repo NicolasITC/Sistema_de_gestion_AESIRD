@@ -6,7 +6,7 @@ from django.contrib.auth.decorators import login_required
 from django.utils import timezone
 from django.shortcuts import render, get_object_or_404
 
-from .models import Usuario, Turnos, Toma_turnos, Anuncios, Comentarios, User
+from .models import Usuario, Turnos, Toma_turnos, Anuncios, Comentarios, User, Lista_de_Espera
 
 from .forms import SignUpForm, Usuario_Form, Turnos_form, Editar_usuario_form, Editar_usuario_form2
 from .forms import SignUpForm, Usuario_Form, Turnos_form, AnunciosForm, ComentariosForm
@@ -72,7 +72,20 @@ def home(request):
         return render(request, 'home.html', {'anuncios': anuncios, 'retorno':retorno, 'informacion':informacion[0], 'form_anuncios':AnunciosForm})
     else:
         return render(request, 'home.html', {'anuncios': anuncios, 'retorno':retorno, 'informacion':"no hay informacion", 'form_anuncios':AnunciosForm})
-
+@login_required
+def lista(request):
+    listas=Lista_de_Espera.objects.all()
+    retorno = ""
+    now = datetime.datetime.today()
+    registro = Toma_turnos.objects.filter(fecha_inicio__lte = now, fecha_termino__gte = now)
+    informacion = Toma_turnos.objects.filter(fecha_termino__gte = now)
+    if(len(registro)>0):
+        retorno = "ahora"
+    print(len(informacion))
+    if(len(informacion)>0):
+        return render(request, 'lista_espera.html', {'listas': listas, 'retorno':retorno, 'informacion':informacion[0]})
+    else:
+        return render(request, 'lista_espera.html', {'listas': listas, 'retorno':retorno, 'informacion':"no hay informacion"})
 @login_required
 def planilla_turnos(request, semana):
     turnos=Turnos.objects.all()

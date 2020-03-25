@@ -1,0 +1,71 @@
+<!-- templates/home.html-->
+{% extends "EMPAQUES/estructura.html" %}
+{% load static %}
+{% block title %}Bievenido{% endblock %}
+
+
+{% block banner %}
+    <div align="center">
+        {% if retorno == "ahora" %} <marquee behavior="alternate" bgcolor="#bb3434" direction="left" height:="" 
+            loop="7" scrollamount="1" scrolldelay="2" width="100%">
+            <span style="font-size: 20px;color:#FFFFFF">Toma de turnos activada
+        {% elif informacion == "no hay informacion" %}<marquee behavior="alternate" direction="left" height:="" 
+            loop="7" scrollamount="1" scrolldelay="2" width="100%">
+            <span style="font-size: 20px;color:#FFFFFF"> Aún no se define la próxima toma de turnos 
+        {% else %}<marquee behavior="alternate" bgcolor="#13895F" direction="left" height:="" 
+            loop="7" scrollamount="1" scrolldelay="2" width="100%">
+            <span style="font-size: 20px;color:#FFFFFF">Siguiente toma de turnos: {{ informacion.fecha_inicio }}
+        {% endif %}
+        </span></marquee>
+    </div>
+{% endblock %}
+
+
+
+
+{% block barra_lateral %}
+    <li><a href="{% url 'home' %}" class="active"><i class="fa fa-home fa-fw"></i>Inicio</a></li>
+    <li><a href="{% url 'turnos' 0 %}"><i class="fa fa-bar-chart fa-fw"></i>Turnos</a></li>
+    <li><a href="data-visualization.html"><i class="fa fa-database fa-fw"></i>Administracion</a></li>
+    <li><a href="{% url 'logout' %}"><i class="fa fa-eject fa-fw"></i>Desconectar</a></li>
+{% endblock %}
+            
+
+
+
+{% block content %}
+<div class="templatemo-content-widget white-bg col-2">
+
+    <h3>Actualmente eres un usuario: <i>{{ user.usuario.get_rol_display }}</i></h3>
+
+    <div class="panel panel-default templatemo-content-widget white-bg no-padding templatemo-overflow-hidden">
+        <i class="fa fa-times"></i>
+        <div class="panel-heading templatemo-position-relative">
+        <h2 class="text-uppercase"> Lista de Espera</h2>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-striped table-bordered">
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Apellido</th>
+                        <th>Celular</th>
+                        <th>ID</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for list in listas %}
+                    <tr>
+                        <td>{{ list.nombre }}</td>
+                        <td>{{ list.apellido}}</td>
+                        <td>{{ list.telefono}}</td>
+                        <td>{{ list.id_Lista_de_Espera}}</td>
+                    </tr>
+                    {% endfor %}    
+                </tbody>
+            </table>    
+        </div>                          
+    </div>
+</div>
+
+{% endblock content %}

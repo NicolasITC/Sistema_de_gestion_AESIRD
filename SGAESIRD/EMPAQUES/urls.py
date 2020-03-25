@@ -46,5 +46,6 @@ urlpatterns = [
     path('lista_usuarios', views.lista_usuarios, name='lista_usuarios'),
     path('perfil_user=<negint:id_perfil>', views.ver_perfil, name='ver_perfil'),
     path('editar_perfil/<int:pk>/edit/', views.editar_perfil, name='editar_perfil'),
+    path('listar',views.lista,name='listar'),
 
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
