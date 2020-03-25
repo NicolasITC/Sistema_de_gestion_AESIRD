@@ -48,5 +48,7 @@ urlpatterns = [
     path('editar_perfil/<int:pk>/edit/', views.editar_perfil, name='editar_perfil'),
     path('listar',views.lista,name='listar'),
     path('agregar_lista_espera',views.agregar_lista,name='agregar_lista_espera'),
+    path('administracion',views.administracion,name='administracion'),
+
 
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

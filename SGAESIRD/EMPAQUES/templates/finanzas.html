@@ -11,10 +11,36 @@
 
 
 {% block content %}
+    
     <div class="templatemo-content-widget white-bg col-2">
-        <div class="col-md-12">
-        <h2 class="page-header">Registros contables</h2>
-        <iframe width="70%" height="500" src="https://docs.google.com/spreadsheets/d/e/2PACX-1vQIQGlVD-0jFZWIYsaGsiW5BrhHv_CXu1q3Ufdn4T-b7-Vc72hXO19sCqmpeO9JEGTKvSIiZB8cTA_Q/pubhtml?gid=572276165&amp;single=true&amp;widget=true&amp;headers=false"></iframe>
+        {% if user.usuario.get_rol_display == "Administrador" %}
+        <div class="panel panel-default margin-10">
+            <div class="panel-heading"><h2 class="text-uppercase">Links a las planillas</h2></div>
+            <form action="https://docs.google.com/spreadsheets/d/14dYffn_-iOyxBwvTn14Mh54GOajQAVIEQ9uMNj-HOGk/edit?usp=sharing" target="_blank">
+                <div class="form-group">
+					<button type="submit" class="templatemo-blue-button width-100">Modificar planillas</button>
+				</div>
+            </form>               
+        </div>
+        {% endif %}
+        <div class="panel panel-default margin-10">
+            <div class="panel-heading"><h2 class="text-uppercase">Registros contables</h2></div>
+            <div class="panel-body">
+                <iframe width="100%" height="500" src="https://docs.google.com/spreadsheets/d/e/2PACX-1vQIQGlVD-0jFZWIYsaGsiW5BrhHv_CXu1q3Ufdn4T-b7-Vc72hXO19sCqmpeO9JEGTKvSIiZB8cTA_Q/pubhtml?gid=572276165&amp;single=true&amp;widget=true&amp;headers=false"></iframe>
+
+                
+            </div>                
         </div>
     </div>
+
+{% endblock %}{% extends "EMPAQUES/estructura.html" %}
+{% load static %}
+
+{% block barra_lateral %}
+    <li><a href="{% url 'home' %}" ><i class="fa fa-home fa-fw"></i>Inicio</a></li>
+    <li><a href="{% url 'turnos' 0 %}" ><i class="fa fa-bar-chart fa-fw"></i>Turnos</a></li>
+    <li><a href="data-visualization.html"><i class="fa fa-database fa-fw"></i>Administracion</a></li>
+    <li><a href="{% url 'finanzas' %}"><i class="fa fa-database fa-fw"></i>Finanzas</a></li>
+    <li><a href="{% url 'logout' %}"><i class="fa fa-eject fa-fw"></i>Desconectar</a></li>
 {% endblock %}
+

@@ -26,3 +26,9 @@
   .volver-login{
     float: right;
   }
+
+
+  .oculto {
+    transition: all 5s linear;
+    display:none
+  }

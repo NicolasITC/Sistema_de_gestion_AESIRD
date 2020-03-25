@@ -215,3 +215,7 @@ def agregar_lista(request):
         form=Agregar_Lista_Espera()
     
     return render(request,'agregar_lista_espera.html',{'form':form})
+
+@login_required
+def administracion(request):
+    return render(request,"administracion.html")
