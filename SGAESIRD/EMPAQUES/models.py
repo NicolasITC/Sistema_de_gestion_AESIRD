@@ -105,7 +105,7 @@ class Comentarios(models.Model):
 class Lista_de_Espera(models.Model):
 	id_Lista_de_Espera = models.AutoField(primary_key=True, help_text="ID")
 	fecha_ingreso = models.DateTimeField(default=timezone.now)
-	rut = models.IntegerField()
+	rut = models.CharField(max_length=200)
 	nombre = models.CharField(max_length=200)
 	apellido = models.CharField(max_length=200)
 	carrera = models.CharField(max_length=200)

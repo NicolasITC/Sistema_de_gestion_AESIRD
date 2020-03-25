@@ -24,7 +24,29 @@
  /********************************************************************/
 
 /****************************** Login **************************/
+.boton1 > a {
+  text-decoration: none;
+  color:white;
+  position: relative;
+  right: 4px;
+  bottom: 4px;
+  text-align: center;
+  font-size: 16px;
+  
+}
+.boton1 {
+  border: 1px solid #2e518b; /*anchura, estilo y color borde*/
+  padding: 10px; /*espacio alrededor texto*/
+  background-color: #0e0f11; /*color botón*/
+  color: #ffffff; /*color texto*/
+  text-decoration: none; /*decoración texto*/
 
+  font-family: "san-serif";
+  border-radius: 50px; /*bordes redondos*/
+  }
+  .boton1 :hover{
+    text-shadow: 0px 0x 4px gray;
+  }
   .login {
     overflow: hidden;
     background-color: white;

@@ -1,5 +1,5 @@
 
-{% extends "base_lista.html" %}
+{% extends "EMPAQUES/estructura.html" %}
 {% load static %}
 {% block title %}Bievenido{% endblock %}
 
@@ -8,7 +8,9 @@
 <link rel="stylesheet" href="{% static "css/home.css" %}">
 
 {% endblock %}
-
+{% block barra_lateral %}
+    <li><a href="{% url 'logout' %}"><i class="fa fa-eject fa-fw"></i>Desconectar</a></li>
+{% endblock %}
 {% block content%}
 <div class="col-1">
     <div class="panel panel-default margin-10">
@@ -26,8 +28,6 @@
     </div>                
     </div>
     <div class="clearfix"></div>
-
-
     <button class="volver-login"><a href="{% url 'listar' %}"> Volver </a></button>          
 </div>
 {% endblock content%}

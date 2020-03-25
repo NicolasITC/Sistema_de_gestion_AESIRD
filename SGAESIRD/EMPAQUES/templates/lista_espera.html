@@ -1,13 +1,24 @@
 <!-- templates/home.html-->
-{% extends "base_lista.html" %}
+{% extends "EMPAQUES/estructura.html" %}
 {% load static %}
 {% block title %}Bievenido{% endblock %}
+{% block banner %}
+    <div align="center">
+        <marquee behavior="alternate" direction="left" height:="" 
+            loop="7" scrollamount="1" scrolldelay="2" width="100%">
+            <span style="font-size: 20px;color:#FFFFFF"> Bienvenidos! 
+        </span></marquee>
+    </div>
+{% endblock %}
 
 
+{% block barra_lateral %}
+    <li><a href="{% url 'logout' %}"><i class="fa fa-eject fa-fw"></i>Desconectar</a></li>
+{% endblock %}
 {% block content %}
 <div class="templatemo-content-widget white-bg col-2">
 
-    <h3>Actualmente eres un usuario: <i>{{ user.usuario.get_rol_display }}</i></h3>
+    <button ><a href="{% url 'agregar_lista_espera' %}"> Añadir persona </a></button>
 
     <div class="panel panel-default templatemo-content-widget white-bg no-padding templatemo-overflow-hidden">
         <i class="fa fa-times"></i>
@@ -38,7 +49,7 @@
             </table>    
         </div>                          
     </div>
-    <button ><a href="{% url 'agregar_lista_espera' %}"> Añadir persona </a></button>
+    
 </div>
 
 {% endblock content %}

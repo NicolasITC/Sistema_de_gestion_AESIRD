@@ -3,25 +3,22 @@
 {% load static %}
 {% block title %}Login{% endblock %}
 
-
-
 {% block head %}
 <link rel="stylesheet" href="{% static "css/login.css" %}">
 <link rel="stylesheet" href="{% static "css/font-awesome.min.css" %}">
-
-
 {% endblock %}
 
 {% block content %}
-
 <div>
-
 
   <div class="titulo-mobile">
       <h1>Agrupación de empaques Santa Isabel Rubén Darío</h1>
   </div>
   
   <div class= "split left">
+
+    <button class="boton1"><a href="{% url 'listar' %}"> Ver lista espera </a></button>
+    
     <div class="info">
 
       <h1>Agrupación de empaques Santa Isabel Rubén Darío</h1>
