@@ -6,7 +6,7 @@ from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit
 
 
-from .models import Usuario, Universidades, Turnos, Anuncios, Comentarios, Lista_de_Espera
+from .models import Usuario, Universidades, Turnos, Anuncios, Comentarios, Lista_de_Espera, Anotaciones
 
 class SignUpForm(UserCreationForm):
     username = forms.CharField(max_length=140, required=True)
@@ -97,4 +97,11 @@ class Agregar_Lista_Espera(forms.ModelForm):
             'carrera',
             'universidad',
             'telefono',
+        }
+class AnotacionesForm(forms.ModelForm):
+    class Meta:
+        model=Anotaciones
+        fields={
+            'categoria_anotaciones',
+            'turnos_restados',
         }

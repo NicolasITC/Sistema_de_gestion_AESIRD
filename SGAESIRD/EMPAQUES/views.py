@@ -9,7 +9,7 @@ from django.shortcuts import render, get_object_or_404
 from .models import Usuario, Turnos, Toma_turnos, Anuncios, Comentarios, User, Lista_de_Espera, Anotaciones
 
 from .forms import SignUpForm, Usuario_Form, Turnos_form, Editar_usuario_form, Editar_usuario_form2, Agregar_Lista_Espera
-from .forms import SignUpForm, Usuario_Form, Turnos_form, AnunciosForm, ComentariosForm
+from .forms import SignUpForm, Usuario_Form, Turnos_form, AnunciosForm, ComentariosForm, AnotacionesForm
 import datetime
 from datetime import timedelta
 import dateutil.parser
@@ -17,7 +17,7 @@ import dateutil.parser
 from django.core.mail import send_mail
 from django.conf import settings
 
-
+now = datetime.datetime.today()
 def turnos_base(actual, turnos):
     if(actual>=0):
         hoy=datetime.datetime.today()+ datetime.timedelta(weeks=actual)
@@ -47,7 +47,7 @@ def get_semana(actual):
 
 @login_required
 def home(request):
-    now = datetime.datetime.today()
+    
     if request.method == "POST":
         form_anuncio = AnunciosForm(request.POST)
         if form_anuncio.is_valid():
@@ -67,13 +67,13 @@ def home(request):
             retorno = "ahora"
     
     informacion = Toma_turnos.objects.filter(fecha_termino__gte = now)
-    form_anuncios = AnunciosForm()
-    if(len(informacion)>0):
-        return render(request, 'home.html', {'anuncios': anuncios, 'retorno':retorno, 'informacion':informacion[0], 'form_anuncios':AnunciosForm})
+    if(len(informacion)==0):
+        info = "no hay informacion"
     else:
-        return render(request, 'home.html', {'anuncios': anuncios, 'retorno':retorno, 'informacion':"no hay informacion", 'form_anuncios':AnunciosForm})
+        info = informacion[0]
 
-
+    form_anuncios = AnunciosForm()
+    return render(request, 'home.html', {'anuncios': anuncios, 'retorno':retorno, 'informacion':info, 'form_anuncios':AnunciosForm})
 
 def lista(request):
     listas=Lista_de_Espera.objects.all()
@@ -88,6 +88,7 @@ def lista(request):
         return render(request, 'lista_espera.html', {'listas': listas, 'retorno':retorno, 'informacion':informacion[0]})
     else:
         return render(request, 'lista_espera.html', {'listas': listas, 'retorno':retorno, 'informacion':"no hay informacion"})
+
 @login_required
 def planilla_turnos(request, semana):
     turnos=Turnos.objects.all()
@@ -117,8 +118,6 @@ def registrate(request):
     else:
         form_account = SignUpForm()
         form_usuario = Usuario_Form()
-
-
     return render(request, 'registration/registrate.html', {'form_account': form_account, 'form_usuario': form_usuario})
     
 
@@ -146,13 +145,20 @@ def ver_anuncios(request, id_anun):
 
     form_comentarios = ComentariosForm
     com=Comentarios.objects.filter(anuncio__id_Anuncios=id_anun)
+
+    informacion = Toma_turnos.objects.filter(fecha_termino__gte = now)
+    if(len(informacion)==0):
+        info = "no hay informacion"
+    else:
+        info = informacion[0]
+
     if len(anu) > 0:
         if len(com) > 0:
-            return render(request, "anuncios.html", {'anu':anu[0], 'com':com, 'form_comentarios':form_comentarios})
+            return render(request, "anuncios.html", {'anu':anu[0], 'com':com, 'informacion':info, 'form_comentarios':form_comentarios})
         else:
-            return render(request, "anuncios.html", {'anu':anu[0], 'com':None, 'form_comentarios':form_comentarios})    
+            return render(request, "anuncios.html", {'anu':anu[0], 'com':None, 'informacion':info, 'form_comentarios':form_comentarios})    
     else:
-        return render(request, "anuncios.html", {'anu':None, 'com':None, 'form_comentarios':form_comentarios})
+        return render(request, "anuncios.html", {'anu':None, 'com':None, 'informacion':info, 'form_comentarios':form_comentarios})
 
 
 @login_required
@@ -171,7 +177,12 @@ def asignar_turnos(request):
 
 @login_required
 def finanzas(request):
-    return render(request,"finanzas.html")
+    informacion = Toma_turnos.objects.filter(fecha_termino__gte = now)
+    if(len(informacion)==0):
+        info = "no hay informacion"
+    else:
+        info = informacion[0]
+    return render(request,"finanzas.html", {'informacion':info})
 
 def lista_usuarios(request):
     usuario=Usuario.objects.all()
@@ -179,6 +190,17 @@ def lista_usuarios(request):
 
 def ver_perfil(request, id_perfil):
     perfil=Usuario.objects.filter(id_Usuario=id_perfil)
+    
+
+    informacion = Toma_turnos.objects.filter(fecha_termino__gte = now)
+    if(len(informacion)==0):
+        info = "no hay informacion"
+    else:
+        info = informacion[0]
+
+
+
+
     anotaciones=Anotaciones.objects.filter(usuario__id_Usuario=id_perfil)
     turnos=Turnos.objects.filter(usuario__id_Usuario=id_perfil)
     current_user = request.user
@@ -190,8 +212,8 @@ def ver_perfil(request, id_perfil):
         b=turnos
     else:
         b=None    
-    return render(request, 'perfil.html', {'perfil':perfil, 'id_perfil':id_perfil, 'anotaciones':a, 'turnos':b, 'current_user':current_user.id})    
-    
+    return render(request, 'perfil.html', {'perfil':perfil, 'id_perfil':id_perfil, 'anotaciones':a, 'informacion':info, 'turnos':b, 'current_user':current_user.id})    
+       
 
 def editar_perfil(request, pk):
     post2 = get_object_or_404(User, pk=pk)
@@ -208,7 +230,14 @@ def editar_perfil(request, pk):
     else:
         form = Editar_usuario_form(instance=post)
         form2 = Editar_usuario_form2(instance=post2)
-    return render(request, 'form_editar_perfil.html', {'form2': form2, 'form': form, 'pk':pk})
+    
+    informacion = Toma_turnos.objects.filter(fecha_termino__gte = now)
+    if(len(informacion)==0):
+        info = "no hay informacion"
+    else:
+        info = informacion[0]
+
+    return render(request, 'form_editar_perfil.html', {'form2': form2, 'form': form, 'informacion':info, 'pk':pk})
 
 
 def agregar_lista(request):
@@ -226,4 +255,33 @@ def agregar_lista(request):
 
 @login_required
 def administracion(request):
-    return render(request,"administracion.html")
+    Lista_empaques = Usuario.objects.all()
+
+    informacion = Toma_turnos.objects.filter(fecha_termino__gte = now)
+    if(len(informacion)==0):
+        info = "no hay informacion"
+    else:
+        info = informacion[0]
+    return render(request,"administracion.html", {'informacion':info, 'lista_empaques':Lista_empaques})
+
+@login_required
+def ingresar_anotacion(request, pk):
+    perfil=Usuario.objects.filter(id_Usuario=pk)
+    anotaciiones=Anotaciones.objects.filter(usuario__id_Usuario=pk)
+
+    if request.method == "POST":
+        form_anotaciones = AnotacionesForm(request.POST)
+        if form_anotaciones.is_valid():
+            post_form_anotaciones = form_anotaciones.save(commit=False)
+            post_form_anotaciones.usuario = Usuario.objects.filter(id_Usuario = pk)[:1].get()
+            post_form_anotaciones.save()
+
+    form_anotaciones = AnotacionesForm
+
+    informacion = Toma_turnos.objects.filter(fecha_termino__gte = now)
+    if(len(informacion)==0):
+        info = "no hay informacion"
+    else:
+        info = informacion[0]
+    if(request.user.usuario.rol == 'A' ):
+        return render(request,"ingresar_anotacion.html", {'informacion':info, 'pk':pk, 'form_anotaciones':form_anotaciones, 'perfil':perfil})
