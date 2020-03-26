@@ -3,7 +3,16 @@
 {% load static %}
 {% block title %}Bievenido{% endblock %}
 
-
+{% block head %}
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script>
+  $(document).ready(function(){
+    $(".mostrar").click(function(){
+      $(".oculto").toggle();
+    });
+  });
+  </script>
+{% endblock %}
 {% block banner %}
     <div align="center">
         {% if retorno == "ahora" %} <marquee behavior="alternate" bgcolor="#bb3434" direction="left" height:="" 
@@ -26,8 +35,8 @@
 {% block barra_lateral %}
     <li><a href="{% url 'home' %}" class="active"><i class="fa fa-home fa-fw"></i>Inicio</a></li>
     <li><a href="{% url 'turnos' 0 %}"><i class="fa fa-bar-chart fa-fw"></i>Turnos</a></li>
-    <li><a href="data-visualization.html"><i class="fa fa-database fa-fw"></i>Administracion</a></li>
-    <li><a href="{% url 'finanzas' %}"><i class="fa fa-database fa-fw"></i>Finanzas</a></li>
+    <li><a href="{% url 'administracion' %}"><i class="fa fa-database fa-fw"></i>Administracion</a></li>
+    <li><a href="{% url 'finanzas' %}"><i class="fa fa-line-chart fa-fw"></i>Finanzas</a></li>
     <li><a href="{% url 'logout' %}"><i class="fa fa-eject fa-fw"></i>Desconectar</a></li>
 {% endblock %}
             
@@ -37,43 +46,42 @@
 {% block content %}
 <link rel="stylesheet" href="{% static "css/home.css" %}">
 <script src="{% static "js/jquery-1.11.1.js" %}"></script>
-
-<div class="templatemo-content-widget white-bg col-2">
-    <div class="templatemo-flex-row flex-content-row">
-            <div class="col-1">
-              <div class="panel panel-default margin-10">
-                <div class="panel-heading"><h2 class="text-uppercase">Ingresa tu aviso</h2></div>
-                <div class="panel-body">
-                    
-                  <form method="POST" class="">
-                    <div class="form-group">
-                      <label >Titulo:</label>
-                      {% csrf_token %}
-                      {{ form_anuncios.titulo }}
-                    </div>
-                    <div class="form-group">                      
-                      <label>Contenido: </label>
-                      {% csrf_token %}
-                      {{ form_anuncios.contenido }}                              
-                    </div>              
-                    
-                    <div class="form-group">
-                      <button type="submit" class="templatemo-blue-button">Publicar</button>
-                    </div>
-                  </form>
-                </div>                
-              </div>              
-            </div>
-            <div class="col-1">              
-              <div class="templatemo-content-widget pink-bg">
-                <i class="fa fa-times"></i>                
-                <h2 class="text-uppercase margin-bottom-10">Advertencia</h2>
-                <p class="margin-bottom-0">
-                    Recuerda, este es el medio oficial de comunicación de la agrupación, modera tu lenguaje y respeta a los otros, el incumplimiento de estas normas puede conllevar alguna sanción de parte de los administradores
-                </p>                  
+  <div class="templatemo-content-widget white-bg col-2">
+      <div class="templatemo-flex-row flex-content-row">
+              <div class="col-1">
+                <div class="panel panel-default margin-10">
+                  <div class="panel-heading encabezado"><h2 class="text-uppercase">Ingresa tu aviso</h2></div>
+                  <div class="panel-body">
+                      
+                    <form method="POST" class="">
+                      <div class="form-group mostrar">
+                        <label >Titulo:</label>
+                        {% csrf_token %}
+                        {{ form_anuncios.titulo }}
+                      </div>
+                      <div class="form-group oculto">                      
+                        <label>Contenido: </label>
+                        {% csrf_token %}
+                        {{ form_anuncios.contenido }}                              
+                      </div>              
+                      
+                      <div class="form-group oculto">
+                        <button type="submit" class="templatemo-blue-button">Publicar</button>
+                      </div>
+                    </form>
+                  </div>                
+                </div>              
+              </div>
+              <div class="col-1">              
+                <div class="templatemo-content-widget pink-bg">
+                  <i class="fa fa-times"></i>                
+                  <h2 class="text-uppercase margin-bottom-10">Advertencia</h2>
+                  <p class="margin-bottom-0">
+                      Recuerda, este es el medio oficial de comunicación de la agrupación, modera tu lenguaje y respeta a los otros, el incumplimiento de estas normas puede conllevar alguna sanción de parte de los administradores
+                  </p>                  
+                </div>                       
               </div>                       
-            </div>                       
-          </div> <!-- Second row ends -->
+            </div> <!-- Second row ends -->
     <div class="panel panel-default templatemo-content-widget white-bg no-padding templatemo-overflow-hidden">
         <i class="fa fa-times"></i>
         <div class="panel-heading templatemo-position-relative">

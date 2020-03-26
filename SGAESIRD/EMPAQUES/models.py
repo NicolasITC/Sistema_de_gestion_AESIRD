@@ -59,6 +59,7 @@ class Anotaciones(models.Model):
 	fecha = models.DateTimeField(default=timezone.now)
 	categoria_anotaciones = models.ForeignKey(Categoria_anotaciones, on_delete=models.CASCADE)
 	turnos_restados = models.IntegerField()
+	fecha_termino_sancion = models.DateField(default = timezone.now)
 	usuario = models.ForeignKey(Usuario, on_delete=models.CASCADE)
 	def __str__(self):
 		return str(self.fecha) + " " + str(self.categoria_anotaciones) + " " + str(self.usuario.usuario)
