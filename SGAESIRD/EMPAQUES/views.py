@@ -179,11 +179,19 @@ def lista_usuarios(request):
 
 def ver_perfil(request, id_perfil):
     perfil=Usuario.objects.filter(id_Usuario=id_perfil)
-    anotaciiones=Anotaciones.objects.filter(usuario__id_Usuario=id_perfil)
-    if len(anotaciiones) > 0:
-        return render(request, 'perfil.html', {'perfil':perfil, 'id_perfil':id_perfil, 'anotaciones':anotaciiones})
+    anotaciones=Anotaciones.objects.filter(usuario__id_Usuario=id_perfil)
+    turnos=Turnos.objects.filter(usuario__id_Usuario=id_perfil)
+    current_user = request.user
+    if len(anotaciones) > 0:
+        a=anotaciones
     else:
-        return render(request, 'perfil.html', {'perfil':perfil, 'id_perfil':id_perfil, 'anotaciones':None})        
+        a=None
+    if len(turnos) > 0:
+        b=turnos
+    else:
+        b=None    
+    return render(request, 'perfil.html', {'perfil':perfil, 'id_perfil':id_perfil, 'anotaciones':a, 'turnos':b, 'current_user':current_user.id})    
+    
 
 def editar_perfil(request, pk):
     post2 = get_object_or_404(User, pk=pk)
