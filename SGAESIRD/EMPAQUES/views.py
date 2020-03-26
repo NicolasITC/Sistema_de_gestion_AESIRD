@@ -184,10 +184,6 @@ def finanzas(request):
         info = informacion[0]
     return render(request,"finanzas.html", {'informacion':info})
 
-def lista_usuarios(request):
-    usuario=Usuario.objects.all()
-    return render(request, 'lista_usuarios.html', {'usuario':usuario})
-
 def ver_perfil(request, id_perfil):
     perfil=Usuario.objects.filter(id_Usuario=id_perfil)
     
