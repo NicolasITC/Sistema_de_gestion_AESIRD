@@ -19,7 +19,8 @@ urlpatterns = [
     path('', views.home, name='home'),
     path('accounts/registrate', views.registrate, name='registrate'),
     path('turnos/<negint:semana>/', views.planilla_turnos, name='turnos'),
-    path('toma_turnos/<negint:semana>', views.toma_turnos, name='toma_turnos'),
+    path('toma_turnos/', views.toma_turnos, name='toma_turnos'),
+    path('crear_planilla/', views.crear_planilla, name='crear_planilla'),
     path('accounts/reset-password/', auth_views.PasswordResetView.as_view(
       template_name='reset_password.html',
       html_email_template_name='reset_password_email.html',
