@@ -50,6 +50,7 @@ urlpatterns = [
     path('listar',views.lista,name='listar'),
     path('agregar_lista_espera',views.agregar_lista,name='agregar_lista_espera'),
     path('administracion',views.administracion,name='administracion'),
+    path('crear_planilla',views.crear_planilla,name='crear_planilla'),
     path('ingresar_anotacion/<int:pk>',views.ingresar_anotacion,name='ingresar_anotacion'),
 
 
