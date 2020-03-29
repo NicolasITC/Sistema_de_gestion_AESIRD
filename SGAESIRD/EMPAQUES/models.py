@@ -45,7 +45,7 @@ class Usuario(models.Model):
 class Toma_turnos(models.Model):
 	fecha_inicio = models.DateTimeField()
 	fecha_termino = models.DateTimeField()
-	def __str__(self):
+	def __str__(self):	
 		return "Fecha inicio: " + str(self.fecha_inicio) +" Fecha termino: "+ str(self.fecha_termino)
 
 class Categoria_anotaciones(models.Model):

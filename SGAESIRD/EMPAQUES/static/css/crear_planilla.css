@@ -1,0 +1,19 @@
+.floatLeft { width: 50%; float: left; }
+.floatRight {width: 50%; float: right; }
+
+
+
+.button {
+    float: right;
+    border: none;
+    padding: 16px 32px;
+    text-align: center;
+    font-size: 16px;
+    margin: 4px 2px;
+    transition: 0.3s;
+    display: inline-block;
+    text-decoration: none;
+    cursor: pointer;
+  }
+  
+  .button:hover {opacity: 1}

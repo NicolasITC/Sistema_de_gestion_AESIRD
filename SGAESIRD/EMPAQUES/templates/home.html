@@ -44,6 +44,7 @@
 
 
 {% block content %}
+<<<<<<< HEAD
 <link rel="stylesheet" href="{% static "css/home.css" %}">
 <script src="{% static "js/jquery-1.11.1.js" %}"></script>
   <div class="templatemo-content-widget white-bg col-2">
@@ -82,6 +83,14 @@
                 </div>                       
               </div>                       
             </div> <!-- Second row ends -->
+=======
+<div class="templatemo-content-widget white-bg col-2">
+    <h1>Hola <i>{{ user.username }}</i></h1>
+    <br></br>
+    <h2>Bienvenido al Sistema de Gestión de la Asociación de Empaques de Santa Isabel de Ruben Dario, Valdivia.</h2><br>
+    <h3>Actualmente eres un usuario: <i>{{ user.usuario.get_rol_display }}</i></h3>
+
+>>>>>>> master
     <div class="panel panel-default templatemo-content-widget white-bg no-padding templatemo-overflow-hidden">
         <i class="fa fa-times"></i>
         <div class="panel-heading templatemo-position-relative">
