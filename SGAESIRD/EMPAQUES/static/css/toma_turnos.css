@@ -1,20 +1,5 @@
-.conteiner_espaques_turno{
-    background-color: red;
-    text-align: justify;
-    padding: 8px;
-}
-
-.nombre_usuario{
-    font-size: 14px;
-}
-
-.boton_turno button{
-    background-color: #008CBA;
-    border: none;
-    color: white;
-    padding: 6px 14px;
+.wenawena{
+    position: absolute;
     text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 14px;
+    color: red;
 }

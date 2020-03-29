@@ -91,7 +91,7 @@ def lista(request):
 
 @login_required
 def planilla_turnos(request, semana):
-    turnos= Turnos.objects.all()
+    turnos=Turnos.objects.all()
     start = datetime.datetime.strptime("07:00", "%H:%M")
     hora = [start + datetime.timedelta(minutes=x*30) for x in range(35)]
     sem=get_semana(semana)
@@ -118,16 +118,12 @@ def registrate(request):
     else:
         form_account = SignUpForm()
         form_usuario = Usuario_Form()
-<<<<<<< HEAD
-=======
-
->>>>>>> master
     return render(request, 'registration/registrate.html', {'form_account': form_account, 'form_usuario': form_usuario})
     
 
+
 @login_required
-def toma_turnos(request):
-    semana = 1
+def toma_turnos(request, semana):
     turnos=Turnos.objects.all()
     start = datetime.datetime.strptime("07:00", "%H:%M")
     hora = [start + datetime.timedelta(minutes=x*30) for x in range(35)]
@@ -164,11 +160,8 @@ def ver_anuncios(request, id_anun):
     else:
         return render(request, "anuncios.html", {'anu':None, 'com':None, 'informacion':info, 'form_comentarios':form_comentarios})
 
-<<<<<<< HEAD
 
 @login_required
-=======
->>>>>>> master
 def registro_completado(request):
     return render(request,"registration/registro_completado.html")
 
@@ -182,7 +175,6 @@ def asignar_turnos(request):
     turnos = turnos_base(semana, turnos)
     return render(request, 'asignar_turnos.html', {'turnos':turnos, 'semana':semana,'sem':sem, 'hora':hora})
 
-<<<<<<< HEAD
 @login_required
 def finanzas(request):
     informacion = Toma_turnos.objects.filter(fecha_termino__gte = now)
@@ -198,17 +190,11 @@ def lista_usuarios(request):
 
 def ver_perfil(request, id_perfil):
     perfil=Usuario.objects.filter(id_Usuario=id_perfil)
-    
-
     informacion = Toma_turnos.objects.filter(fecha_termino__gte = now)
     if(len(informacion)==0):
         info = "no hay informacion"
     else:
         info = informacion[0]
-
-
-
-
     anotaciones=Anotaciones.objects.filter(usuario__id_Usuario=id_perfil)
     turnos=Turnos.objects.filter(usuario__id_Usuario=id_perfil)
     current_user = request.user
@@ -293,7 +279,6 @@ def ingresar_anotacion(request, pk):
         info = informacion[0]
     if(request.user.usuario.rol == 'A' ):
         return render(request,"ingresar_anotacion.html", {'informacion':info, 'pk':pk, 'form_anotaciones':form_anotaciones, 'perfil':perfil})
-=======
 
 @login_required
 def crear_planilla(request):
@@ -304,4 +289,3 @@ def crear_planilla(request):
     #turnos = turnos_base(semana, turnos)
 
     return render(request, "crear_planilla.html",{'semana':semana,'sem':sem, 'users':users})
->>>>>>> master

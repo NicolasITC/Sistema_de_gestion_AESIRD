@@ -12,25 +12,26 @@
 
 {% block content %}
 
-
 <div class="col-1">
 
-    <div class="panel panel-default templatemo-content-widget white-bg no-padding templatemo-overflow-hidden">
+
+
+    
+        <div class="panel panel-default templatemo-content-widget white-bg no-padding templatemo-overflow-hidden">
         <i class="fa fa-times"></i>
         <div class="panel-heading templatemo-position-relative"><h2 class="text-uppercase">
-            Semana del 
-            {% for d in sem %}
-                {% if forloop.first %}
-                    {{ d|date:"j \d\e F" }} al 
-                {% endif %}
-                
-                {% if forloop.last %}
-                    {{ d|date:"j \d\e F \d\e Y" }}
-                {% endif %}
-            {% endfor %}
+        Semana del 
+        {% for d in sem %}
+            {% if forloop.first %}
+                {{ d|date:"j \d\e F" }} al 
+            {% endif %}
             
-             </h2>
-        </div>
+            {% if forloop.last %}
+                {{ d|date:"j \d\e F \d\e Y" }}
+            {% endif %}
+        {% endfor %}
+        
+        </h2></div>
         <div class="table-responsive">
             <table class="table table-striped table-bordered">
                 <thead>
@@ -46,40 +47,28 @@
                     </tr>
                 </thead>
                 <tbody>
-                
+                    
+                   
                     {% for h in hora %}
                         
                         <tr>
                             <th>{{ h|date:'H:i' }}</th>
-                            <th>
-                            </th>
+                            <th></th>
                             {% for dia in sem %}
                             <td>
-                                <div class="nombres_empaque">
-                                    <form>
-                                        <input list="browsers">
-                                        <input list="browsers">
-                                        <input list="browsers">
-                                        <input list="browsers">
 
-                                        <datalist id="browsers">
-                                          <option value="Cristian">
-                                          <option value="Nicolas">
-                                          <option value="Felipe">
-                                          <option value="Daniela">
-                                          <option value="Amalia">
-                                        </datalist>
-                                      </form>
-                                </div>
                             </td>
                             {% endfor %}
-                        </tr>  
-                
+                         </tr>
+                        
+                        
+                    
+                    
                     {% endfor %}
                 </tbody>
             </table>    
         </div>                          
-    </div>
+        </div>
 
 </div>
 
