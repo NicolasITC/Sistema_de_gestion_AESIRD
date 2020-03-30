@@ -186,17 +186,11 @@ def finanzas(request):
 
 def ver_perfil(request, id_perfil):
     perfil=Usuario.objects.filter(id_Usuario=id_perfil)
-    
-
     informacion = Toma_turnos.objects.filter(fecha_termino__gte = now)
     if(len(informacion)==0):
         info = "no hay informacion"
     else:
         info = informacion[0]
-
-
-
-
     anotaciones=Anotaciones.objects.filter(usuario__id_Usuario=id_perfil)
     turnos=Turnos.objects.filter(usuario__id_Usuario=id_perfil)
     current_user = request.user
@@ -281,3 +275,13 @@ def ingresar_anotacion(request, pk):
         info = informacion[0]
     if(request.user.usuario.rol == 'A' ):
         return render(request,"ingresar_anotacion.html", {'informacion':info, 'pk':pk, 'form_anotaciones':form_anotaciones, 'perfil':perfil})
+
+@login_required
+def crear_planilla(request):
+    semana = 1
+    users = Usuario.objects.all()
+    print(users)
+    sem=get_semana(semana)
+    #turnos = turnos_base(semana, turnos)
+
+    return render(request, "crear_planilla.html",{'semana':semana,'sem':sem, 'users':users})
