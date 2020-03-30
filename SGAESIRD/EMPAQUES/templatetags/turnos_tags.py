@@ -1,5 +1,5 @@
 from django import template
-from ..models import Turnos
+from ..models import Turno
 import datetime
 from datetime import timedelta
 import dateutil.parser

@@ -64,16 +64,27 @@ class Anotaciones(models.Model):
 		return str(self.fecha) + " " + str(self.categoria_anotaciones) + " " + str(self.usuario.usuario)
 
 
-class Turnos(models.Model):
+
+		
+class Turno(models.Model):
 	id_Turnos = models.AutoField(primary_key=True, help_text="ID")
 	fecha = models.DateField(default=timezone.now)
-	hora_inicio = models.TimeField()
-	hora_final = models.TimeField()
-	usuario = models.ManyToManyField(Usuario, blank=True)
+	emp01=models.ForeignKey(Usuario, on_delete=models.CASCADE, related_name='01+', blank=True, null=True)
+	emp02=models.ForeignKey(Usuario, on_delete=models.CASCADE, related_name='02+', blank=True, null=True)
+	emp03=models.ForeignKey(Usuario, on_delete=models.CASCADE, related_name='03+', blank=True, null=True)
+	emp04=models.ForeignKey(Usuario, on_delete=models.CASCADE, related_name='04+', blank=True, null=True)
+	emp05=models.ForeignKey(Usuario, on_delete=models.CASCADE, related_name='05+', blank=True, null=True)
+	emp06=models.ForeignKey(Usuario, on_delete=models.CASCADE, related_name='06+', blank=True, null=True)
+	emp07=models.ForeignKey(Usuario, on_delete=models.CASCADE, related_name='07+', blank=True, null=True)
+	emp08=models.ForeignKey(Usuario, on_delete=models.CASCADE, related_name='08+', blank=True, null=True)
+	emp09=models.ForeignKey(Usuario, on_delete=models.CASCADE, related_name='09+', blank=True, null=True)
+	emp10=models.ForeignKey(Usuario, on_delete=models.CASCADE, related_name='10+', blank=True, null=True)
+	emp11=models.ForeignKey(Usuario, on_delete=models.CASCADE, related_name='11+', blank=True, null=True)
+	emp12=models.ForeignKey(Usuario, on_delete=models.CASCADE, related_name='12+', blank=True, null=True)
+	emp13=models.ForeignKey(Usuario, on_delete=models.CASCADE, related_name='13+', blank=True, null=True)
 	def __str__(self):
-		return str(self.fecha) + " " + str(self.hora_inicio) + " " + str(self.hora_final)
-	class Meta:
-		ordering = ('fecha', 'hora_inicio', 'hora_final',)
+		return str(self.fecha) 
+
 
 class Finanzas(models.Model):
 	id_Finanzas = models.AutoField(primary_key=True, help_text="ID")

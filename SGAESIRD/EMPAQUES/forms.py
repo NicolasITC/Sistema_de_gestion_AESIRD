@@ -6,7 +6,7 @@ from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit
 
 
-from .models import Usuario, Universidades, Turnos, Anuncios, Comentarios, Lista_de_Espera, Anotaciones, Toma_turnos, Mensaje_inicio
+from .models import Usuario, Universidades, Turno, Anuncios, Comentarios, Lista_de_Espera, Anotaciones, Toma_turnos, Mensaje_inicio
 
 class SignUpForm(UserCreationForm):
     username = forms.CharField(max_length=140, required=True)
@@ -37,14 +37,7 @@ class Usuario_Form(forms.ModelForm):
             'telefono',
             
         }
-class Turnos_form(forms.ModelForm):
-    class Meta:
-        model=Turnos
-        fields={
-            'hora_inicio',
-            'hora_final',
-            'fecha',
-        }
+
     
 class Editar_usuario_form(forms.ModelForm):
     class Meta:
@@ -125,3 +118,8 @@ class Mensaje_inicioForm(forms.ModelForm):
     class Meta:
         model = Mensaje_inicio
         fields = ("titulo","mensaje",)
+
+class TurnoForm(forms.ModelForm):
+    class Meta:
+        model = Turno
+        fields = ("emp01","emp02","emp03","emp04","emp05","emp06","emp07","emp08","emp09","emp10","emp11","emp12","emp13",)

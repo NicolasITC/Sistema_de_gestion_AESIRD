@@ -58,9 +58,6 @@
 {% block content %}
   <link rel="stylesheet" href="{% static "css/home.css" %}">
   <script src="{% static "js/jquery-1.11.1.js" %}"></script>
-
-
-
   <div class="templatemo-content-widget white-bg col-2">
     {% if user.usuario.get_rol_display == "Administrador" %}
       <div class="templatemo-flex-row flex-content-row">

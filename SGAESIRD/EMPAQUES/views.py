@@ -6,9 +6,9 @@ from django.contrib.auth.decorators import login_required
 from django.utils import timezone
 from django.shortcuts import render, get_object_or_404
 
-from .models import Usuario, Turnos, Toma_turnos, Anuncios, Comentarios, User, Lista_de_Espera, Anotaciones, Mensaje_inicio
+from .models import Usuario, Turno, Toma_turnos, Anuncios, Comentarios, User, Lista_de_Espera, Anotaciones, Mensaje_inicio
 
-from .forms import SignUpForm, Usuario_Form, Turnos_form, Editar_usuario_form, Editar_usuario_form2, Agregar_Lista_Espera, TomaturnosForm, Mensaje_inicioForm, AnunciosForm, ComentariosForm, AnotacionesForm
+from .forms import SignUpForm, Usuario_Form, Editar_usuario_form, Editar_usuario_form2, Agregar_Lista_Espera, TomaturnosForm, Mensaje_inicioForm, AnunciosForm, ComentariosForm, AnotacionesForm, TurnoForm
 
 import datetime
 from datetime import timedelta
@@ -158,7 +158,7 @@ def ver_perfil(request, id_perfil):
     else:
         info = informacion[0]
     anotaciones=Anotaciones.objects.filter(usuario__id_Usuario=id_perfil)
-    turnos=Turnos.objects.filter(usuario__id_Usuario=id_perfil)
+    turnos=Turno.objects.filter(usuario__id_Usuario=id_perfil)
     current_user = request.user
     if len(anotaciones) > 0:
         a=anotaciones
@@ -260,6 +260,20 @@ def ingresar_anotacion(request, pk):
 
 @login_required
 def crear_planilla(request):
+
+    if request.method == "POST":
+        form_turno = TurnoForm(request.POST)
+        if form_turno.is_valid():
+            post_form_turno = form_turno.save(commit=False)
+            post_form_turno.fecha = timezone.now()
+            post_form_turno.save()
+
+    form_turno = TurnoForm
+
+
+
+
+
     semana = 1
     users = Usuario.objects.all()
     print(users)
@@ -270,4 +284,4 @@ def crear_planilla(request):
         info = "no hay informacion"
     else:
         info = informacion[0]
-    return render(request, "crear_planilla.html",{'semana':semana,'informacion':info, 'sem':sem, 'users':users})
+    return render(request, "crear_planilla.html",{'semana':semana,'informacion':info, 'sem':sem, 'users':users, 'form_turno':form_turno})
