@@ -1,7 +1,36 @@
 {% extends "EMPAQUES/estructura.html" %}
 {% load static %}
 
+{% block head %}
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
+  <!-- Moment.js -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.23.0/moment.min.js" integrity="sha256-VBLiveTKyUZMEzJd6z2mhfxIqz3ZATCuVMawPZGzIfA=" crossorigin="anonymous"></script>
+
+  <!-- Tempus Dominus Bootstrap 4 -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.1.2/js/tempusdominus-bootstrap-4.min.js" integrity="sha256-z0oKYg6xiLq3yJGsp/LsY9XykbweQlHl42jHv2XTBz4=" crossorigin="anonymous"></script>
+
+  <script>
+
+  $(function () {
+    $("#datetimepicker1").datetimepicker({
+      format: 'DD/MM/YYYY HH:mm',
+    });
+  });
+  $(document).ready(function(){
+    $(".mostrar").click(function(){
+      $(".oculto").toggle();
+      $(".visible").toggle();
+    });
+    $(".mostrar2").click(function(){
+      $(".oculto2").toggle();
+      $(".visible2").toggle();
+    });
+  });
+  </script>
+
+
+{% endblock %}
 {% block banner %}
     <div align="center">
         {% if retorno == "ahora" %} <marquee behavior="alternate" bgcolor="#bb3434" direction="left" height:="" 
@@ -19,66 +48,129 @@
 {% endblock %}
 
 {% block barra_lateral %}
-    <li><a href="{% url 'home' %}" ><i class="fa fa-home fa-fw"></i>Inicio</a></li>
-    <li><a href="{% url 'turnos' 0 %}" ><i class="fa fa-bar-chart fa-fw"></i>Turnos</a></li>
-    <li><a href="{% url 'administracion' %}" class="active"><i class="fa fa-database fa-fw"></i>Administracion</a></li>
-    <li><a href="{% url 'finanzas' %}"><i class="fa fa-line-chart fa-fw"></i>Finanzas</a></li>
-    <li><a href="{% url 'logout' %}"><i class="fa fa-eject fa-fw"></i>Desconectar</a></li>
+  <li><a href="{% url 'home' %}" ><i class="fa fa-home fa-fw"></i>Inicio</a></li>
+  <li><a href="{% url 'turnos' 0 %}" ><i class="fa fa-bar-chart fa-fw"></i>Turnos</a></li>
+  <li><a href="{% url 'administracion' %}" class="active"><i class="fa fa-database fa-fw"></i>Administracion</a></li>
+  <li><a href="{% url 'finanzas' %}"><i class="fa fa-line-chart fa-fw"></i>Finanzas</a></li>
+  <li><a href="{% url 'logout' %}"><i class="fa fa-eject fa-fw"></i>Desconectar</a></li>
 {% endblock %}
 
 {% block content %}
+  <link rel="stylesheet" href="{% static "css/home.css" %}">
+  <script src="{% static "js/jquery-1.11.1.js" %}"></script>
 
-    <div class="templatemo-content-widget white-bg col-2">
-        
-        <div class="panel panel-default margin-10">
-            <div class="panel-heading"><h2 class="text-uppercase">Links a las planillas</h2></div>
-            <form action="{% url 'crear_planilla'%}">
-                <div class="form-group">
-					<button type="submit" class="templatemo-blue-button width-100">Asignar turnos</button>
-				</div>
-            </form>               
-        </div>
 
-        <div class="templatemo-content-container">
-          
-            <div class="panel panel-default table-responsive">
-              <table class="table table-striped table-bordered templatemo-user-table">
-                <thead>
-                  <tr>
-                    <td><a href="" class="white-text templatemo-sort-by"># <span class="caret"></span></a></td>
-                    <td><a href="" class="white-text templatemo-sort-by">Nombre <span class="caret"></span></a></td>
-                    <td><a href="" class="white-text templatemo-sort-by">Apellido <span class="caret"></span></a></td>
-                    <td><a href="" class="white-text templatemo-sort-by">Nombre de usuario <span class="caret"></span></a></td>
-                    <td><a href="" class="white-text templatemo-sort-by">Teléfono <span class="caret"></span></a></td>
-                    <td><a href="" class="white-text templatemo-sort-by">Rango <span class="caret"></span></a></td>
-                    <td></td>
-                    {% if user.usuario.get_rol_display == "Administrador" %}
-                    <td>Modificar</td>
-                    <td>Anotaciones</td>
-                    {% endif %}
-                  </tr>
-                </thead>
-                <tbody>
-                    {% for empaque in lista_empaques %}
-                        <tr>
-                            <td>{{ forloop.counter }}.</td>
-                            <td>{{ empaque.usuario.first_name }}</td>
-                            <td>{{ empaque.usuario.last_name }}</td>
-                            <td>{{ empaque.usuario }}</td>
-                            <td>{{ empaque.telefono }}</td>
-                            <td>{{ empaque.get_rol_display }}</td>
-                            <td><a href="{% url 'ver_perfil' empaque.id_Usuario %}" class="templatemo-edit-btn">Ir a perfil</a></td>
-                            {% if user.usuario.get_rol_display == "Administrador" %}
-                            <td><a href="{% url 'editar_perfil' empaque.id_Usuario %}" class="templatemo-edit-btn">Modificar perfil</a></td>
-                            <td><a href="{% url 'ingresar_anotacion' empaque.id_Usuario %}" class="templatemo-edit-btn">Ingresar anotacion</a></td>
-                            {% endif %}
-                        </tr>
-                    {% endfor %}
-                                     
-                </tbody>
-              </table>    
-            </div>                          
+
+  <div class="templatemo-content-widget white-bg col-2">
+    {% if user.usuario.get_rol_display == "Administrador" %}
+      <div class="templatemo-flex-row flex-content-row">
+        <div class="col-1">
+          <div class="panel panel-default margin-10">
+            <div class="panel-body">
+              <form method="POST" class="">
+                <div class="templatemo-flex-row flex-content-row mostrar ">
+                  <div class="templatemo-blue-button">Editar fecha y lugar reunión</div>
+                </div>
+                <div class="input-group date oculto" id="datetimepicker1" data-target-input="nearest" style="float:left">
+                  <label>Fecha inicio: </label>
+                  {{ TomaturnosForm.fecha_inicio }}
+                  <div class="input-group-append" data-target="#datetimepicker1" data-toggle="datetimepicker">
+                    <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                  </div>
+                </div>
+                <div class="form-group oculto" style="float:left">                      
+                  <label>Lugar de reunión: </label>
+                  {% csrf_token %}
+                  {{ TomaturnosForm.lugar_reunion }}                              
+                </div>              
+                <div class="form-group oculto" style="float:right">
+                  <button type="submit" class="templatemo-blue-button" >Publicar</button>
+                </div>
+              </form>
+            </div>                
+          </div>              
         </div>
+        <div class="col-1">
+          <div class="panel panel-default margin-10">
+            
+            <div class="panel-body">
+                
+              <form method="POST" class="">
+                <div class="templatemo-flex-row flex-content-row mostrar2">
+                  <div class="templatemo-blue-button">Editar mensaje de inicio</div>
+                </div>
+                <div class="form-group oculto2" style="float:left">                      
+                  <label>Titulo: </label>
+                  {% csrf_token %}
+                  {{ form_mensaje.titulo }}                              
+                </div>
+                <div class="form-group oculto2" style="float:left">                      
+                  <label>Mensaje: </label>
+                  {% csrf_token %}
+                  {{ form_mensaje.mensaje }}                              
+                </div>              
+                <div class="form-group oculto2" style="float:right">
+                  <button type="submit" class="templatemo-blue-button" >Publicar</button>
+                </div>
+              </form>
+            </div>                
+          </div>               
+                          
+        </div>
+        <div class="col-1">
+          <div class="panel panel-default margin-10">
+            
+            <div class="panel-body">
+                
+              <form action="{% url 'crear_planilla'%}">
+                <div class="templatemo-flex-row flex-content-row">
+                  <button class="templatemo-blue-button">Asignar turnos</button>
+                </div>
+              </form>
+            </div>                
+          </div>                           
+        </div>                     
+      </div> <!-- Second row ends -->
+
+    {% endif %}
+
+    <div class="templatemo-content-container">
+      <div class="panel panel-default table-responsive">
+        <table class="table table-striped table-bordered templatemo-user-table">
+          <thead>
+            <tr>
+              <td><a href="" class="white-text templatemo-sort-by"># <span class="caret"></span></a></td>
+              <td><a href="" class="white-text templatemo-sort-by">Nombre <span class="caret"></span></a></td>
+              <td><a href="" class="white-text templatemo-sort-by">Apellido <span class="caret"></span></a></td>
+              <td><a href="" class="white-text templatemo-sort-by">Nombre de usuario <span class="caret"></span></a></td>
+              <td><a href="" class="white-text templatemo-sort-by">Teléfono <span class="caret"></span></a></td>
+              <td><a href="" class="white-text templatemo-sort-by">Rango <span class="caret"></span></a></td>
+              <td></td>
+              {% if user.usuario.get_rol_display == "Administrador" %}
+              <td>Modificar</td>
+              <td>Anotaciones</td>
+              {% endif %}
+            </tr>
+          </thead>
+          <tbody>
+            {% for empaque in lista_empaques %}
+              <tr>
+                <td>{{ forloop.counter }}.</td>
+                <td>{{ empaque.usuario.first_name }}</td>
+                <td>{{ empaque.usuario.last_name }}</td>
+                <td>{{ empaque.usuario }}</td>
+                <td>{{ empaque.telefono }}</td>
+                <td>{{ empaque.get_rol_display }}</td>
+                <td><a href="{% url 'ver_perfil' empaque.id_Usuario %}" class="templatemo-edit-btn">Ir a perfil</a></td>
+                {% if user.usuario.get_rol_display == "Administrador" %}
+                <td><a href="{% url 'editar_perfil' empaque.id_Usuario %}" class="templatemo-edit-btn">Modificar perfil</a></td>
+                <td><a href="{% url 'ingresar_anotacion' empaque.id_Usuario %}" class="templatemo-edit-btn">Ingresar anotacion</a></td>
+                {% endif %}
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>    
+      </div>                          
     </div>
-
+  </div>
 {% endblock %}

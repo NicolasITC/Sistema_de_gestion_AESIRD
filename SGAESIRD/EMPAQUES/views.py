@@ -6,10 +6,10 @@ from django.contrib.auth.decorators import login_required
 from django.utils import timezone
 from django.shortcuts import render, get_object_or_404
 
-from .models import Usuario, Turnos, Toma_turnos, Anuncios, Comentarios, User, Lista_de_Espera, Anotaciones
+from .models import Usuario, Turnos, Toma_turnos, Anuncios, Comentarios, User, Lista_de_Espera, Anotaciones, Mensaje_inicio
 
-from .forms import SignUpForm, Usuario_Form, Turnos_form, Editar_usuario_form, Editar_usuario_form2, Agregar_Lista_Espera
-from .forms import SignUpForm, Usuario_Form, Turnos_form, AnunciosForm, ComentariosForm, AnotacionesForm
+from .forms import SignUpForm, Usuario_Form, Turnos_form, Editar_usuario_form, Editar_usuario_form2, Agregar_Lista_Espera, TomaturnosForm, Mensaje_inicioForm, AnunciosForm, ComentariosForm, AnotacionesForm
+
 import datetime
 from datetime import timedelta
 import dateutil.parser
@@ -56,31 +56,31 @@ def home(request):
             post_form_anuncio.save()
         anuncios=Anuncios.objects.all()
         retorno = ""
-        registro = Toma_turnos.objects.filter(fecha_inicio__lte = now, fecha_termino__gte = now)
+        registro = Toma_turnos.objects.filter(fecha_inicio__lte = now)
         if(len(registro)>0):
             retorno = "ahora"
     else:
         anuncios=Anuncios.objects.all()
         retorno = ""
-        registro = Toma_turnos.objects.filter(fecha_inicio__lte = now, fecha_termino__gte = now)
+        registro = Toma_turnos.objects.filter(fecha_inicio__lte = now)
         if(len(registro)>0):
             retorno = "ahora"
-    
-    informacion = Toma_turnos.objects.filter(fecha_termino__gte = now)
+    mensajeinicio= Mensaje_inicio.objects.latest('fecha')
+    informacion = Toma_turnos.objects.filter(fecha_inicio__gte = now)
     if(len(informacion)==0):
         info = "no hay informacion"
     else:
         info = informacion[0]
 
     form_anuncios = AnunciosForm()
-    return render(request, 'home.html', {'anuncios': anuncios, 'retorno':retorno, 'informacion':info, 'form_anuncios':AnunciosForm})
+    return render(request, 'home.html', {'anuncios': anuncios, 'retorno':retorno, 'informacion':info, 'form_anuncios':AnunciosForm, 'mensaje_inicio':mensajeinicio})
 
 def lista(request):
     listas=Lista_de_Espera.objects.all()
     retorno = ""
     now = datetime.datetime.today()
-    registro = Toma_turnos.objects.filter(fecha_inicio__lte = now, fecha_termino__gte = now)
-    informacion = Toma_turnos.objects.filter(fecha_termino__gte = now)
+    registro = Toma_turnos.objects.filter(fecha_inicio__lte = now, fecha_inicio__gte = now)
+    informacion = Toma_turnos.objects.filter(fecha_inicio__gte = now)
     if(len(registro)>0):
         retorno = "ahora"
     print(len(informacion))
@@ -146,7 +146,7 @@ def ver_anuncios(request, id_anun):
     form_comentarios = ComentariosForm
     com=Comentarios.objects.filter(anuncio__id_Anuncios=id_anun)
 
-    informacion = Toma_turnos.objects.filter(fecha_termino__gte = now)
+    informacion = Toma_turnos.objects.filter(fecha_inicio__gte = now)
     if(len(informacion)==0):
         info = "no hay informacion"
     else:
@@ -177,7 +177,7 @@ def asignar_turnos(request):
 
 @login_required
 def finanzas(request):
-    informacion = Toma_turnos.objects.filter(fecha_termino__gte = now)
+    informacion = Toma_turnos.objects.filter(fecha_inicio__gte = now)
     if(len(informacion)==0):
         info = "no hay informacion"
     else:
@@ -186,7 +186,7 @@ def finanzas(request):
 
 def ver_perfil(request, id_perfil):
     perfil=Usuario.objects.filter(id_Usuario=id_perfil)
-    informacion = Toma_turnos.objects.filter(fecha_termino__gte = now)
+    informacion = Toma_turnos.objects.filter(fecha_inicio__gte = now)
     if(len(informacion)==0):
         info = "no hay informacion"
     else:
@@ -221,7 +221,7 @@ def editar_perfil(request, pk):
         form = Editar_usuario_form(instance=post)
         form2 = Editar_usuario_form2(instance=post2)
     
-    informacion = Toma_turnos.objects.filter(fecha_termino__gte = now)
+    informacion = Toma_turnos.objects.filter(fecha_inicio__gte = now)
     if(len(informacion)==0):
         info = "no hay informacion"
     else:
@@ -246,13 +246,24 @@ def agregar_lista(request):
 @login_required
 def administracion(request):
     Lista_empaques = Usuario.objects.all()
-
-    informacion = Toma_turnos.objects.filter(fecha_termino__gte = now)
-    if(len(informacion)==0):
-        info = "no hay informacion"
+    if request.method == "POST":
+        form = TomaturnosForm(request.POST)
+        form_mensaje = Mensaje_inicioForm(request.POST)
+        if form.is_valid():
+            post = form.save(commit=True)
+            post.save()
+       
+        if form_mensaje.is_valid():
+            post2 = form_mensaje.save(commit=True)
+            post2.save() 
     else:
-        info = informacion[0]
-    return render(request,"administracion.html", {'informacion':info, 'lista_empaques':Lista_empaques})
+        form_mensaje = Mensaje_inicioForm()
+        form = TomaturnosForm()
+
+
+    informacion = Toma_turnos.objects.filter(fecha_inicio__gte = now)
+
+    return render(request,"administracion.html", {'informacion':informacion, 'lista_empaques':Lista_empaques, 'TomaturnosForm':TomaturnosForm, 'form_mensaje':form_mensaje})
 
 @login_required
 def ingresar_anotacion(request, pk):
@@ -268,11 +279,8 @@ def ingresar_anotacion(request, pk):
 
     form_anotaciones = AnotacionesForm
 
-    informacion = Toma_turnos.objects.filter(fecha_termino__gte = now)
-    if(len(informacion)==0):
-        info = "no hay informacion"
-    else:
-        info = informacion[0]
+    informacion = Toma_turnos.objects.filter(fecha_inicio__gte = now)
+    
     if(request.user.usuario.rol == 'A' ):
         return render(request,"ingresar_anotacion.html", {'informacion':info, 'pk':pk, 'form_anotaciones':form_anotaciones, 'perfil':perfil})
 

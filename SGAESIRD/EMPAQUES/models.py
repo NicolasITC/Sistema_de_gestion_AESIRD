@@ -44,10 +44,9 @@ class Usuario(models.Model):
 
 class Toma_turnos(models.Model):
 	fecha_inicio = models.DateTimeField()
-	fecha_termino = models.DateTimeField()
+	lugar_reunion = models.CharField(max_length=50, blank=True)
 	def __str__(self):
-		return "Fecha inicio: " + str(self.fecha_inicio) +" Fecha termino: "+ str(self.fecha_termino)
-
+		return "Fecha inicio: " + str(self.fecha_inicio) + "Lugar reunion: " + str(self.lugar_reunion)
 class Categoria_anotaciones(models.Model):
 	id_Categoria_anotaciones = models.AutoField(primary_key=True, help_text="ID")
 	nombre_anotacion = models.CharField(max_length=200)
@@ -63,6 +62,7 @@ class Anotaciones(models.Model):
 	usuario = models.ForeignKey(Usuario, on_delete=models.CASCADE)
 	def __str__(self):
 		return str(self.fecha) + " " + str(self.categoria_anotaciones) + " " + str(self.usuario.usuario)
+
 
 class Turnos(models.Model):
 	id_Turnos = models.AutoField(primary_key=True, help_text="ID")
@@ -114,3 +114,8 @@ class Lista_de_Espera(models.Model):
 	telefono = models.CharField(max_length=12)
 	def __str__(self):
 		return self.nombre + " " + self.apellido
+
+class Mensaje_inicio(models.Model):
+	titulo = models.CharField(max_length=50)
+	mensaje = models.CharField(max_length=200)
+	fecha = models.DateField(default=timezone.now)
