@@ -26,6 +26,16 @@
   </head>
   <body>  
     {% block banner %}
+    <div align="center">
+        {% if informacion == "no hay informacion" %}<marquee behavior="alternate" direction="left" height:="" 
+            loop="7" scrollamount="1" scrolldelay="2" width="100%">
+            <span style="font-size: 20px;color:#FFFFFF"> Aún no se define la próxima toma de turnos 
+        {% else %}<marquee behavior="alternate" bgcolor="#13895F" direction="left" height:="" 
+            loop="7" scrollamount="1" scrolldelay="2" width="100%">
+            <span style="font-size: 20px;color:#FFFFFF">Siguiente toma de turnos: {{ informacion.fecha_inicio }} en {{ informacion.lugar_reunion}}
+        {% endif %}
+        </span></marquee>
+    </div>
     {% endblock %}
 
     <!-- Left column -->

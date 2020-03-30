@@ -23,7 +23,6 @@ def turnos_base(actual, turnos):
         hoy=datetime.datetime.today()+ datetime.timedelta(weeks=actual)
     else:
         hoy=datetime.datetime.today()- datetime.timedelta(weeks=abs(actual))
-        
     week=hoy.strftime("%Y-W%W") 
     start_week = datetime.datetime.strptime(week + '-1', "%Y-W%W-%w")
     end_week = start_week + datetime.timedelta(days=7)   
@@ -37,17 +36,14 @@ def get_semana(actual):
         hoy=datetime.datetime.today()+ datetime.timedelta(weeks=actual)
     else:
         hoy=datetime.datetime.today()- datetime.timedelta(weeks=abs(actual))
-        
     week=hoy.strftime("%Y-W%W") 
     start_week = datetime.datetime.strptime(week + '-1', "%Y-W%W-%w")
     start_week = dateutil.parser.parse(str(start_week)).date()
     date_list = [start_week + datetime.timedelta(days=x) for x in range(7)]
-
     return date_list
 
 @login_required
 def home(request):
-    
     if request.method == "POST":
         form_anuncio = AnunciosForm(request.POST)
         if form_anuncio.is_valid():
@@ -55,25 +51,19 @@ def home(request):
             post_form_anuncio.usuario = Usuario.objects.filter(usuario = request.user)[:1].get()
             post_form_anuncio.save()
         anuncios=Anuncios.objects.all()
-        retorno = ""
-        registro = Toma_turnos.objects.filter(fecha_inicio__lte = now)
-        if(len(registro)>0):
-            retorno = "ahora"
     else:
         anuncios=Anuncios.objects.all()
-        retorno = ""
-        registro = Toma_turnos.objects.filter(fecha_inicio__lte = now)
-        if(len(registro)>0):
-            retorno = "ahora"
-    mensajeinicio= Mensaje_inicio.objects.latest('fecha')
+    if(len(Mensaje_inicio.objects.all())>0):
+        mensajeinicio= Mensaje_inicio.objects.latest('fecha')
+    else:
+        mensajeinicio= "1"
     informacion = Toma_turnos.objects.filter(fecha_inicio__gte = now)
     if(len(informacion)==0):
         info = "no hay informacion"
     else:
         info = informacion[0]
-
     form_anuncios = AnunciosForm()
-    return render(request, 'home.html', {'anuncios': anuncios, 'retorno':retorno, 'informacion':info, 'form_anuncios':AnunciosForm, 'mensaje_inicio':mensajeinicio})
+    return render(request, 'home.html', {'anuncios': anuncios, 'informacion':info, 'form_anuncios':AnunciosForm, 'mensaje_inicio':mensajeinicio})
 
 def lista(request):
     listas=Lista_de_Espera.objects.all()
@@ -81,22 +71,15 @@ def lista(request):
     now = datetime.datetime.today()
     registro = Toma_turnos.objects.filter(fecha_inicio__lte = now, fecha_inicio__gte = now)
     informacion = Toma_turnos.objects.filter(fecha_inicio__gte = now)
-    if(len(registro)>0):
-        retorno = "ahora"
-    print(len(informacion))
-    if(len(informacion)>0):
-        return render(request, 'lista_espera.html', {'listas': listas, 'retorno':retorno, 'informacion':informacion[0]})
+    if(len(informacion)==0):
+        info = "no hay informacion"
     else:
-        return render(request, 'lista_espera.html', {'listas': listas, 'retorno':retorno, 'informacion':"no hay informacion"})
+        info = informacion[0]
+    
+    
+    return render(request, 'lista_espera.html', {'listas': listas, 'retorno':retorno, 'informacion':info})
 
-@login_required
-def planilla_turnos(request, semana):
-    turnos=Turnos.objects.all()
-    start = datetime.datetime.strptime("07:00", "%H:%M")
-    hora = [start + datetime.timedelta(minutes=x*30) for x in range(35)]
-    sem=get_semana(semana)
-    turnos = turnos_base(semana, turnos)
-    return render(request, 'turnos.html', {'turnos':turnos, 'semana':semana,'sem':sem, 'hora':hora})
+
     
 @login_required
 def registrate(request):
@@ -122,15 +105,6 @@ def registrate(request):
     
 
 
-@login_required
-def toma_turnos(request, semana):
-    turnos=Turnos.objects.all()
-    start = datetime.datetime.strptime("07:00", "%H:%M")
-    hora = [start + datetime.timedelta(minutes=x*30) for x in range(35)]
-    sem=get_semana(semana)
-    turnos = turnos_base(semana, turnos)
-
-    return render(request, "toma_turnos.html",{'turnos':turnos, 'semana':semana,'sem':sem, 'hora':hora})
 
 @login_required
 def ver_anuncios(request, id_anun):
@@ -165,15 +139,7 @@ def ver_anuncios(request, id_anun):
 def registro_completado(request):
     return render(request,"registration/registro_completado.html")
 
-@login_required
-def asignar_turnos(request):
-    semana=1
-    turnos=Turnos.objects.all()
-    start = datetime.datetime.strptime("07:00", "%H:%M")
-    hora = [start + datetime.timedelta(minutes=x*30) for x in range(35)]
-    sem=get_semana(semana)
-    turnos = turnos_base(semana, turnos)
-    return render(request, 'asignar_turnos.html', {'turnos':turnos, 'semana':semana,'sem':sem, 'hora':hora})
+
 
 @login_required
 def finanzas(request):
@@ -262,8 +228,12 @@ def administracion(request):
 
 
     informacion = Toma_turnos.objects.filter(fecha_inicio__gte = now)
+    if(len(informacion)==0):
+        info = "no hay informacion"
+    else:
+        info = informacion[0]
 
-    return render(request,"administracion.html", {'informacion':informacion, 'lista_empaques':Lista_empaques, 'TomaturnosForm':TomaturnosForm, 'form_mensaje':form_mensaje})
+    return render(request,"administracion.html", {'informacion':info, 'lista_empaques':Lista_empaques, 'TomaturnosForm':TomaturnosForm, 'form_mensaje':form_mensaje})
 
 @login_required
 def ingresar_anotacion(request, pk):
@@ -280,6 +250,10 @@ def ingresar_anotacion(request, pk):
     form_anotaciones = AnotacionesForm
 
     informacion = Toma_turnos.objects.filter(fecha_inicio__gte = now)
+    if(len(informacion)==0):
+        info = "no hay informacion"
+    else:
+        info = informacion[0]
     
     if(request.user.usuario.rol == 'A' ):
         return render(request,"ingresar_anotacion.html", {'informacion':info, 'pk':pk, 'form_anotaciones':form_anotaciones, 'perfil':perfil})
@@ -291,5 +265,9 @@ def crear_planilla(request):
     print(users)
     sem=get_semana(semana)
     #turnos = turnos_base(semana, turnos)
-
-    return render(request, "crear_planilla.html",{'semana':semana,'sem':sem, 'users':users})
+    informacion = Toma_turnos.objects.filter(fecha_inicio__gte = now)
+    if(len(informacion)==0):
+        info = "no hay informacion"
+    else:
+        info = informacion[0]
+    return render(request, "crear_planilla.html",{'semana':semana,'informacion':info, 'sem':sem, 'users':users})

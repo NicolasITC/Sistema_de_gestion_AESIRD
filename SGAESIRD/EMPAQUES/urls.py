@@ -18,8 +18,6 @@ urlpatterns = [
     
     path('', views.home, name='home'),
     path('accounts/registrate', views.registrate, name='registrate'),
-    path('turnos/<negint:semana>/', views.planilla_turnos, name='turnos'),
-    path('toma_turnos/<negint:semana>', views.toma_turnos, name='toma_turnos'),
     path('crear_planilla/', views.crear_planilla, name='crear_planilla'),
     path('accounts/reset-password/', auth_views.PasswordResetView.as_view(
       template_name='reset_password.html',
@@ -42,14 +40,12 @@ urlpatterns = [
     ),
     path('anuncios/<negint:id_anun>', views.ver_anuncios, name='ver_anuncios'),
     path('accounts/registro_completado', views.registro_completado, name='registro_completado'),
-    path('asignar_turnos',views.asignar_turnos,name='asignar_turnos'),
     path('finanzas',views.finanzas,name='finanzas'),
     path('perfil_user=<negint:id_perfil>', views.ver_perfil, name='ver_perfil'),
     path('editar_perfil/<int:pk>/edit/', views.editar_perfil, name='editar_perfil'),
     path('listar',views.lista,name='listar'),
     path('agregar_lista_espera',views.agregar_lista,name='agregar_lista_espera'),
     path('administracion',views.administracion,name='administracion'),
-    path('crear_planilla',views.crear_planilla,name='crear_planilla'),
     path('ingresar_anotacion/<int:pk>',views.ingresar_anotacion,name='ingresar_anotacion'),
 
 
