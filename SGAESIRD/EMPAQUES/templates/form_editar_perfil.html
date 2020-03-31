@@ -23,11 +23,27 @@
                         <div class="panel-heading right">Editar perfil</div>
                         <div class="panel-body">
                             <header class="text-left">
-                                <form method="POST" enctype='multipart/form-data' class="post-form">{% csrf_token %}
+                                <form method="POST" enctype='multipart/form-data' class="post-form">{% csrf_token %} 
+                                    {% for field in form2 %}
+                                        <div class="fieldWrapper">
+                                            {{ field.errors }}
+                                            {{ field.label_tag }} {{ field }}
+                                            {% if field.help_text %}
+                                            <p class="help">{{ field.help_text|safe }}</p>
+                                            {% endif %}
+                                        </div>
+                                    {% endfor %}
 
-                                    {{ form2.as_p }}
-                                    {{ form.as_p }}
-                                    
+                                    {% for field in form %}
+                                        <div class="fieldWrapper">
+                                            {{ field.errors }}
+                                            {{ field.label_tag }} {{ field }} 
+                                            {% if field.help_text %}
+                                            <p class="help">{{ field.help_text|safe }}</p>
+                                            {% endif %}
+                                        </div>      
+                                    {% endfor %}
+            
                                     <button type="submit" class="templatemo-blue-button">Guardar</button>
                                     <button class="templatemo-blue-button"><a href="{% url 'ver_perfil' id_perfil=pk %}">Cancelar cambios y volver</a></button>                             
                                 </form>
