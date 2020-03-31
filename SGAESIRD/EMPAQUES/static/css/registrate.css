@@ -26,3 +26,7 @@
 .tooltip:hover .tooltiptext {
   visibility: visible;
 }
+.clear-fix{
+  clear: both;
+  float: none;
+}

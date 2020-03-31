@@ -8,25 +8,40 @@
 
 
 {% block barra_lateral %}
-    <li><a href="{% url 'home' %}" ><i class="fa fa-home fa-fw"></i>Inicio</a></li>
-    <li><a href="{% url 'turnos' 0 %}" ><i class="fa fa-bar-chart fa-fw"></i>Turnos</a></li>
-    <li><a href="data-visualization.html" class="active"><i class="fa fa-database fa-fw"></i>Administracion</a></li>
-    <li><a href="{% url 'logout' %}"><i class="fa fa-eject fa-fw"></i>Desconectar</a></li>
+  <li><a href="{% url 'home' %}" ><i class="fa fa-home fa-fw"></i>Inicio</a></li>
+  <li><a href="" ><i class="fa fa-bar-chart fa-fw"></i>Turnos</a></li>
+  <li><a href="{% url 'administracion' %}" class="active"><i class="fa fa-database fa-fw"></i>Administracion</a></li>
+  <li><a href="{% url 'finanzas' %}"><i class="fa fa-line-chart fa-fw"></i>Finanzas</a></li>
+  <li><a href="{% url 'logout' %}"><i class="fa fa-eject fa-fw"></i>Desconectar</a></li>
 {% endblock %}
 
 
 {% block content %}
+
 <div class="templatemo-content col-1 light-gray-bg">
 <div class="templatemo-content-container">
     <div class="templatemo-content-widget white-bg">
-        <h2 class="margin-bottom-10">Preferences</h2>
-        
+         <div class="templatemo-content-widget white-bg col-2">
+    
+      <div class="templatemo-flex-row flex-content-row">
+        <div class="col-1">
+          <div class="panel panel-default margin-10">
+            <div class="panel-body">
+              
+                <div class="templatemo-flex-row flex-content-row mostrar ">
+                  <div class="templatemo-blue-button">REGISTRAR USUARIO</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+</div>
         <form method="POST" class="templatemo-login-form" enctype="multipart/form-data">
 
         {% csrf_token %}
         {{ form_account.non_field_errors }}
         {{ form_usuario.non_field_errors }}
-
+        <div class="templatemo-content-widget white-bg">
         <div class="row form-group">
         <div class="col-lg-6 col-md-6 form-group">
                 <label for="{{ form_account.username.id_for_label }}">Nombre de usuario:</label>
@@ -154,12 +169,13 @@
                 {% endif %}
         </div>
         </div>
-
-        <td>
-            <button align ="center"   type="submit"><span>Guardar:</span></button>
-        </td>
+        <div class="form-group">
+            <button type="submit" class="templatemo-blue-button" >Agregar</button>
+        </div>
+        <div class="clearfix"></div>
+    </div>
     </form>
 </div>
 </div>
-
+<div class="clear-fix"
 {% endblock content %}

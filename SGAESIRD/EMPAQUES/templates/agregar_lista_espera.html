@@ -8,9 +8,12 @@
 <link rel="stylesheet" href="{% static "css/home.css" %}">
 
 {% endblock %}
-{% block barra_lateral %}
-    <li><a href="{% url 'logout' %}"><i class="fa fa-eject fa-fw"></i>Desconectar</a></li>
+
+{% if not user.is_authenticated %}
+{% block banner %}
 {% endblock %}
+{% endif %}
+
 {% block content%}
 <div class="col-1">
     <div class="panel panel-default margin-10">
@@ -28,6 +31,9 @@
     </div>                
     </div>
     <div class="clearfix"></div>
-    <button class="volver-login"><a href="{% url 'listar' %}"> Volver </a></button>          
+    {% if not user.is_authenticated %}
+        <button class="volver-login"><a href="{% url 'login' %}"> Volver </a></button>
+    {% endif %}
+    
 </div>
 {% endblock content%}

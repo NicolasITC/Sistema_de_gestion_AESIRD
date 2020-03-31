@@ -8,7 +8,7 @@ from django.shortcuts import render, get_object_or_404
 
 from .models import Usuario, Turno, Toma_turnos, Anuncios, Comentarios, User, Lista_de_Espera, Anotaciones, Mensaje_inicio
 
-from .forms import SignUpForm, Usuario_Form, Editar_usuario_form, Editar_usuario_form2, Agregar_Lista_Espera, TomaturnosForm, Mensaje_inicioForm, AnunciosForm, ComentariosForm, AnotacionesForm, TurnoForm
+from .forms import SignUpForm, Usuario_Form, Editar_usuario_form, Editar_usuario_form2, Agregar_Lista_Espera, TomaturnosForm, Mensaje_inicioForm, AnunciosForm, ComentariosForm, AnotacionesForm, TurnoForm, Categoria_anotacionesForm
 
 import datetime
 from datetime import timedelta
@@ -65,6 +65,8 @@ def home(request):
     form_anuncios = AnunciosForm()
     return render(request, 'home.html', {'anuncios': anuncios, 'informacion':info, 'form_anuncios':AnunciosForm, 'mensaje_inicio':mensajeinicio})
 
+
+@login_required
 def lista(request):
     listas=Lista_de_Espera.objects.all()
     retorno = ""
@@ -97,7 +99,7 @@ def registrate(request):
             post_form_usuario.fecha_ingreso = timezone.now()
             post_form_usuario.cant_turnos_disponibles = 3
             post_form_usuario.save()
-            return redirect('registro_completado')
+            return redirect('administracion')
     else:
         form_account = SignUpForm()
         form_usuario = Usuario_Form()
@@ -158,17 +160,14 @@ def ver_perfil(request, id_perfil):
     else:
         info = informacion[0]
     anotaciones=Anotaciones.objects.filter(usuario__id_Usuario=id_perfil)
-    turnos=Turno.objects.filter(usuario__id_Usuario=id_perfil)
+    
     current_user = request.user
     if len(anotaciones) > 0:
         a=anotaciones
     else:
         a=None
-    if len(turnos) > 0:
-        b=turnos
-    else:
-        b=None    
-    return render(request, 'perfil.html', {'perfil':perfil, 'id_perfil':id_perfil, 'anotaciones':a, 'informacion':info, 'turnos':b, 'current_user':current_user.id})    
+      
+    return render(request, 'perfil.html', {'perfil':perfil, 'id_perfil':id_perfil, 'anotaciones':a, 'informacion':info, 'current_user':current_user.id})    
        
 
 def editar_perfil(request, pk):
@@ -211,10 +210,11 @@ def agregar_lista(request):
 
 @login_required
 def administracion(request):
-    Lista_empaques = Usuario.objects.all()
+    Lista_empaques = Usuario.objects.all()  
     if request.method == "POST":
         form = TomaturnosForm(request.POST)
         form_mensaje = Mensaje_inicioForm(request.POST)
+        form_anotacion = Categoria_anotacionesForm(request.POST)
         if form.is_valid():
             post = form.save(commit=True)
             post.save()
@@ -222,9 +222,14 @@ def administracion(request):
         if form_mensaje.is_valid():
             post2 = form_mensaje.save(commit=True)
             post2.save() 
+        
+        if form_anotacion.is_valid():
+            post3 = form_anotacion.save(commit=True)
+            post3.save()
     else:
         form_mensaje = Mensaje_inicioForm()
         form = TomaturnosForm()
+        form_anotacion = Categoria_anotacionesForm()
 
 
     informacion = Toma_turnos.objects.filter(fecha_inicio__gte = now)
@@ -233,7 +238,7 @@ def administracion(request):
     else:
         info = informacion[0]
 
-    return render(request,"administracion.html", {'informacion':info, 'lista_empaques':Lista_empaques, 'TomaturnosForm':TomaturnosForm, 'form_mensaje':form_mensaje})
+    return render(request,"administracion.html", {'informacion':info, 'lista_empaques':Lista_empaques, 'TomaturnosForm':TomaturnosForm, 'form_mensaje':form_mensaje, 'form_anotacion': form_anotacion})
 
 @login_required
 def ingresar_anotacion(request, pk):
@@ -285,3 +290,10 @@ def crear_planilla(request):
     else:
         info = informacion[0]
     return render(request, "crear_planilla.html",{'semana':semana,'informacion':info, 'sem':sem, 'users':users, 'form_turno':form_turno})
+
+
+def delete(reques,persona_id):
+    usuario=Usuario.objects.get(id_Usuario=persona_id)
+    usuario.delete()
+    return redirect('administracion')
+
