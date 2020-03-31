@@ -103,7 +103,12 @@ def registrate(request):
     else:
         form_account = SignUpForm()
         form_usuario = Usuario_Form()
-    return render(request, 'registration/registrate.html', {'form_account': form_account, 'form_usuario': form_usuario})
+    informacion = Toma_turnos.objects.filter(fecha_inicio__gte = now)
+    if(len(informacion)==0):
+        info = "no hay informacion"
+    else:
+        info = informacion[0]
+    return render(request, 'registration/registrate.html', {'form_account': form_account, 'form_usuario': form_usuario,'informacion':info})
     
 
 
@@ -290,6 +295,7 @@ def crear_planilla(request):
     else:
         info = informacion[0]
     return render(request, "crear_planilla.html",{'semana':semana,'informacion':info, 'sem':sem, 'users':users, 'form_turno':form_turno})
+
 
 
 def delete(reques,persona_id):
