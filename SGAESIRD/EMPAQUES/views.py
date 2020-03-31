@@ -171,16 +171,22 @@ def ver_perfil(request, id_perfil):
        
 
 def editar_perfil(request, pk):
+    perfil=Usuario.objects.filter(id_Usuario=pk)
     post2 = get_object_or_404(User, pk=pk)
     post = get_object_or_404(Usuario, pk=pk)
     if request.method == "POST":
         form2 = Editar_usuario_form2(request.POST, instance=post2)
         form = Editar_usuario_form(request.POST, request.FILES, instance=post)
-        if form.is_valid() and  form2.is_valid:
-            post = form.save(commit=False)
+        if form.is_valid and  form2.is_valid:
             post2 = form2.save(commit=False)
-            post.save()
+            post = form.save(commit=False)   
+            if request.user.usuario.rol != 'A':
+                post.cant_turnos_disponibles = perfil[0].cant_turnos_disponibles
+                post.activo = perfil[0].activo
+            
             post2.save()
+            post.save()
+            
             return redirect('ver_perfil', id_perfil=pk)
     else:
         form = Editar_usuario_form(instance=post)
@@ -192,7 +198,7 @@ def editar_perfil(request, pk):
     else:
         info = informacion[0]
 
-    return render(request, 'form_editar_perfil.html', {'form2': form2, 'form': form, 'informacion':info, 'pk':pk})
+    return render(request, 'form_editar_perfil.html', {'form2': form2, 'form': form, 'informacion':info, 'pk':pk, 'activo':perfil[0].activo})
 
 
 def agregar_lista(request):
