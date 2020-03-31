@@ -19,23 +19,14 @@
 {% block content %}
 
 <div class="templatemo-content col-1 light-gray-bg">
-<div class="templatemo-content-container">
-    <div class="templatemo-content-widget white-bg">
-         <div class="templatemo-content-widget white-bg col-2">
-    
-      <div class="templatemo-flex-row flex-content-row">
-        <div class="col-1">
-          <div class="panel panel-default margin-10">
-            <div class="panel-body">
-              
-                <div class="templatemo-flex-row flex-content-row mostrar ">
-                  <div class="templatemo-blue-button">REGISTRAR USUARIO</div>
-                </div>
-            </div>
+    <div class="panel panel-default templatemo-content-widget white-bg no-padding templatemo-overflow-hidden">
+        <i class="fa fa-times"></i>
+        <div class="panel-heading templatemo-position-relative"><h2 class="text-uppercase">
+            Registrar Usuario
+             </h2>
         </div>
+
     </div>
-    </div>
-</div>
         <form method="POST" class="templatemo-login-form" enctype="multipart/form-data">
 
         {% csrf_token %}

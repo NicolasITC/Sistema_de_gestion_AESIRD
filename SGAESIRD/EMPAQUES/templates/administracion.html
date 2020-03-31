@@ -133,6 +133,8 @@
         </div>
                             
       </div> <!-- Second row ends -->
+
+      
       <div class="templatemo-flex-row flex-content-row">
         <div class="col-1">
           <div class="panel panel-default margin-10"> 
@@ -167,19 +169,7 @@
             </div>                
           </div>                           
         </div>
-        <div class="col-1">
-          <div class="panel panel-default margin-10">
-            
-            <div class="panel-body">
-                
-              <form action="">
-                <div class="templatemo-flex-row flex-content-row">
-                  <button class="templatemo-blue-button">Eliminar usuario</button>
-                </div>
-              </form>
-            </div>                
-          </div>                           
-      </div>               
+             
       </div>
       
     {% endif %}
@@ -231,8 +221,8 @@
                 {% if user.usuario.get_rol_display == "Administrador" %}
                 <td><a href="{% url 'editar_perfil' empaque.id_Usuario %}" class="templatemo-edit-btn">Modificar perfil</a></td>
                 <td><a href="{% url 'ingresar_anotacion' empaque.id_Usuario %}" class="templatemo-edit-btn">Ingresar anotacion</a></td>
-                <td><a href="{% url 'delete' empaque.id_Usuario %}" 
-          onClick="return confirm('¿Seguro que quieres borrar a {{empaque.usuario.first_name }} {{empaque.usuario.last_name }}?');">
+                <td><a href="{% url 'delete' empaque.id_Usuario %}" class="templatemo-edit-btn" 
+          onClick="return confirm('¿Seguro que quieres borrar a {{empaque.usuario.first_name }} {{empaque.usuario.last_name }}?');"><i class="fa fa-trash fa-fw"></i>
             Borrar
         </a></td>
 
