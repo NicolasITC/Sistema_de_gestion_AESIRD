@@ -5,6 +5,7 @@ from django.views.generic import CreateView, TemplateView
 from django.contrib.auth.decorators import login_required
 from django.utils import timezone
 from django.shortcuts import render, get_object_or_404
+from django.core.paginator import Paginator
 
 from .models import Usuario, Turno, Toma_turnos, Anuncios, Comentarios, User, Lista_de_Espera, Anotaciones, Mensaje_inicio
 
@@ -65,7 +66,6 @@ def home(request):
     form_anuncios = AnunciosForm()
     return render(request, 'home.html', {'anuncios': anuncios, 'informacion':info, 'form_anuncios':AnunciosForm, 'mensaje_inicio':mensajeinicio})
 
-
 @login_required
 def lista(request):
     listas=Lista_de_Espera.objects.all()
@@ -81,8 +81,6 @@ def lista(request):
     
     return render(request, 'lista_espera.html', {'listas': listas, 'retorno':retorno, 'informacion':info})
 
-
-    
 @login_required
 def registrate(request):
     if request.method == "POST":
@@ -110,9 +108,6 @@ def registrate(request):
         info = informacion[0]
     return render(request, 'registration/registrate.html', {'form_account': form_account, 'form_usuario': form_usuario,'informacion':info})
     
-
-
-
 @login_required
 def ver_anuncios(request, id_anun):
     anu=Anuncios.objects.filter(id_Anuncios=id_anun)
@@ -141,12 +136,9 @@ def ver_anuncios(request, id_anun):
     else:
         return render(request, "anuncios.html", {'anu':None, 'com':None, 'informacion':info, 'form_comentarios':form_comentarios})
 
-
 @login_required
 def registro_completado(request):
     return render(request,"registration/registro_completado.html")
-
-
 
 @login_required
 def finanzas(request):
@@ -157,6 +149,7 @@ def finanzas(request):
         info = informacion[0]
     return render(request,"finanzas.html", {'informacion':info})
 
+@login_required
 def ver_perfil(request, id_perfil):
     perfil=Usuario.objects.filter(id_Usuario=id_perfil)
     informacion = Toma_turnos.objects.filter(fecha_inicio__gte = now)
@@ -174,7 +167,7 @@ def ver_perfil(request, id_perfil):
       
     return render(request, 'perfil.html', {'perfil':perfil, 'id_perfil':id_perfil, 'anotaciones':a, 'informacion':info, 'current_user':current_user.id})    
        
-
+@login_required
 def editar_perfil(request, pk):
     perfil=Usuario.objects.filter(id_Usuario=pk)
     post2 = get_object_or_404(User, pk=pk)
@@ -204,7 +197,6 @@ def editar_perfil(request, pk):
         info = informacion[0]
 
     return render(request, 'form_editar_perfil.html', {'form2': form2, 'form': form, 'informacion':info, 'pk':pk, 'activo':perfil[0].activo})
-
 
 def agregar_lista(request):
     if request.method == "POST":
@@ -276,20 +268,6 @@ def ingresar_anotacion(request, pk):
 
 @login_required
 def crear_planilla(request):
-
-    if request.method == "POST":
-        form_turno = TurnoForm(request.POST)
-        if form_turno.is_valid():
-            post_form_turno = form_turno.save(commit=False)
-            post_form_turno.fecha = timezone.now()
-            post_form_turno.save()
-
-    form_turno = TurnoForm
-
-
-
-
-
     semana = 1
     users = Usuario.objects.all()
     print(users)
@@ -300,10 +278,24 @@ def crear_planilla(request):
         info = "no hay informacion"
     else:
         info = informacion[0]
-    return render(request, "crear_planilla.html",{'semana':semana,'informacion':info, 'sem':sem, 'users':users, 'form_turno':form_turno})
 
+    fechas = get_semana(0)
+    paginator = Paginator(fechas,1)
+    page = request.GET.get('page')
+    post = paginator.get_page(page)
 
+    if request.method == "POST":
+        form_turno = TurnoForm(request.POST)
+        if form_turno.is_valid():
+            post_form_turno = form_turno.save(commit=False)
+            post_form_turno.fecha = fechas[int(page)]
+            post_form_turno.save()
 
+    form_turno = TurnoForm
+
+    return render(request, "crear_planilla.html",{'semana':semana,'informacion':info, 'sem':sem, 'users':users, 'form_turno':form_turno, 'fechas':fechas, 'post':post})
+
+@login_required
 def delete(reques,persona_id):
     usuario=Usuario.objects.get(id_Usuario=persona_id)
     usuario.activo='E'
