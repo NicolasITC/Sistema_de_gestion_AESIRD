@@ -253,6 +253,12 @@ def ingresar_anotacion(request, pk):
         if form_anotaciones.is_valid():
             post_form_anotaciones = form_anotaciones.save(commit=False)
             post_form_anotaciones.usuario = Usuario.objects.filter(id_Usuario = pk)[:1].get()
+
+            num = Usuario.objects.get(id_Usuario = pk).cant_turnos_disponibles + post_form_anotaciones.turnos_restados
+
+            t = Usuario.objects.get(id_Usuario = pk)
+            t.cant_turnos_disponibles = num
+            t.save(update_fields=['cant_turnos_disponibles'])
             post_form_anotaciones.save()
 
     form_anotaciones = AnotacionesForm
