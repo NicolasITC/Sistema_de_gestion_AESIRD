@@ -306,6 +306,7 @@ def crear_planilla(request):
 
 def delete(reques,persona_id):
     usuario=Usuario.objects.get(id_Usuario=persona_id)
-    usuario.delete()
+    usuario.activo='E'
+    usuario.save()
     return redirect('administracion')
 
