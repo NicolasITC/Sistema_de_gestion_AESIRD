@@ -49,6 +49,7 @@ urlpatterns = [
     path('administracion',views.administracion,name='administracion'),
     path('ingresar_anotacion/<int:pk>',views.ingresar_anotacion,name='ingresar_anotacion'),
     path('delete/<int:persona_id>', views.delete,name="delete"),
+    path('delete_anuncio/<int:id_anun>', views.delete_anuncio,name="delete_anuncio"),
 
 
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

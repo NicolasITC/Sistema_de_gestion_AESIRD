@@ -82,6 +82,7 @@
                         <th>Usuario</th>
                         <th>Titulo</th>
                         <th>Fecha</th>
+                        <th>ELiminar anuncio</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -91,6 +92,10 @@
                             alt="Profile Photo" align="left" height="30" width="30" class="img-responsive">&nbsp;&nbsp;{{ user.usuario.usuario}}</a></td>
                         <td><a href="{% url 'ver_anuncios' id_anun=user.id_Anuncios %}">{{ user.titulo }}</a></td>
                         <td><a href="{% url 'ver_anuncios' id_anun=user.id_Anuncios %}">{{ user.fecha }}</a></td>
+                        <td><a href="{% url 'delete_anuncio' id_anun=user.id_Anuncios %}" class="templatemo-edit-btn" 
+          onClick="return confirm('¿Seguro que quieres borrar el anuncio?');"><i class="fa fa-trash fa-fw"></i>
+            Borrar
+        </a></td>
                     </tr>
                     {% endfor %}    
                 </tbody>

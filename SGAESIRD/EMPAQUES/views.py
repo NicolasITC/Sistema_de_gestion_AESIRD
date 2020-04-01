@@ -316,9 +316,16 @@ def turnos(request, semana):
 
 
 @login_required
-def delete(reques,persona_id):
+def delete(request,persona_id):
     usuario=Usuario.objects.get(id_Usuario=persona_id)
     usuario.activo='E'
     usuario.save()
     return redirect('administracion')
 
+@login_required
+def delete_anuncio(request,id_anun):
+    anu=Anuncios.objects.filter(id_Anuncios=id_anun)
+    anu=Anuncios.objects.get(id_Anuncios=id_anun)
+
+    anu.delete()
+    return redirect('home')
