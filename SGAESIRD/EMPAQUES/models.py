@@ -84,6 +84,8 @@ class Turno(models.Model):
 	emp13=models.ForeignKey(Usuario, on_delete=models.CASCADE, related_name='13+', blank=True, null=True)
 	def __str__(self):
 		return str(self.fecha) 
+	class Meta:
+		ordering = ('fecha',)
 
 
 class Finanzas(models.Model):

@@ -299,34 +299,20 @@ def crear_planilla(request):
         return redirect('home')
 
 @login_required
-def turnos(request,pk):
-
-    semana = 1
-    users = Usuario.objects.all()
-    print(users)
-    sem=get_semana(semana)
-    #turnos = turnos_base(semana, turnos)
-    informacion = Toma_turnos.objects.filter(fecha_inicio__gte = now)
+def turnos(request, semana):
+    sem  = get_semana(semana)
+    sem2 = get_semana(semana+1)
+    informacion = Toma_turnos.objects.filter()
     if(len(informacion)==0):
         info = "no hay informacion"
     else:
         info = informacion[0]
-    sem2=get_semana(semana+1)
-    fechas = get_semana(0)
-    paginator = Paginator(fechas,1)
+    fechas = get_semana(semana)
+    turno = Turno.objects.filter(fecha__gte = sem[0], fecha__lte = sem2[0]).order_by('fecha').distinct()
+    paginator = Paginator(turno,1)
     page = request.GET.get('page',1)
     post = paginator.get_page(page)
-    turnos=Turno.objects.filter(fecha__gte=pk,fecha__lte=fechas[6])
-    print(turnos)
-    if request.method == "POST":
-        form_turno = TurnoForm(request.POST)
-        if form_turno.is_valid():
-            post_form_turno = form_turno.save(commit=False)
-            post_form_turno.fecha = fechas[int(page)]
-            post_form_turno.save()
-    form_turno = TurnoForm
-
-    return render(request, "turnos.html",{'semana':semana,'informacion':info, 'sem':sem, 'users':users, 'form_turno':form_turno, 'fechas':fechas, 'post':post})
+    return render(request, "turnos.html",{'semana':semana,'informacion':info, 'sem':sem,'fechas':fechas, 'post':post})
 
 
 @login_required

@@ -8,7 +8,7 @@
 
 {% block barra_lateral %}
     <li><a href="{% url 'home' %}"><i class="fa fa-home fa-fw"></i>Inicio</a></li>
-    <li><a href="" class="active"><i class="fa fa-bar-chart fa-fw"></i>Turnos</a></li>
+    <li><a href="{% url 'turnos' 0 %}" class="active"><i class="fa fa-bar-chart fa-fw"></i>Turnos</a></li>
     <li><a href="{% url 'administracion' %}"><i class="fa fa-database fa-fw"></i>Administracion</a></li>
     <li><a href="{% url 'finanzas' %}"><i class="fa fa-line-chart fa-fw"></i>Finanzas</a></li>
     <li><a href="{% url 'logout' %}"><i class="fa fa-eject fa-fw"></i>Desconectar</a></li>
@@ -20,16 +20,17 @@
     <div class="panel panel-default templatemo-content-widget white-bg no-padding templatemo-overflow-hidden">
         <i class="fa fa-times"></i>
         <div class="panel-heading templatemo-position-relative"><h2 class="text-uppercase">
+            <a href="{% url 'turnos' semana|add:"-1" %}">Anterior &raquo;</a> 
             Semana del 
             {% for d in sem %}
                 {% if forloop.first %}
                     {{ d|date:"j \d\e F" }} al 
                 {% endif %}
-                 
                 {% if forloop.last %}
                     {{ d|date:"j \d\e F \d\e Y" }}
                 {% endif %}
             {% endfor %}
+            <a href="{% url 'turnos' semana|add:"1" %}">&raquo; Siguiente</a></li>
              </h2>
         </div>
     </div>
@@ -39,7 +40,6 @@
         <div class="row align-items-center">
             <div class="col-sm-3"></div>
             <div class="col-sm-6">
-
                 <div class="pagination">
                     <li class="step-links">
                         {% if post.has_previous %}
@@ -57,62 +57,57 @@
                         {% endif %}
                     </li>
                 </div>
-
                 <div class="table-responsive">
-                    <form method="POST" class="">
-                        <table class="table table-striped table-bordered">
-                            <div class="panel-heading templatemo-position-relative">            
-                                <thead>
-                                    <tr>                      
-                                        <th colspan="2" >{{ post.object_list.0|date:"l j \d\e F" }}</th>
+                    <table class="table table-striped table-bordered">
+                        <div class="panel-heading templatemo-position-relative">            
+                            <thead>
+                                <tr>                      
+                                    <th colspan="2" >{% if forloop.last %}{{ d|date:"l j \d\e F" }}{% endif %}</th>
                                     </tr>
-                                </thead>
-                                <tbody>{% csrf_token %}      
+                            </thead>
+                            <tbody>  
+                                <tr>
+                                    <th rowspan="2">9:00 - 12:00</th>                                    
+                                    <td> {% with post|first as i %}{{ i.emp01 }}{% endwith %} </td>                                        
                                     <tr>
-                                        <th rowspan="2">9:00 - 12:00</th>
-                                        <td> {{form_turno.emp01}} </td>                                        
-                                        <tr>
-                                            <td>{{form_turno.emp02}}</td>
-                                        </tr>
+                                        <td>{% with post|first as i %}{{ i.emp02 }}{% endwith %}</td>
                                     </tr>
+                                </tr>
+                                <tr>
+                                    <th rowspan="2">12:00 - 15:30:</th>
+                                    <td>{% with post|first as i %}{{ i.emp03 }}{% endwith %}</td>
+                                </tr>
+                                <tr>
+                                    <td>{% with post|first as i %}{{ i.emp04 }}{% endwith %}</td>
+                                </tr>
+                                <tr>
+                                    <th rowspan="3">15:30 - 19:00</th>
+                                    <td>{% with post|first as i %}{{ i.emp05 }}{% endwith %}</td>
                                     <tr>
-                                        <th rowspan="2">12:00 - 15:30:</th>
-                                        <td>{{form_turno.emp03}}</td>
+                                        <td>{% with post|first as i %}{{ i.emp06 }}{% endwith %}</td>
                                     </tr>
+                                <tr>
+                                <td>{% with post|first as i %}{{ i.emp07 }}{% endwith %}</td>
+                                </tr>
+                                <tr>
+                                <th rowspan="4">19:00 - 22:00</th>
+                                <td>{% with post|first as i %}{{ i.emp08 }}{% endwith %}</td>
                                     <tr>
-                                        <td>{{form_turno.emp04}}</td>
+                                        <td>{% with post|first as i %}{{ i.emp09 }}{% endwith %}</td>
                                     </tr>
-                                    <tr>
-                                        <th rowspan="3">15:30 - 19:00</th>
-                                        <td>{{form_turno.emp05}}</td>
-                                        <tr>
-                                            <td>{{form_turno.emp06}}</td>
-                                        </tr>
-                                    <tr>
-                                    <td>{{form_turno.emp07}}</td>
-                                    </tr>
-                                    <tr>
-                                    <th rowspan="4">19:00 - 22:00</th>
-                                    <td>{{form_turno.emp08}}</td>
-                                        <tr>
-                                            <td>{{form_turno.emp09}}</td>
-                                        </tr>
-                                    <tr>
-                                    <td>{{form_turno.emp10}}</td>
-                                    </tr>
-                                    <tr>
-                                        <td>{{form_turno.emp11}}</td>
-                                    </tr>
-                                </tbody>
-                            </div>
-                        </table> 
-                    </form>
+                                <tr>
+                                <td>{% with post|first as i %}{{ i.emp10 }}{% endwith %}</td>
+                                </tr>
+                                <tr>
+                                    <td>{% with post|first as i %}{{ i.emp11 }}{% endwith %}</td>
+                                </tr>
+                            </tbody>
+                        </div>
+                    </table> 
                 </div>
-               
             </div>
         </div>     
     </div>
-    
 </div>
 
 
