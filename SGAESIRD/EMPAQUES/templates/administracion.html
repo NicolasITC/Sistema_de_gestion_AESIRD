@@ -51,34 +51,7 @@
   <div class="templatemo-content-widget white-bg col-2">
     {% if user.usuario.get_rol_display == "Administrador" %}
       <div class="templatemo-flex-row flex-content-row">
-        <div class="col-1">
-          <div class="panel panel-default margin-10">
-            <div class="panel-body">
-              <form method="POST" class="">
-                <div class="templatemo-flex-row flex-content-row mostrar ">
-                  <div class="button">
-                    <div class="templatemo-blue-button">Editar fecha y lugar reunión</div>
-                  </div>
-                </div>
-                <div class="input-group date oculto" id="datetimepicker1" data-target-input="nearest" style="float:left">
-                  <label>Fecha inicio: </label>
-                  {{ TomaturnosForm.fecha_inicio }}
-                  <div class="input-group-append" data-target="#datetimepicker1" data-toggle="datetimepicker">
-                    <div class="input-group-text"><i class="fa fa-calendar"></i></div>
-                  </div>
-                </div>
-                <div class="form-group oculto" style="float:left">                      
-                  <label>Lugar de reunión: </label>
-                  {% csrf_token %}
-                  {{ TomaturnosForm.lugar_reunion }}                              
-                </div>              
-                <div class="form-group oculto" style="float:right">
-                  <button type="submit" class="templatemo-blue-button" >Publicar</button>
-                </div>
-              </form>
-            </div>                
-          </div>              
-        </div>
+
         <div class="col-1">
           <div class="panel panel-default margin-10">
             

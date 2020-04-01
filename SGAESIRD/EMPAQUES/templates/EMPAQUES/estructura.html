@@ -34,11 +34,13 @@
         <header class="templatemo-site-header">
           <div class="square"></div>
           <h1>Empaques</h1>
-        </header>
+        </header><a href = "{% url 'ver_perfil' id_perfil=user.usuario.id_Usuario %}">
         <div class="profile-photo-container">
-          <img src="{{ user.usuario.foto.url }}" alt="Profile Photo" class="img-responsive">  
+            
+              <img src="{{ user.usuario.foto.url }}" alt="Profile Photo" class="img-responsive">  
+            
           <div class="profile-photo-overlay"></div>
-        </div>      
+        </div>   </a>   
 
         <div class="mobile-menu-icon">
             <i class="fa fa-bars"></i>

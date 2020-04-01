@@ -50,6 +50,7 @@ class Editar_usuario_form(forms.ModelForm):
             'activo',
             'cant_turnos_disponibles',
             'universidad',
+            'rol',
         }
 class Editar_usuario_form2(forms.ModelForm):
     class Meta:

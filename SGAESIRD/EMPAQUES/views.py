@@ -181,6 +181,7 @@ def editar_perfil(request, pk):
             if request.user.usuario.rol != 'A':
                 post.cant_turnos_disponibles = perfil[0].cant_turnos_disponibles
                 post.activo = perfil[0].activo
+                post.rol = perfil[0].rol
             
             post2.save()
             post.save()

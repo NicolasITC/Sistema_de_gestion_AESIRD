@@ -24,6 +24,7 @@
                         <div class="panel-body">
                             <header class="text-left">
                                 <form method="POST" enctype='multipart/form-data' class="post-form">{% csrf_token %} 
+                                    
                                     {% for field in form2 %}
                                         <div class="fieldWrapper">
                                             {{ field.errors }}
