@@ -268,35 +268,40 @@ def ingresar_anotacion(request, pk):
 
 @login_required
 def crear_planilla(request):
-    semana = 1
-    users = Usuario.objects.all()
-    print(users)
-    sem=get_semana(semana)
-    #turnos = turnos_base(semana, turnos)
-    informacion = Toma_turnos.objects.filter(fecha_inicio__gte = now)
-    if(len(informacion)==0):
-        info = "no hay informacion"
+
+    print(request.user.usuario.rol)
+
+    if request.user.usuario.rol == 'A':
+        semana = 1
+        users = Usuario.objects.all()
+        print(users)
+        sem=get_semana(semana)
+        #turnos = turnos_base(semana, turnos)
+        informacion = Toma_turnos.objects.filter(fecha_inicio__gte = now)
+        if(len(informacion)==0):
+            info = "no hay informacion"
+        else:
+            info = informacion[0]
+        fechas = get_semana(0)
+        paginator = Paginator(fechas,1)
+        page = request.GET.get('page',1)
+        post = paginator.get_page(page)
+
+        if request.method == "POST":
+            form_turno = TurnoForm(request.POST)
+            if form_turno.is_valid():
+                post_form_turno = form_turno.save(commit=False)
+                post_form_turno.fecha = fechas[int(page)]
+                post_form_turno.save()
+        form_turno = TurnoForm
+        return render(request, "crear_planilla.html",{'semana':semana,'informacion':info, 'sem':sem, 'users':users, 'form_turno':form_turno, 'fechas':fechas, 'post':post})
     else:
-        info = informacion[0]
-
-    fechas = get_semana(0)
-    paginator = Paginator(fechas,1)
-    page = request.GET.get('page')
-    post = paginator.get_page(page)
-
-    if request.method == "POST":
-        form_turno = TurnoForm(request.POST)
-        if form_turno.is_valid():
-            post_form_turno = form_turno.save(commit=False)
-            post_form_turno.fecha = fechas[int(page)]
-            post_form_turno.save()
-
-    form_turno = TurnoForm
-
-    return render(request, "crear_planilla.html",{'semana':semana,'informacion':info, 'sem':sem, 'users':users, 'form_turno':form_turno, 'fechas':fechas, 'post':post})
+        return redirect('home')
+        
 
 @login_required
 def turnos(request):
+
     semana = 1
     users = Usuario.objects.all()
     print(users)
