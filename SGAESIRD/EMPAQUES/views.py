@@ -273,7 +273,7 @@ def crear_planilla(request):
 
     if request.user.usuario.rol == 'A':
         semana = 1
-        users = Usuario.objects.all()
+        users = Usuario.objects.exclude(activo='S').exclude(activo='E')
         print(users)
         sem=get_semana(semana)
         #turnos = turnos_base(semana, turnos)
