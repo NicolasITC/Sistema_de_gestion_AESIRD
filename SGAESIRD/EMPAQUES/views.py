@@ -51,9 +51,9 @@ def home(request):
             post_form_anuncio = form_anuncio.save(commit=False)
             post_form_anuncio.usuario = Usuario.objects.filter(usuario = request.user)[:1].get()
             post_form_anuncio.save()
-        anuncios=Anuncios.objects.all()
+        anuncios=Anuncios.objects.all().order_by('-fecha')
     else:
-        anuncios=Anuncios.objects.all()
+        anuncios=Anuncios.objects.all().order_by('-fecha')
     if(len(Mensaje_inicio.objects.all())>0):
         mensajeinicio= Mensaje_inicio.objects.latest('fecha')
     else:
@@ -313,7 +313,6 @@ def turnos(request, semana):
     page = request.GET.get('page',1)
     post = paginator.get_page(page)
     return render(request, "turnos.html",{'semana':semana,'informacion':info, 'sem':sem,'fechas':fechas, 'post':post})
-
 
 @login_required
 def delete(request,persona_id):
