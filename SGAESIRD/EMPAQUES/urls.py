@@ -19,6 +19,7 @@ urlpatterns = [
     path('', views.home, name='home'),
     path('accounts/registrate', views.registrate, name='registrate'),
     path('crear_planilla/', views.crear_planilla, name='crear_planilla'),
+    path('turnos/', views.turnos, name='turnos'),
     path('accounts/reset-password/', auth_views.PasswordResetView.as_view(
       template_name='reset_password.html',
       html_email_template_name='reset_password_email.html',
