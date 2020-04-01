@@ -62,7 +62,7 @@
                         <div class="panel-heading templatemo-position-relative">            
                             <thead>
                                 <tr>                      
-                                    <th colspan="2" >{% if forloop.last %}{{ d|date:"l j \d\e F" }}{% endif %}</th>
+                                    <th colspan="2" >{% with post|first as i %}{{ i.fecha|date:"l j \d\e F" }}{% endwith %}</th>
                                     </tr>
                             </thead>
                             <tbody>  
